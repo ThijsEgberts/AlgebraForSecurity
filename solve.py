@@ -1,4 +1,12 @@
 import json
+import addition
+import substraction
+import multiplication
+import multiplication_primary
+import multiplication_karatsuba
+import extended_euclidean_algorithm
+import reduction
+import inverse
 
 def solve_exercise(exercise_location : str, answer_location : str):
     """
@@ -19,44 +27,44 @@ def solve(exercise : dict):
     """
     match exercise:
         case {'operation': 'addition'}:
-            return solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
+            return addition.solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
         
         case {'operation': 'subtraction'}:
-            return solve_subtraction(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
+            return substraction.solve_subtraction(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
         
         case {'operation': 'multiplication'}:
             if exercise["type"] == "modular_arithmetic":
-                return solve_multiplication(exercise["radix"], exercise["x"], exercise["y"])
+                return multiplication.solve_multiplication(exercise["radix"], exercise["x"], exercise["y"])
             else:
                 raise Exception("Invalid type for multiplication, only modular_arithmetic is supported")
             
         case {'operation': 'multiplication_primary'}:
             if exercise["type"] == "integer_arithmetic":
-                return solve_multiplication_primary(exercise["radix"], exercise["x"], exercise["y"])
+                return multiplication_primary.solve_multiplication_primary(exercise["radix"], exercise["x"], exercise["y"])
             else:
                 raise Exception("Invalid type for multiplication_primary, only integer_arithmetic is supported")
             
         case {'operation': 'multiplication_karatsuba'}:
             if exercise["type"] == "integer_arithmetic":
-                return solve_multiplication_karatsuba(exercise["radix"], exercise["x"], exercise["y"])
+                return multiplication_karatsuba.solve_multiplication_karatsuba(exercise["radix"], exercise["x"], exercise["y"])
             else:
                 raise Exception("Invalid type for multiplication_karatsuba, only integer_arithmetic is supported")
             
         case {'operation': 'extended_euclidean_algorithm'}:
             if exercise["type"] == "integer_arithmetic":
-                return solve_extended_euclidean_algorithm(exercise["radix"], exercise["x"], exercise["y"])
+                return extended_euclidean_algorithm.solve_extended_euclidean_algorithm(exercise["radix"], exercise["x"], exercise["y"])
             else:
                 raise Exception("Invalid type for extended_euclidean_algorithm, only integer_arithmetic is supported")
             
         case {'operation': 'reduction'}:
             if exercise["type"] == "modular_arithmetic":
-                return solve_reduction(exercise["radix"], exercise["x"])
+                return reduction.solve_reduction(exercise["radix"], exercise["x"])
             else:
                 raise Exception("Invalid type for reduction, only modular_arithmetic is supported")
             
         case {'operation': 'inverse'}:
             if exercise["type"] == "modular_arithmetic":
-                return solve_inverse(exercise["radix"], exercise["x"])
+                return inverse.solve_inverse(exercise["radix"], exercise["x"])
             else:
                 raise Exception("Invalid type for inverse, only modular_arithmetic is supported")
         
