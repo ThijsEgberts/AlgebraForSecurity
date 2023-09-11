@@ -1,4 +1,5 @@
 from fixedint import Int32, MutableInt32
+import string
 
 class BigNumber:
     
@@ -7,17 +8,17 @@ class BigNumber:
     isNegative = 0
     
     #Construct a BigNumber from a radix, list of exponents and the sign of the number
-    def __init__(self, radix, exponents, isNegative) -> None:
+    def __init__(self, radix : Int32, exponents : [Int32], isNegative : int) -> None:
         self.radix = radix
         self.exponents = exponents
-        self.isNegative = int(isNegative) #isNegative as a 1 or 0 boolean representation
+        self.isNegative = isNegative #isNegative as a 1 or 0 boolean representation
     
     #Construct a BigNumber from a string
-    def __init__(self, string, radix) -> None:
+    def __init__(self, string : string, radix : Int32) -> None:
         self.parseString(string, radix)
     
     #Parses a string representing a number to a BigNumber format
-    def parseString(self, stringNr, radix):
+    def parseString(self, stringNr : string, radix : Int32):
         if radix <= 0 or radix > 16: #check correct format
             self.radix = radix
         
