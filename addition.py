@@ -13,6 +13,7 @@ def solve_addition(type : str, radix : int, x : str, y : str):
         raise Exception("Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
     
 def solve_addition_integer_arithmetic(type : str, originalX : str, originalY : str, x : BigNumber, y : BigNumber):
+    #TODO: use use 32 bit types, this is mandated by the assignment
     """
     Solves the addition of two numbers in integer arithmetic.
     """
