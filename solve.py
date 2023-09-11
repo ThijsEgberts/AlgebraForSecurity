@@ -72,14 +72,16 @@ def solve(exercise : dict):
         case _:
             raise Exception("Invalid operation")
 
-def save_answer(answer : dict, answer_location : str):
+def save_answer(answer : int, answer_location : str):
     """
-    Saves the answer at the given location.
+    Saves the answer at the given location. 
+    Using the JSON format "answer": "int".
     """
-    # Open the answer file
+    # Create the answer object
+    answer_object = {"answer": answer}
+    # Save the answer object to a JSON file
     with open(answer_location, 'w') as answer_file:
-        # Write the answer file
-        answer_file.write(json.dumps(answer))
+        json.dump(answer_object, answer_file)
 
 def load_exercise(exercise_location : str):
     """
