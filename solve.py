@@ -1,8 +1,11 @@
+import json
+
 def solve_exercise(exercise_location : str, answer_location : str):
     """
     Solves the exercise at the given location and saves the answer at the given location.
     """
-    # Load the exercise
+    # Load the exercise and return the JSON object with fields:
+    # type, operation, radix, x, points
     exercise = load_exercise(exercise_location)
     # Solve the exercise
     answer = solve(exercise)
@@ -18,7 +21,8 @@ def load_exercise(exercise_location : str):
     # Load the exercise file
     exercise = load_exercise_file(exercise_location)
     # Parse the exercise
-    exercise = parse_exercise(exercise)
+    exercise = json.loads(exercise)
+    
     # Return the exercise
     return exercise
 
