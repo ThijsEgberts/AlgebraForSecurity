@@ -17,7 +17,6 @@ def solve(exercise : dict):
     """
     Solve chooses the correct solver for the chosen operation and returns the answer.
     """
-    #TODO: Implement solve
     match exercise:
         case {'operation': 'addition'}:
             return solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
