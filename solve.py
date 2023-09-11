@@ -18,6 +18,52 @@ def solve(exercise : dict):
     Solve chooses the correct solver for the chosen operation and returns the answer.
     """
     #TODO: Implement solve
+    match exercise:
+        case {'operation': 'addition'}:
+            return solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
+        
+        case {'operation': 'subtraction'}:
+            return solve_subtraction(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
+        
+        case {'operation': 'multiplication'}:
+            if exercise["type"] == "modular_arithmetic":
+                return solve_multiplication(exercise["radix"], exercise["x"], exercise["y"])
+            else:
+                raise Exception("Invalid type for multiplication, only modular_arithmetic is supported")
+            
+        case {'operation': 'multiplication_primary'}:
+            if exercise["type"] == "integer_arithmetic":
+                return solve_multiplication_primary(exercise["radix"], exercise["x"], exercise["y"])
+            else:
+                raise Exception("Invalid type for multiplication_primary, only integer_arithmetic is supported")
+            
+        case {'operation': 'multiplication_karatsuba'}:
+            if exercise["type"] == "integer_arithmetic":
+                return solve_multiplication_karatsuba(exercise["radix"], exercise["x"], exercise["y"])
+            else:
+                raise Exception("Invalid type for multiplication_karatsuba, only integer_arithmetic is supported")
+            
+        case {'operation': 'extended_euclidean_algorithm'}:
+            if exercise["type"] == "integer_arithmetic":
+                return solve_extended_euclidean_algorithm(exercise["radix"], exercise["x"], exercise["y"])
+            else:
+                raise Exception("Invalid type for extended_euclidean_algorithm, only integer_arithmetic is supported")
+            
+        case {'operation': 'reduction'}:
+            if exercise["type"] == "modular_arithmetic":
+                return solve_reduction(exercise["radix"], exercise["x"])
+            else:
+                raise Exception("Invalid type for reduction, only modular_arithmetic is supported")
+            
+        case {'operation': 'inverse'}:
+            if exercise["type"] == "modular_arithmetic":
+                return solve_inverse(exercise["radix"], exercise["x"])
+            else:
+                raise Exception("Invalid type for inverse, only modular_arithmetic is supported")
+        
+        #Invalid operation
+        case _:
+            raise Exception("Invalid operation")
 
 def save_answer(answer : dict, answer_location : str):
     """
