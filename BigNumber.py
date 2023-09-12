@@ -20,15 +20,15 @@ class BigNumber:
     #Parses a string representing a number to a BigNumber format
     def parseString(self, stringNr : string, radix : Int32):
         self.exponents = [None] * len(stringNr) #create a list of exponents with the length of the string
-        
+
         if radix <= 0 or radix > 16: #check correct format
             self.radix = radix
         
         #check if the number is negative
         if stringNr[0] == "-":
-            self.isNegative = 0
-        else:
             self.isNegative = 1
+        else:
+            self.isNegative = 0
         
         #parse each digit in the string and convert it to a number in the exponent list
         for i in range(self.isNegative, len(stringNr)): #skip the minus sign if the number is negative
