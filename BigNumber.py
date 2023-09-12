@@ -15,6 +15,7 @@ class BigNumber:
     
     #Construct a BigNumber from a string
     def __init__(self, string : string, radix : Int32) -> None:
+        self.radix = Int32(radix)
         self.parseString(string, radix)
     
     #Parses a string representing a number to a BigNumber format
@@ -77,7 +78,7 @@ def matchExponentsLength(x : BigNumber, y : BigNumber):
         """
         if len(x.exponents) > len(y.exponents):
             for i in range(len(x.exponents) - len(y.exponents)):
-                y.exponents.insert(0, 0)
+                y.exponents.insert(0, Int32(0))
         elif len(x.exponents) < len(y.exponents):
             for i in range(len(y.exponents) - len(x.exponents)):
-                x.exponents.insert(0, 0)
+                x.exponents.insert(0, Int32(0))

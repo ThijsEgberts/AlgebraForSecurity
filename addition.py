@@ -43,20 +43,17 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
     carry = Int32(0)
 
     # i counts from len(x.exponents)-1 to -1
-    #TODO Type error fixen
     i = len(x.exponents)-1
     for iteration in range(-1, len(x.exponents)-1):
         #No carry needed
         if x.exponents[i] + y.exponents[i] + carry < x.radix:
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry)
-            print("inserted")
-            print(exponents)
             carry = Int32(0)
         #Carry needed :shook:
         elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
+            print(x.exponents[i] + y.exponents[i] + carry)
+            print(x.radix)
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry - x.radix)
-            print("inserted")
-            print(exponents)
 
             #Carry the 1
             carry = Int32(1)
@@ -65,8 +62,9 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
     #3.
     #If there is a carry left, we need to add it to the exponents
     if carry == 1:
-        exponents.insert(0, 1)
+        exponents.insert(0, Int32(1))
     
+
     #4.
     #Calculate a number using the exponent list
     # Using number * radix ** exponent
@@ -78,7 +76,7 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
         exponent -= 1
 
     #5.
-    return result
+    return exponents
 
 def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber):
     """
