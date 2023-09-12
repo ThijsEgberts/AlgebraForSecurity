@@ -86,10 +86,3 @@ def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber):
     """
     #TODO: Implement
     return None
-
-radix = Int32(10)
-x = BigNumber("637624", radix)
-y = BigNumber("6324", radix)
-matchExponentsLength(x, y)
-result = solve_addition_integer_arithmetic(x, y)
-print(result)

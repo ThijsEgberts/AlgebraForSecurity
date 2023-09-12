@@ -4,12 +4,12 @@ import string
 class BigNumber:
     
     exponents = [] #a list of exponents for the exponential representation of the number, so 3 in binary will be represented as [1,1]
-    radix = None
+    radix = Int32(0)
     isNegative = 0
     
     #Construct a BigNumber from a radix, list of exponents and the sign of the number
     def __init__(self, radix : Int32, exponents : [Int32], isNegative : int) -> None:
-        self.radix = radix
+        self.radix = Int32(radix)
         self.exponents = exponents
         self.isNegative = isNegative #isNegative as a 1 or 0 boolean representation
     
@@ -22,7 +22,7 @@ class BigNumber:
         self.exponents = [None] * len(stringNr) #create a list of exponents with the length of the string
 
         if radix <= 0 or radix > 16: #check correct format
-            self.radix = radix
+            self.radix = Int32(radix)
         
         #check if the number is negative
         if stringNr[0] == "-":
