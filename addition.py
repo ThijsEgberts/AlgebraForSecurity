@@ -40,8 +40,10 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
     exponents = []
     carry = 0
 
-    #TODO: For some reason the code inside the loop does not execute. I have no idea why. Fix this. :sad:
-    for i in range(len(x.exponents)-1, -1):
+    # i counts from len(x.exponents)-1 to -1
+    #TODO IndexError fixen. Als de exponents niet even lang zijn, dan krijg je een index error
+    i = len(x.exponents)-1
+    for iteration in range(-1, len(x.exponents)-1):
         #No carry needed
         if x.exponents[i] + y.exponents[i] + carry < x.radix:
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry)
@@ -57,6 +59,7 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
             carry = 0
             #Carry the 1
             carry = 1
+        i -= 1
 
     #3.
     #If there is a carry left, we need to add it to the exponents
