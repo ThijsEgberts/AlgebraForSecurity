@@ -1,4 +1,4 @@
-import BigNumber
+from BigNumber import BigNumber
 import substraction
 
 #TODO: Also calculate time complexity and see if it matches the theoretical time complexity.
@@ -39,14 +39,21 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
     #If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed
     exponents = []
     carry = 0
+
+    #TODO: For some reason the code inside the loop does not execute. I have no idea why. Fix this. :sad:
     for i in range(len(x.exponents)-1, -1):
         #No carry needed
         if x.exponents[i] + y.exponents[i] + carry < x.radix:
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry)
+            print("inserted")
+            print(exponents)
             carry = 0
         #Carry needed :shook:
         elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry - x.radix)
+            print("inserted")
+            print(exponents)
+
             carry = 0
             #Carry the 1
             carry = 1
@@ -75,3 +82,9 @@ def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber):
     """
     #TODO: Implement
     return None
+
+radix = 10
+x = BigNumber("637624", radix)
+y = BigNumber("6324", radix)
+result = solve_addition_integer_arithmetic(x, y)
+print(result)

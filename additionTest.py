@@ -8,7 +8,8 @@ class TestAdditionMethods(unittest.TestCase):
         radix = 10
         x = BigNumber("637624", radix)
         y = BigNumber("6324", radix)
-        self.assertEqual(addition.solve_addition_integer_arithmetic(x, y), 643948)
+        result = addition.solve_addition_integer_arithmetic(x, y)
+        self.assertEqual(result, 643948)
 
 if __name__ == '__main__':
     unittest.main()
