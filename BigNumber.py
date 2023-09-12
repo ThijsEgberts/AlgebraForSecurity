@@ -67,4 +67,17 @@ class BigNumber:
                     self.exponents[i] = Int32(15)
                 case _ :
                     raise Exception('Radix out of bounds')
-                
+
+    def __str__(self):
+        return "Radix: " + str(self.radix) + " Exponents: " + str(self.exponents) + " isNegative: " + str(self.isNegative)                
+
+def matchExponentsLength(x : BigNumber, y : BigNumber):
+        """
+        Matches the length of the exponents of two BigNumbers by adding 0's to the front of the list.
+        """
+        if len(x.exponents) > len(y.exponents):
+            for i in range(len(x.exponents) - len(y.exponents)):
+                y.exponents.insert(0, 0)
+        elif len(x.exponents) < len(y.exponents):
+            for i in range(len(y.exponents) - len(x.exponents)):
+                x.exponents.insert(0, 0)

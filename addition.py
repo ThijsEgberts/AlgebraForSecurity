@@ -1,10 +1,12 @@
 from BigNumber import BigNumber
+from BigNumber import matchExponentsLength
+from fixedint import Int32
 import substraction
 
 #TODO: Also calculate time complexity and see if it matches the theoretical time complexity.
 #TODO: Unit Tests :happy:
 
-def solve_addition(type : str, radix : int, x : str, y : str):
+def solve_addition(type : str, radix : Int32, x : str, y : str):
     BigNumberX = BigNumber(x, radix)
     BigNumberY = BigNumber(y, radix)
 
@@ -38,10 +40,10 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
     #2.
     #If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed
     exponents = []
-    carry = 0
+    carry = Int32(0)
 
     # i counts from len(x.exponents)-1 to -1
-    #TODO IndexError fixen. Als de exponents niet even lang zijn, dan krijg je een index error
+    #TODO Type error fixen
     i = len(x.exponents)-1
     for iteration in range(-1, len(x.exponents)-1):
         #No carry needed
@@ -49,16 +51,15 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry)
             print("inserted")
             print(exponents)
-            carry = 0
+            carry = Int32(0)
         #Carry needed :shook:
         elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry - x.radix)
             print("inserted")
             print(exponents)
 
-            carry = 0
             #Carry the 1
-            carry = 1
+            carry = Int32(1)
         i -= 1
 
     #3.
@@ -86,8 +87,9 @@ def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber):
     #TODO: Implement
     return None
 
-radix = 10
+radix = Int32(10)
 x = BigNumber("637624", radix)
 y = BigNumber("6324", radix)
+matchExponentsLength(x, y)
 result = solve_addition_integer_arithmetic(x, y)
 print(result)

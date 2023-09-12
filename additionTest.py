@@ -8,6 +8,7 @@ class TestAdditionMethods(unittest.TestCase):
         radix = 10
         x = BigNumber("637624", radix)
         y = BigNumber("6324", radix)
+        BigNumber.matchExponentsLength(x, y)
         result = addition.solve_addition_integer_arithmetic(x, y)
         self.assertEqual(result, 643948)
 
