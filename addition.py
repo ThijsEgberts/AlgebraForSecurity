@@ -9,7 +9,7 @@ import substraction
 def solve_addition(type : str, radix : Int32, x : str, y : str):
     BigNumberX = BigNumber(x, radix)
     BigNumberY = BigNumber(y, radix)
-
+    
     if type == "integer_arithmetic":
         return solve_addition_integer_arithmetic(type, x, y, BigNumberX, BigNumberY)
     elif type == "modular_arithmetic":
@@ -36,6 +36,9 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
             return substraction.solve_subtraction(type, x, y)
         else:
             return substraction.solve_subtraction(type, y, x)
+    
+    #Match the exponent list length
+    matchExponentsLength(x, y)
 
     #2.
     #If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed
