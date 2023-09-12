@@ -19,6 +19,8 @@ class BigNumber:
     
     #Parses a string representing a number to a BigNumber format
     def parseString(self, stringNr : string, radix : Int32):
+        self.exponents = [None] * len(stringNr) #create a list of exponents with the length of the string
+        
         if radix <= 0 or radix > 16: #check correct format
             self.radix = radix
         
