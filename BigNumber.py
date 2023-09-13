@@ -82,10 +82,3 @@ def matchExponentsLength(x : BigNumber, y : BigNumber):
         elif len(x.exponents) < len(y.exponents):
             for i in range(len(y.exponents) - len(x.exponents)):
                 x.exponents.insert(0, Int32(0))
-
-def matchRadix(x : BigNumber, y : BigNumber):
-    """
-    Matches the radix of two BigNumbers by converting the radix of the first number to the radix of the second number.
-    """
-    #TODO: Implement this function (https://www.geeksforgeeks.org/convert-a-number-from-base-a-to-base-b/)
-        

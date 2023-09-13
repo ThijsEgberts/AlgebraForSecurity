@@ -3,9 +3,6 @@ from BigNumber import matchExponentsLength
 from fixedint import Int32
 import substraction
 
-#TODO: Also calculate time complexity and see if it matches the theoretical time complexity.
-#TODO: Unit Tests :happy:
-
 def solve_addition(type : str, radix : Int32, x : str, y : str):
     BigNumberX = BigNumber(x, radix)
     BigNumberY = BigNumber(y, radix)
@@ -79,7 +76,7 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
         exponent -= 1
 
     #5.
-    return exponents
+    return result
 
 def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber):
     """
