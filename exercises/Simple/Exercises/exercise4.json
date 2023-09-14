@@ -1,0 +1,8 @@
+{
+    "type": "integer_arithmetic",
+    "operation": "extended_euclidean_algorithm",
+    "radix": 7,
+    "x": "133",
+    "y": "143",
+    "points": 0.5
+}

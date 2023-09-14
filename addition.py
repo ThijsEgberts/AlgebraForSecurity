@@ -1,8 +1,8 @@
 from BigNumber import BigNumber
 from BigNumber import matchExponentsLength
 from fixedint import Int32
-import substraction
 import division
+import subtraction
 
 def solve_addition(type : str, radix : Int32, x : str, y : str):
     BigNumberX = BigNumber(x, radix)
@@ -31,9 +31,9 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber) -> str:
     #If the signs are different, we need to subtract the smaller number from the bigger number
     if x.isNegative != y.isNegative:
         if x.isNegative == 0:
-            return substraction.solve_subtraction(type, x, y)
+            return subtraction.solve_subtraction(type, x, y)
         else:
-            return substraction.solve_subtraction(type, y, x)
+            return subtraction.solve_subtraction(type, y, x)
     
     #Match the exponent list length
     matchExponentsLength(x, y)
@@ -52,8 +52,8 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber) -> str:
             carry = Int32(0)
         #Carry needed :shook:
         elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
-            print(x.exponents[i] + y.exponents[i] + carry)
-            print(x.radix)
+            # print(x.exponents[i] + y.exponents[i] + carry)
+            # print(x.radix)
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry - x.radix)
 
             #Carry the 1

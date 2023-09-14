@@ -1,6 +1,9 @@
 import json
+
+from fixedint import Int32
+from BigNumber import BigNumber
 import addition
-import substraction
+import subtraction
 import multiplication
 import multiplication_primary
 import multiplication_karatsuba
@@ -8,7 +11,7 @@ import extended_euclidean_algorithm
 import reduction
 import inverse
 
-def solve_exercise(exercise_location : str, answer_location : str):
+def solve_exercise(exercise_location : str, answer_location : str, saveAnswer : bool):
     """
     Solves the exercise at the given location and saves the answer at the given location.
     """
@@ -16,10 +19,17 @@ def solve_exercise(exercise_location : str, answer_location : str):
     exercise = load_exercise(exercise_location)
     # Solve the exercise and returns a JSON object with the answer(s) (see Assignment 2.4)
     answer = solve(exercise)
-    # Save the answer
-    save_answer(answer, answer_location)
+    
     # Print the answer
     print(answer)
+    
+    if saveAnswer:
+        # Save the answer
+        save_answer(answer, answer_location)
+    else:
+        answerDict = load_answer(answer_location)
+        print(answerDict["answer"] == answer)
+        
 
 def solve(exercise : dict):
     """
@@ -27,10 +37,16 @@ def solve(exercise : dict):
     """
     match exercise:
         case {'operation': 'addition'}:
-            return addition.solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
+            if exercise["type"] == "integer_arithmetic":
+                return addition.solve_addition_integer_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])))
+            elif exercise["type"] == "modular_arithmetic":
+                return addition.solve_addition_modular_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"])))
+            else:
+                raise Exception("Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
+            # return addition.solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
         
         case {'operation': 'subtraction'}:
-            return substraction.solve_subtraction(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
+            return subtraction.solve_subtraction(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
         
         case {'operation': 'multiplication'}:
             if exercise["type"] == "modular_arithmetic":
@@ -105,3 +121,17 @@ def load_exercise_file(exercise_location : str):
         exercise = exercise_file.read()
     # Return the exercise
     return exercise
+
+def load_answer(answer_location : str):
+    """
+    Loads the answer at the given location.
+    """
+    # Open the exercise file
+    with open(answer_location, 'r') as answer_file:
+        # Read the exercise file
+        answer = answer_file.read()
+    # Return the exercise
+    return json.loads(answer)
+
+###run the solver###
+solve_exercise("exercises\Simple\Exercises\exercise0.json", "exercises\Simple\Answers\\answer0.json", False)
