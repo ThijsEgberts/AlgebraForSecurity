@@ -4,8 +4,6 @@ from fixedint import Int32
 import substraction
 import division
 
-# TODO results should be strings
-
 def solve_addition(type : str, radix : Int32, x : str, y : str):
     BigNumberX = BigNumber(x, radix)
     BigNumberY = BigNumber(y, radix)
