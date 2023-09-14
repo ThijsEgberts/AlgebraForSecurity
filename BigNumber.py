@@ -69,10 +69,16 @@ class BigNumber:
                 case _ :
                     raise Exception('Radix out of bounds')
 
-        
-        
     def __str__(self):
         return "Radix: " + str(self.radix) + " Exponents: " + str(self.exponents) + " isNegative: " + str(self.isNegative)                
+    
+    #flips the sign of the big number, ei -1 becomes 1
+    def flipSign(self):
+        if bool(self.isNegative):
+            return BigNumber(self.radix, self.exponents, 0)
+        else:
+            return BigNumber(self.radix, self.exponents, 1)
+
 
 # TODO Dit kan sws wel iets compacter, letterlijk 2x dezelfde code :skull:
 def isGreaterThan(x : BigNumber, y : BigNumber):
@@ -148,6 +154,7 @@ def isGreaterOrEqual(x : BigNumber, y : BigNumber):
             elif x.exponents[i] < y.exponents[i]:
                 return False
     return True
+    
 
 def matchExponentsLength(x : BigNumber, y : BigNumber):
         """
