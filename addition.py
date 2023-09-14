@@ -2,6 +2,9 @@ from BigNumber import BigNumber
 from BigNumber import matchExponentsLength
 from fixedint import Int32
 import substraction
+import division
+
+# TODO results should be strings
 
 def solve_addition(type : str, radix : Int32, x : str, y : str):
     BigNumberX = BigNumber(x, radix)
@@ -78,9 +81,16 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
     #5.
     return result
 
-def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber):
+def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber, modulus : BigNumber):
     """
     Solves the addition of two numbers in modular arithmetic.
+    
+    The algorithm is as follows:
+    1. Solve the addition in integer arithmetic.
+    2. Solve the division with remainder of the result and the modulus.
+    3. Return the remainder.
     """
-    #TODO: Implement
-    return None
+    return division.solve_division_with_remainder(solve_addition_integer_arithmetic(x, y), modulus)[1]
+
+
+
