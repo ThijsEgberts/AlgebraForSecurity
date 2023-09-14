@@ -7,12 +7,6 @@ class BigNumber:
     radix = Int32(0)
     isNegative = 0
     
-    #Construct a BigNumber from a radix, list of exponents and the sign of the number
-    def __init__(self, radix : Int32, exponents : [Int32], isNegative : int) -> None:
-        self.radix = Int32(radix)
-        self.exponents = exponents
-        self.isNegative = isNegative #isNegative as a 1 or 0 boolean representation
-    
     #Construct a BigNumber from a string
     def __init__(self, string : string, radix : Int32) -> None:
         self.radix = Int32(radix)
@@ -72,7 +66,18 @@ class BigNumber:
         
         
     def __str__(self):
-        return "Radix: " + str(self.radix) + " Exponents: " + str(self.exponents) + " isNegative: " + str(self.isNegative)                
+        return "Radix: " + str(self.radix) + " Exponents: " + str(self.exponents) + " isNegative: " + str(self.isNegative)             
+
+    def exponentsToString(self):
+        output = ""
+        for exponent in self.exponents:
+            if(exponent >= 10):
+                output += string.ascii_uppercase[exponent - 10]
+            else: 
+                output += str(exponent)
+
+        return output
+            
 
 # TODO Dit kan sws wel iets compacter, letterlijk 2x dezelfde code :skull:
 def isGreaterThan(x : BigNumber, y : BigNumber):
@@ -155,7 +160,16 @@ def matchExponentsLength(x : BigNumber, y : BigNumber):
         """
         if len(x.exponents) > len(y.exponents):
             for i in range(len(x.exponents) - len(y.exponents)):
-                y.exponents.insert(0, Int32(0))
+                addLeadingZero(y)
         elif len(x.exponents) < len(y.exponents):
             for i in range(len(y.exponents) - len(x.exponents)):
-                x.exponents.insert(0, Int32(0))
+                addLeadingZero(x)
+
+def addLeadingZero(x: BigNumber):
+    x.exponents.insert(0, Int32(0))
+
+def createBigNumberFromExponents(radix, exponents, isNegative):
+    x = BigNumber("0", radix)
+    x.exponents = exponents
+    x.isNegative = isNegative
+    return x
