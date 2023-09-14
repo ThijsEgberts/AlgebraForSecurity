@@ -17,7 +17,7 @@ def solve_addition(type : str, radix : Int32, x : str, y : str):
     else:
         raise Exception("Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
     
-def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
+def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber) -> str:
     """
     Solves the addition of two numbers in integer arithmetic.
 
@@ -81,7 +81,7 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber):
     #5.
     return result
 
-def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber, modulus : BigNumber):
+def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber, modulus : BigNumber) -> str:
     """
     Solves the addition of two numbers in modular arithmetic.
     
