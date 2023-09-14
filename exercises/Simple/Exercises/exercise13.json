@@ -1,0 +1,8 @@
+{
+    "type": "modular_arithmetic",
+    "operation": "inversion",
+    "radix": 10,
+    "x": "93",
+    "modulus": "21",
+    "points": 0.5
+}
