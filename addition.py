@@ -2,7 +2,7 @@ from BigNumber import BigNumber
 from BigNumber import matchExponentsLength
 from fixedint import Int32
 import division
-import subtraction
+import substraction
 
 def solve_addition(type : str, radix : Int32, x : str, y : str):
     BigNumberX = BigNumber(x, radix)
@@ -31,9 +31,9 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber) -> str:
     #If the signs are different, we need to subtract the smaller number from the bigger number
     if x.isNegative != y.isNegative:
         if x.isNegative == 0:
-            return subtraction.solve_subtraction(type, x, y)
+            return substraction.solve_substraction(type, x, y)
         else:
-            return subtraction.solve_subtraction(type, y, x)
+            return substraction.solve_substraction(type, y, x)
     
     #Match the exponent list length
     matchExponentsLength(x, y)
