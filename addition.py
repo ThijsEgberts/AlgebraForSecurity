@@ -25,7 +25,7 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber) -> str:
     1. If the signs are different, we need to subtract the smaller number from the bigger number and return the result with the sign of the bigger number.
     2. If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed.
     3. If there is a carry left, we need to add it to the exponents.
-    4. Calculate a number using the exponent list. Using number * radix ** exponent. So [1, 1, 1] would be 1*2^2 + 1*2^1 + 1*2^0 = 7
+    4. Convert the BigNumber to a string
     5. Return the result.
     """
 
@@ -69,14 +69,10 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber) -> str:
     
 
     #4.
-    #Calculate a number using the exponent list
-    # Using number * radix ** exponent
-    # so [1, 1, 1] would be 1*2^2 + 1*2^1 + 1*2^0 = 7
-    result = 0
-    exponent = len(exponents) - 1
+    #Convert the BigNumber to a string
+    result = ""
     for i in range(len(exponents)):
-        result += exponents[i] * x.radix ** exponent
-        exponent -= 1
+        result += str(exponents[i])
 
     #5.
     return result
@@ -88,9 +84,16 @@ def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber, modulus : Bi
     The algorithm is as follows:
     1. Solve the addition in integer arithmetic.
     2. Solve the division with remainder of the result and the modulus.
-    3. Return the remainder.
+    3. Return the remainder as a string.
     """
-    return division.solve_division_with_remainder(solve_addition_integer_arithmetic(x, y), modulus)[1]
+    remainder = division.solve_division_with_remainder(solve_addition_integer_arithmetic(x, y), modulus)[1]
+
+    # Convert BigNumber remainder to a string
+    result = ""
+    for i in range(len(remainder.exponents)):
+        result += str(remainder.exponents[i])
+
+    return result
 
 
 
