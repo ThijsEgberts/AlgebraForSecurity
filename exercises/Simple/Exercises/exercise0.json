@@ -1,0 +1,8 @@
+{
+    "type": "integer_arithmetic",
+    "operation": "addition",
+    "radix": 10,
+    "x": "4",
+    "y": "28",
+    "points": 0.5
+}

@@ -1,0 +1,8 @@
+{
+    "type": "modular_arithmetic",
+    "operation": "reduction",
+    "radix": 5,
+    "x": "333",
+    "modulus": "0",
+    "points": 0.5
+}
