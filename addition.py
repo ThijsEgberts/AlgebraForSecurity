@@ -9,7 +9,7 @@ def solve_addition(type : str, radix : Int32, x : str, y : str):
     BigNumberY = BigNumber(y, radix)
     
     if type == "integer_arithmetic":
-        return solve_addition_integer_arithmetic(type, x, y, BigNumberX, BigNumberY)
+        return solve_addition_integer_arithmetic(BigNumberX, BigNumberY)
     elif type == "modular_arithmetic":
         return solve_addition_modular_arithmetic(BigNumberX, BigNumberY)
     else:

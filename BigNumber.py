@@ -175,6 +175,11 @@ def matchExponentsLength(x : BigNumber, y : BigNumber):
 def addLeadingZero(x: BigNumber):
     x.exponents.insert(0, Int32(0))
 
+def bitShift(x: str, shift: int):
+    for _ in range(shift):
+        x = "0" + x
+    return x
+
 def createBigNumberFromExponents(radix, exponents, isNegative):
     x = BigNumber("0", radix)
     x.exponents = exponents

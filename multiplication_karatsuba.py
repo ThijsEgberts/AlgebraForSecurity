@@ -4,7 +4,8 @@ from BigNumber import addLeadingZero
 from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 from addition import solve_addition
-from subtraction import solve_subtraction_integer_arithmetic
+from subtraction import solve_subtraction
+from BigNumber import bitShift
 
 def solve_multiplication_karatsuba(radix : Int32, x : str, y : str):
     """
@@ -19,7 +20,9 @@ def solve_multiplication_karatsuba(radix : Int32, x : str, y : str):
                 
 
     if(n == 1):
-        return BigNumberX
+        # Primitive multiplications
+        return str(BigNumberX.exponents[0] * BigNumberY.exponents[0])
+
 
     #If n is odd, then n <- n + 1
     if(n % 2 == 1):
@@ -27,29 +30,38 @@ def solve_multiplication_karatsuba(radix : Int32, x : str, y : str):
         addLeadingZero(BigNumberY)
         n += 1
 
-    x_hi = createBigNumberFromExponents(radix, BigNumberX.exponents[:n/2], BigNumberX.isNegative)
-    x_lo = createBigNumberFromExponents(radix, BigNumberX.exponents[n/2:], BigNumberX.isNegative)
+    x_hi = createBigNumberFromExponents(radix, BigNumberX.exponents[:int(n/2)], BigNumberX.isNegative).exponentsToString()
+    x_lo = createBigNumberFromExponents(radix, BigNumberX.exponents[int(n/2):], BigNumberX.isNegative).exponentsToString()
 
-    y_hi = createBigNumberFromExponents(radix, BigNumberY.exponents[:n/2], BigNumberY.isNegative)
-    y_lo = createBigNumberFromExponents(radix, BigNumberY.exponents[n/2:], BigNumberY.isNegative)
+    y_hi = createBigNumberFromExponents(radix, BigNumberY.exponents[:int(n/2)], BigNumberY.isNegative).exponentsToString()
+    y_lo = createBigNumberFromExponents(radix, BigNumberY.exponents[int(n/2):], BigNumberY.isNegative).exponentsToString()
 
-    z2 = solve_multiplication_karatsuba(x_hi.exponentsToString(),
-                                        y_hi.exponentsToString(),
-                                        radix)
+    z2 = solve_multiplication_karatsuba(radix,
+                                        x_hi,
+                                        y_hi)
     
-    z0 = solve_multiplication_karatsuba(x_lo.exponentsToString(),
-                                        y_lo.exponentsToString(),
-                                        radix)
+    z0 = solve_multiplication_karatsuba(radix,
+                                        x_lo,
+                                        y_lo)
     
-    z1 = solve_multiplication_karatsuba(solve_addition("integer_arithmetic", x_hi, x_lo),
-                                        solve_addition("integer_arithmetic", y_hi, y_lo),
-                                        radix) - z0 - z2
+    z1 = solve_subtraction("integer_arithmetic", radix,
+                           solve_subtraction("integer_arithmetic", radix,
+                                             solve_multiplication_karatsuba(radix,
+                                                                            solve_addition("integer_arithmetic", radix, x_hi, x_lo),
+                                                                            solve_addition("integer_arithmetic", radix, y_hi, y_lo)),
+                                              z0),
+                           z2)
     
-    z = z2 * (radix ** n) + z1 * (radix ** (n/2)) + z0
-    return 
+    z = solve_addition("integer_arithmetic", radix,
+                       solve_addition("integer_arithmetic", radix,
+                                      bitShift(z2, n),
+                                      bitShift(z1, (n/2)),
+                       z0))
+    
+    return z
 
 
 print()
-print(solve_multiplication_karatsuba(10, "12234", "32332").exponentsToString())
+print(solve_multiplication_karatsuba(10, "22", "31"))
 print()
     
