@@ -3,65 +3,62 @@ from BigNumber import matchExponentsLength
 from BigNumber import addLeadingZero
 from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
-from addition import solve_addition
-from subtraction import solve_subtraction
+from addition import solve_addition_integer_arithmetic
+from subtraction import solve_subtraction_integer_arithmetic
 from BigNumber import bitShift
 
-def solve_multiplication_karatsuba(radix : Int32, x : str, y : str):
+def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
     """
 
     """
 
-    BigNumberX = BigNumber(x, radix)
-    BigNumberY = BigNumber(y, radix)
-
-    matchExponentsLength(BigNumberX, BigNumberY)
-    n = len(BigNumberX.exponents)
-                
+    matchExponentsLength(x, y)
+    n = len(x.exponents)
 
     if(n == 1):
         # Primitive multiplications
-        return str(BigNumberX.exponents[0] * BigNumberY.exponents[0])
-
+        return BigNumber(str(x.exponents[0] * y.exponents[0]), x.radix)
 
     #If n is odd, then n <- n + 1
     if(n % 2 == 1):
-        addLeadingZero(BigNumberX)
-        addLeadingZero(BigNumberY)
+        addLeadingZero(x)
+        addLeadingZero(y)
         n += 1
 
-    x_hi = createBigNumberFromExponents(radix, BigNumberX.exponents[:int(n/2)], BigNumberX.isNegative).exponentsToString()
-    x_lo = createBigNumberFromExponents(radix, BigNumberX.exponents[int(n/2):], BigNumberX.isNegative).exponentsToString()
+    x_hi = createBigNumberFromExponents(x.radix, x.exponents[:int(n/2)], x.isNegative)
+    x_lo = createBigNumberFromExponents(x.radix, x.exponents[int(n/2):], x.isNegative)
 
-    y_hi = createBigNumberFromExponents(radix, BigNumberY.exponents[:int(n/2)], BigNumberY.isNegative).exponentsToString()
-    y_lo = createBigNumberFromExponents(radix, BigNumberY.exponents[int(n/2):], BigNumberY.isNegative).exponentsToString()
+    y_hi = createBigNumberFromExponents(x.radix, y.exponents[:int(n/2)], y.isNegative)
+    y_lo = createBigNumberFromExponents(x.radix, y.exponents[int(n/2):], y.isNegative)
 
-    z2 = solve_multiplication_karatsuba(radix,
-                                        x_hi,
+    z2 = solve_multiplication_karatsuba(x_hi,
                                         y_hi)
     
-    z0 = solve_multiplication_karatsuba(radix,
-                                        x_lo,
+    z0 = solve_multiplication_karatsuba(x_lo,
                                         y_lo)
     
-    z1 = solve_subtraction("integer_arithmetic", radix,
-                           solve_subtraction("integer_arithmetic", radix,
-                                             solve_multiplication_karatsuba(radix,
-                                                                            solve_addition("integer_arithmetic", radix, x_hi, x_lo),
-                                                                            solve_addition("integer_arithmetic", radix, y_hi, y_lo)),
-                                              z0),
-                           z2)
+    z1 = solve_subtraction_integer_arithmetic(
+        solve_subtraction_integer_arithmetic(
+            solve_multiplication_karatsuba(
+                solve_addition_integer_arithmetic(x_hi, x_lo),
+                solve_addition_integer_arithmetic(y_hi, y_lo)
+                ),
+            z0),
+        z2)
     
-    z = solve_addition("integer_arithmetic", radix,
-                       solve_addition("integer_arithmetic", radix,
+    z = solve_addition_integer_arithmetic(
+                       solve_addition_integer_arithmetic(
                                       bitShift(z2, n),
-                                      bitShift(z1, (n/2)),
-                       z0))
+                                      bitShift(z1, int(n/2))
+                       ),
+                       z0)
     
     return z
 
 
-print()
-print(solve_multiplication_karatsuba(10, "22", "31"))
-print()
+#print()
+#print(solve_multiplication_karatsuba(BigNumber("2", 10), BigNumber("3", 10)))
+#print()
     
+
+#print(solve_subtraction_integer_arithmetic(BigNumber("253", 10), BigNumber("101", 10)))

@@ -3,7 +3,7 @@ import json
 from fixedint import Int32
 from BigNumber import BigNumber
 import addition
-import substraction
+import subtraction
 import multiplication
 import multiplication_primary
 import multiplication_karatsuba
@@ -46,7 +46,7 @@ def solve(exercise : dict):
             # return addition.solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
         
         case {'operation': 'substraction'}:
-            return substraction.solve_substraction(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
+            return subtraction.solve_substraction(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
         
         case {'operation': 'multiplication'}:
             if exercise["type"] == "modular_arithmetic":

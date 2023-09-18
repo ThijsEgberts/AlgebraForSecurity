@@ -64,7 +64,7 @@ class BigNumber:
                     raise Exception('Radix out of bounds')
 
     def __str__(self):
-        return "Radix: " + str(self.radix) + " Exponents: " + str(self.exponents) + " isNegative: " + str(self.isNegative)             
+        return "[" + self.exponentsToString() + "]_" + str(self.radix)
     
     #flips the sign of the big number, ei -1 becomes 1
     def flipSign(self):
@@ -175,13 +175,18 @@ def matchExponentsLength(x : BigNumber, y : BigNumber):
 def addLeadingZero(x: BigNumber):
     x.exponents.insert(0, Int32(0))
 
-def bitShift(x: str, shift: int):
+def copyBigNumber(x: BigNumber):
+    return createBigNumberFromExponents(x.radix, x.exponents, x.isNegative)
+
+#Only works with positive shift
+def bitShift(original: BigNumber, shift: int):
+    x = copyBigNumber(original)
     for _ in range(shift):
-        x = "0" + x
+        addLeadingZero(x)
     return x
 
 def createBigNumberFromExponents(radix, exponents, isNegative):
     x = BigNumber("0", radix)
-    x.exponents = exponents
+    x.exponents = exponents.copy()
     x.isNegative = isNegative
     return x
