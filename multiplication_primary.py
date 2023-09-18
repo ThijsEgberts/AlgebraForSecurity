@@ -37,15 +37,10 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
                 exponents.insert(0, x.exponents[i] * y.exponents[j] + carry)
                 carry = Int32(0)
             elif x.exponents[i] * y.exponents[j] + carry >= x.radix:
-                resultMultiplication = x.exponents[i] * y.exponents[j] + carry
-                resultMultiplicationBigNumber = BigNumber(str(resultMultiplication), x.radix)
-                radixBigNumber = BigNumber(str(x.radix), x.radix)
-                # raise Exception(resultMultiplicationBigNumber)
-                divRemainder = division.solve_division_with_remainder(resultMultiplicationBigNumber, radixBigNumber)
-                qoutient = divRemainder[0]
-                modulo = divRemainder[1]
-                exponents.insert(0, modulo)
-                carry = Int32(qoutient)
+                resultBigNumber = BigNumber(str(x.exponents[i] * y.exponents[j] + carry), x.radix)
+                divRemainder = division.solve_division_with_remainder(resultBigNumber, BigNumber(str(x.radix), x.radix))
+                exponents.insert(0, divRemainder[1])
+                carry = Int32(divRemainder[0])
         # Finished the multiplication of the last exponent from x with all exponents in y
         # Add the carry to the exponents
         exponents.insert(0, carry)

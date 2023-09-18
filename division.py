@@ -1,7 +1,7 @@
 from BigNumber import BigNumber
 import BigNumber as bn
 import addition
-import subtraction
+import substraction
 
 def solve_division_with_remainder(x : BigNumber, y : BigNumber):
     """
@@ -19,7 +19,7 @@ def solve_division_with_remainder(x : BigNumber, y : BigNumber):
 
     while bn.isGreaterOrEqual(x, y):
         # Calculate the remainder after subtracting y from x
-        x = BigNumber(subtraction.solve_subtraction_integer_arithmetic(x, y), x.radix)
+        x = BigNumber(substraction.solve_substraction_integer_arithmetic(x, y), x.radix)
         # Add 1 to the quotient
         quotient = BigNumber(addition.solve_addition_integer_arithmetic(quotient, BigNumber("1", x.radix)), x.radix)
 
