@@ -1,9 +1,12 @@
 from fixedint import Int32
-from BigNumber import BigNumber
+import BigNumber
 import division
 
 #solves a reduction x modulo mod with string input
 def solve_reduction(radix : Int32, x : str, mod : str):
+    if mod == "0":
+        return None
+    
     x = BigNumber(x, radix)
     mod = BigNumber(mod, radix)
     return reduce_number(x, mod)
