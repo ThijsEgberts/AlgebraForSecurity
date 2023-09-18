@@ -1,4 +1,4 @@
-import addition
+import addition_subtraction
 from BigNumber import BigNumber
 from BigNumber import matchExponentsLength
 import unittest
@@ -12,7 +12,7 @@ class TestAdditionMethods(unittest.TestCase):
         x = BigNumber("637624", radix)
         y = BigNumber("6324", radix)
         matchExponentsLength(x, y)
-        result = addition.solve_addition_integer_arithmetic(x, y)
+        result = addition_subtraction.solve_addition_integer_arithmetic(x, y)
         self.assertEqual(result, "643948")
 
     # Tests integer addition for two small positive numbers.
@@ -20,7 +20,7 @@ class TestAdditionMethods(unittest.TestCase):
         radix = Int32(10)
         x = BigNumber("637624", radix)
         y = BigNumber("6324", radix)
-        result = addition.solve_addition_integer_arithmetic(x, y)
+        result = addition_subtraction.solve_addition_integer_arithmetic(x, y)
         self.assertEqual(result, "643948")
 
 # TODO implement substraction

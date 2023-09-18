@@ -2,7 +2,7 @@ import json
 
 from fixedint import Int32
 from BigNumber import BigNumber
-import addition
+import addition_subtraction
 import subtraction
 import multiplication
 import multiplication_primary
@@ -38,9 +38,9 @@ def solve(exercise : dict):
     match exercise:
         case {'operation': 'addition'}:
             if exercise["type"] == "integer_arithmetic":
-                return addition.solve_addition_integer_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])))
+                return addition_subtraction.solve_addition_integer_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])))
             elif exercise["type"] == "modular_arithmetic":
-                return addition.solve_addition_modular_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"])))
+                return addition_subtraction.solve_addition_modular_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"])))
             else:
                 raise Exception("Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
             # return addition.solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])

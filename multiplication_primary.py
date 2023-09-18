@@ -1,7 +1,7 @@
 from BigNumber import BigNumber
 from fixedint import Int32
 import division
-import addition
+import addition_subtraction
 
 def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
     """
@@ -61,7 +61,7 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
     # Add the BigNumbers together
     result = BigNumber("0", x.radix)
     for i in range(len(exponentsMultiplicationResultsBigNumbers)):
-        result = BigNumber( addition.solve_addition_integer_arithmetic(result, exponentsMultiplicationResultsBigNumbers[i]), x.radix)
+        result = BigNumber( addition_subtraction.solve_addition_integer_arithmetic(result, exponentsMultiplicationResultsBigNumbers[i]), x.radix)
 
 
     # Convert BigNumber result to a string
