@@ -2,7 +2,6 @@ from BigNumber import BigNumber
 from BigNumber import createBigNumberFromExponents
 from BigNumber import matchExponentsLength
 from fixedint import Int32
-import division
 
 def solve_addition(type : str, x : BigNumber, y : BigNumber):
     if type == "integer_arithmetic":
@@ -16,7 +15,7 @@ def solve_substraction(type : str, x : BigNumber, y : BigNumber):
     if type == "integer_arithmetic":
         return solve_subtraction_integer_arithmetic(x, y)
     elif type == "modular_arithmetic":
-        return solve_substraction_modular_arithmetic(x, y)
+        return solve_subtraction_modular_arithmetic(x, y)
     else:
         raise Exception("Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
     
@@ -36,9 +35,9 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber) -> BigNumber
     #If the signs are different, we need to subtract the smaller number from the bigger number
     if x.isNegative != y.isNegative:
         if x.isNegative == 0:
-            return solve_substraction(type, x, y)
+            return solve_substraction("integer_arithmetic", x, y)
         else:
-            return solve_substraction(type, y, x)
+            return solve_substraction("integer_arithmetic", y, x)
     
     #Match the exponent list length
     matchExponentsLength(x, y)
@@ -74,6 +73,7 @@ def solve_addition_integer_arithmetic(x : BigNumber, y : BigNumber) -> BigNumber
     return createBigNumberFromExponents(x.radix, exponents, x.isNegative)
 
 def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber, modulus : BigNumber) -> BigNumber:
+    from division import solve_division_with_remainder
     """
     Solves the addition of two numbers in modular arithmetic.
     
@@ -82,7 +82,7 @@ def solve_addition_modular_arithmetic(x : BigNumber, y : BigNumber, modulus : Bi
     2. Solve the division with remainder of the result and the modulus.
     3. Return the remainder as a big number
     """
-    remainder = division.solve_division_with_remainder(solve_addition_integer_arithmetic(x, y), modulus)[1]
+    remainder = solve_division_with_remainder(solve_addition_integer_arithmetic(x, y), modulus)[1]
 
     return remainder
 
@@ -133,7 +133,7 @@ def solve_subtraction_integer_arithmetic(x : BigNumber, y : BigNumber) -> BigNum
     
     return createBigNumberFromExponents(x.radix, exponents, x.isNegative)
 
-def solve_substraction_modular_arithmetic(x : BigNumber, y : BigNumber, modulus : BigNumber) -> BigNumber:
+def solve_subtraction_modular_arithmetic(x : BigNumber, y : BigNumber, modulus : BigNumber) -> BigNumber:
     """
     Solves the subtraction of two numbers in modular arithmetic.
 
@@ -142,6 +142,8 @@ def solve_substraction_modular_arithmetic(x : BigNumber, y : BigNumber, modulus 
     2. Solve the division with remainder of the result and the modulus.
     3. Return the remainder as a big number
     """
-    remainder = division.solve_division_with_remainder(solve_subtraction_integer_arithmetic(x, y), modulus)[1]
+    result = solve_subtraction_integer_arithmetic(x, y)
+    from division import solve_division_with_remainder
+    remainder = solve_division_with_remainder(solve_subtraction_integer_arithmetic(x, y), modulus)[1]
 
     return remainder

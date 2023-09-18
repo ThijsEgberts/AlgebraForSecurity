@@ -22,6 +22,8 @@ class BigNumber:
         #check if the number is negative
         if stringNr[0] == "-":
             self.isNegative = 1
+            stringNr = stringNr[1:]
+            print(stringNr)
         else:
             self.isNegative = 0
         
