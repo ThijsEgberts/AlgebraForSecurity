@@ -74,7 +74,7 @@ def solve(exercise : dict):
             
         case {'operation': 'reduction'}:
             if exercise["type"] == "modular_arithmetic":
-                return reduction.solve_reduction(exercise["radix"], exercise["x"])
+                return reduction.solve_reduction(exercise["radix"], exercise["x"], exercise["modulus"])
             else:
                 raise Exception("Invalid type for reduction, only modular_arithmetic is supported")
             
@@ -134,4 +134,4 @@ def load_answer(answer_location : str):
     return json.loads(answer)
 
 ###run the solver###
-solve_exercise("exercises\Simple\Exercises\exercise0.json", "exercises\Simple\Answers\\answer0.json", False)
+solve_exercise("exercises\Simple\Exercises\exercise7.json", "exercises\Simple\Answers\\answer7.json", False)
