@@ -3,8 +3,8 @@ from BigNumber import matchExponentsLength
 from BigNumber import addLeadingZero
 from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
-from addition import solve_addition_integer_arithmetic
-from subtraction import solve_subtraction_integer_arithmetic
+import addition_subtraction
+import subtraction
 from BigNumber import bitShift
 
 def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
@@ -37,17 +37,17 @@ def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
     z0 = solve_multiplication_karatsuba(x_lo,
                                         y_lo)
     
-    z1 = solve_subtraction_integer_arithmetic(
-        solve_subtraction_integer_arithmetic(
+    z1 = subtraction.solve_subtraction_integer_arithmetic(
+        subtraction.solve_subtraction_integer_arithmetic(
             solve_multiplication_karatsuba(
-                solve_addition_integer_arithmetic(x_hi, x_lo),
-                solve_addition_integer_arithmetic(y_hi, y_lo)
+                addition_subtraction.solve_addition_integer_arithmetic(x_hi, x_lo),
+                addition_subtraction.solve_addition_integer_arithmetic(y_hi, y_lo)
                 ),
             z0),
         z2)
     
-    z = solve_addition_integer_arithmetic(
-                       solve_addition_integer_arithmetic(
+    z = addition_subtraction.solve_addition_integer_arithmetic(
+                       addition_subtraction.solve_addition_integer_arithmetic(
                                       bitShift(z2, n),
                                       bitShift(z1, int(n/2))
                        ),
