@@ -8,6 +8,7 @@ from addition_subtraction import (
     solve_subtraction_modular_arithmetic,
 )
 
+
 class TestBigNumberOperations(unittest.TestCase):
 
     def test_addition_integer_arithmetic(self):
@@ -103,6 +104,7 @@ class TestBigNumberOperations(unittest.TestCase):
         result = solve_subtraction_modular_arithmetic(x, y, modulus)
         self.assertEqual(result.exponents, [1, 1, 1])
         self.assertEqual(result.isNegative, 0)
+
 
 if __name__ == '__main__':
     unittest.main()
