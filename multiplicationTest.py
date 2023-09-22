@@ -28,7 +28,13 @@ class TestMultiplicationOperations(unittest.TestCase):
         self.assertEqual(result.exponents, [6, 6, 7, 8, 9])
         self.assertEqual(result.isNegative, 1)
 
-        # Add more test cases here
+        # Test case 4: Multiplication of two negative numbers
+        x = createBigNumberFromExponents(10, [5, 4, 3], 1)
+        y = createBigNumberFromExponents(10, [1, 2, 3], 1)
+        result = multiplication_function(x, y)
+        self.assertEqual(result.exponents, [6, 6, 7, 8, 9])
+        self.assertEqual(result.isNegative, 0)
+        
 
     # def test_multiplication_primary(self):
     #     self.run_test_cases(solve_multiplication_primary)
