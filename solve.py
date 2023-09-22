@@ -3,7 +3,6 @@ import json
 from fixedint import Int32
 from BigNumber import BigNumber
 import addition_subtraction
-import subtraction
 import multiplication
 import multiplication_primary
 import multiplication_karatsuba
@@ -21,14 +20,14 @@ def solve_exercise(exercise_location : str, answer_location : str, saveAnswer : 
     answer = solve(exercise)
     
     # Print the answer
-    print(answer)
+    print("The answer is: " + str(answer))
     
     if saveAnswer:
         # Save the answer
         save_answer(answer, answer_location)
     else:
         answerDict = load_answer(answer_location)
-        print(answerDict["answer"] == answer)
+        print("The answer is correct: " + str(answerDict["answer"] == answer))
         
 
 def solve(exercise : dict):
@@ -134,4 +133,4 @@ def load_answer(answer_location : str):
     return json.loads(answer)
 
 ###run the solver###
-solve_exercise("exercises\Simple\Exercises\exercise7.json", "exercises\Simple\Answers\\answer7.json", False)
+solve_exercise("exercises\Simple\Exercises\exercise6.json", "exercises\Simple\Answers\\answer6.json", False)
