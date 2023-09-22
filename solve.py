@@ -138,4 +138,4 @@ def load_answer(answer_location : str):
     return json.loads(answer)
 
 ###run the solver###
-solve_exercise("exercises\Simple\Exercises\exercise6.json", "exercises\Simple\Answers\\answer6.json", False)
+# solve_exercise("exercises\Simple\Exercises\exercise6.json", "exercises\Simple\Answers\\answer6.json", False)
