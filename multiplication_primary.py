@@ -3,7 +3,7 @@ from fixedint import Int32
 import division
 import addition_subtraction
 
-def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
+def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> BigNumber:
     """
     Solves the multiplication of two numbers using primary school multiplication.
 
@@ -64,16 +64,16 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
         result = BigNumber( addition_subtraction.solve_addition_integer_arithmetic(result, exponentsMultiplicationResultsBigNumbers[i]), x.radix)
 
 
-    # Convert BigNumber result to a string
-    result = ""
-    for i in range(len(result.exponents)):
-        result += str(result.exponents[i])
+    # # Convert BigNumber result to a string
+    # result = ""
+    # for i in range(len(result.exponents)):
+    #     result += str(result.exponents[i])
 
     return result
 
 # # Test
-x = BigNumber("18", Int32(10))
-y = BigNumber("10", Int32(10))
-print(division.solve_division_with_remainder(x, y))
+# x = BigNumber("18", Int32(10))
+# y = BigNumber("10", Int32(10))
+# print(division.solve_division_with_remainder(x, y))
 # print(solve_multiplication_primary(x, y))
 # print(division.solve_division_with_remainder(BigNumber("123", Int32(10)), BigNumber("456", Int32(10)))[1])
