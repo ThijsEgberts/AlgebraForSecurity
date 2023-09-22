@@ -14,7 +14,6 @@ class BigNumber:
     
     #Parses a string representing a number to a BigNumber format
     def parseString(self, stringNr : string, radix : Int32):
-        self.exponents = [None] * len(stringNr) #create a list of exponents with the length of the string
 
         if radix <= 0 or radix > 16: #check correct format
             self.radix = Int32(radix)
@@ -24,10 +23,14 @@ class BigNumber:
             self.isNegative = 1
         else:
             self.isNegative = 0
+
+        length = len(stringNr) - self.isNegative
+
+        self.exponents = [None] * length #create a list of exponents with the length of the string
         
         #parse each digit in the string and convert it to a number in the exponent list
-        for i in range(self.isNegative, len(stringNr)): #skip the minus sign if the number is negative
-            match stringNr[i]:
+        for i in range(0, length): #skip the minus sign if the number is negative
+            match stringNr[i + self.isNegative]:
                 case '0':
                     self.exponents[i] = Int32(0)
                 case '1':
@@ -76,6 +79,8 @@ class BigNumber:
 
     def exponentsToString(self):
         output = ""
+        if(self.isNegative):
+            output = "-"
         for exponent in self.exponents:
             if(exponent >= 10):
                 output += string.ascii_uppercase[exponent - 10]
@@ -83,7 +88,18 @@ class BigNumber:
                 output += str(exponent)
 
         return output
-            
+    
+    def removeLeadingZeroes(self):
+        removeUntil = 0
+
+        for i in range(0, len(self.exponents) - 1):
+            if self.exponents[i] == 0:
+                removeUntil += 1
+            else:
+                break
+        
+        for i in range(0, removeUntil):
+            del self.exponents[0]
 
 # TODO Dit kan sws wel iets compacter, letterlijk 2x dezelfde code :skull:
 def isGreaterThan(x : BigNumber, y : BigNumber):
@@ -166,10 +182,10 @@ def matchExponentsLength(x : BigNumber, y : BigNumber):
         Matches the length of the exponents of two BigNumbers by adding 0's to the front of the list.
         """
         if len(x.exponents) > len(y.exponents):
-            for i in range(len(x.exponents) - len(y.exponents)):
+            for _ in range(len(x.exponents) - len(y.exponents)):
                 addLeadingZero(y)
         elif len(x.exponents) < len(y.exponents):
-            for i in range(len(y.exponents) - len(x.exponents)):
+            for _ in range(len(y.exponents) - len(x.exponents)):
                 addLeadingZero(x)
 
 def addLeadingZero(x: BigNumber):
@@ -182,7 +198,7 @@ def copyBigNumber(x: BigNumber):
 def bitShift(original: BigNumber, shift: int):
     x = copyBigNumber(original)
     for _ in range(shift):
-        addLeadingZero(x)
+        x.exponents.append(0)
     return x
 
 def createBigNumberFromExponents(radix, exponents, isNegative):

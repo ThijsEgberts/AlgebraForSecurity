@@ -4,7 +4,6 @@ from BigNumber import addLeadingZero
 from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 import addition_subtraction
-import subtraction
 from BigNumber import bitShift
 
 def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
@@ -14,6 +13,15 @@ def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
 
     matchExponentsLength(x, y)
     n = len(x.exponents)
+
+    negativeResult = 0
+    # If the signs are different, flip the sign at the end
+    # a *  b =  ab
+    #-a *  b = -ab
+    # a * -b = -ab
+    #-a * -b =  ab
+    if(x.isNegative != y.isNegative):
+        negativeResult = 1
 
     if(n == 1):
         # Primitive multiplications
@@ -37,8 +45,8 @@ def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
     z0 = solve_multiplication_karatsuba(x_lo,
                                         y_lo)
     
-    z1 = subtraction.solve_subtraction_integer_arithmetic(
-        subtraction.solve_subtraction_integer_arithmetic(
+    z1 = addition_subtraction.solve_subtraction_integer_arithmetic(
+        addition_subtraction.solve_subtraction_integer_arithmetic(
             solve_multiplication_karatsuba(
                 addition_subtraction.solve_addition_integer_arithmetic(x_hi, x_lo),
                 addition_subtraction.solve_addition_integer_arithmetic(y_hi, y_lo)
@@ -53,12 +61,8 @@ def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
                        ),
                        z0)
     
+    z.removeLeadingZeroes()
+
+    z.isNegative = negativeResult
+
     return z
-
-
-#print()
-#print(solve_multiplication_karatsuba(BigNumber("2", 10), BigNumber("3", 10)))
-#print()
-    
-
-#print(solve_subtraction_integer_arithmetic(BigNumber("253", 10), BigNumber("101", 10)))
