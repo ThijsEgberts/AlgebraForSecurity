@@ -85,17 +85,6 @@ class BigNumber:
         self.isNegative = sign
         return self
 
-    def exponentsToString(self):
-        output = ""
-        if(self.isNegative):
-            output = "-"
-        for exponent in self.exponents:
-            if (exponent >= 10):
-                output += string.ascii_uppercase[exponent - 10]
-            else:
-                output += str(exponent)
-
-        return output
     
     def removeLeadingZeroes(self):
         removeUntil = 0
@@ -109,6 +98,19 @@ class BigNumber:
         for i in range(0, removeUntil):
             del self.exponents[0]
 
+    def exponentsToString(self):
+        self.removeLeadingZeroes()
+        output = ""
+        if(self.isNegative):
+            output = "-"
+        for exponent in self.exponents:
+            if (exponent >= 10):
+                output += string.ascii_uppercase[exponent - 10]
+            else:
+                output += str(exponent)
+
+        return output
+    
 # TODO Dit kan sws wel iets compacter, letterlijk 2x dezelfde code :skull:
 def isGreaterThan(x: BigNumber, y: BigNumber):
     """
