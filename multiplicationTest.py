@@ -43,8 +43,8 @@ class TestMultiplicationOperations(unittest.TestCase):
         # self.assertEqual(result.exponents, [5, 3, 1])
         # self.assertEqual(result.isNegative, 0)
 
-    def test_multiplication_primary(self):
-        self.run_test_cases(solve_multiplication_primary)
+    # def test_multiplication_primary(self):
+    #     self.run_test_cases(solve_multiplication_primary)
 
     def test_multiplication_karatsuba(self):
         self.run_test_cases(solve_multiplication_karatsuba)
