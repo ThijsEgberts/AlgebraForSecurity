@@ -15,6 +15,7 @@ def solve_division_with_remainder(x : BigNumber, y : BigNumber):
 
     This is based on Euclid's algorithm.
     """
+
     quotient = BigNumber("0", x.radix)
 
     while bn.isGreaterOrEqual(x, y):
