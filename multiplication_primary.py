@@ -4,8 +4,7 @@ from fixedint import Int32
 import division
 import addition_subtraction
 
-
-def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> str:
+def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> BigNumber:
     """
     Solves the multiplication of two numbers using primary school multiplication.
 
