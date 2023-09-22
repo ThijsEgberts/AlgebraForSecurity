@@ -183,23 +183,18 @@ def matchExponentsLength(x: BigNumber, y: BigNumber):
         for i in range(len(y.exponents) - len(x.exponents)):
             addLeadingZero(x)
 
-
 def addLeadingZero(x: BigNumber):
     x.exponents.insert(0, Int32(0))
-
 
 def copyBigNumber(x: BigNumber):
     return createBigNumberFromExponents(x.radix, x.exponents, x.isNegative)
 
 # Only works with positive shift
-
-
 def bitShift(original: BigNumber, shift: int):
     x = copyBigNumber(original)
     for _ in range(shift):
         addLeadingZero(x)
     return x
-
 
 def createBigNumberFromExponents(radix, exponents, isNegative):
     x = BigNumber("0", radix)
