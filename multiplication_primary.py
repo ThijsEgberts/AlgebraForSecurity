@@ -3,7 +3,8 @@ from fixedint import Int32
 import division
 import addition_subtraction
 
-def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
+
+def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> str:
     """
     Solves the multiplication of two numbers using primary school multiplication.
 
@@ -21,7 +22,7 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
     if x.isNegative != y.isNegative:
         # 2. If the signs are different, return a negative result
         isNegative = 1
-    
+
     # 3. If the signs are the same, multiply the exponents from right to left
     exponentsMultiplicationResults = []
     exponents = []
@@ -37,8 +38,10 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
                 exponents.insert(0, x.exponents[i] * y.exponents[j] + carry)
                 carry = Int32(0)
             elif x.exponents[i] * y.exponents[j] + carry >= x.radix:
-                resultBigNumber = BigNumber(str(x.exponents[i] * y.exponents[j] + carry), x.radix)
-                divRemainder = division.solve_division_with_remainder(resultBigNumber, BigNumber(str(x.radix), x.radix))
+                resultBigNumber = BigNumber(
+                    str(x.exponents[i] * y.exponents[j] + carry), x.radix)
+                divRemainder = division.solve_division_with_remainder(
+                    resultBigNumber, BigNumber(str(x.radix), x.radix))
                 exponents.insert(0, divRemainder[1])
                 carry = Int32(divRemainder[0])
         # Finished the multiplication of the last exponent from x with all exponents in y
@@ -49,31 +52,26 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> str:
         # Move to the next exponent from x and save the exponents list to be able to add them together later
         exponentsMultiplicationResults.append(exponents)
         exponents = []
-    
+
     # Now we have a list of lists with the multiplication results of all exponents from x with all exponents from y
     # We need to add them together
     # We turn the list of lists into a list of BigNumbers
     exponentsMultiplicationResultsBigNumbers = []
     for i in range(len(exponentsMultiplicationResults)):
-        exponentsMultiplicationResultsBigNumbers.append(BigNumber("", x.radix))
+        exponentsMultiplicationResultsBigNumbers.append(
+            BigNumber("0", x.radix))
         exponentsMultiplicationResultsBigNumbers[i].exponents = exponentsMultiplicationResults[i]
-    
+
     # Add the BigNumbers together
     result = BigNumber("0", x.radix)
     for i in range(len(exponentsMultiplicationResultsBigNumbers)):
-        result = BigNumber( addition_subtraction.solve_addition_integer_arithmetic(result, exponentsMultiplicationResultsBigNumbers[i]), x.radix)
-
-
-    # Convert BigNumber result to a string
-    result = ""
-    for i in range(len(result.exponents)):
-        result += str(result.exponents[i])
+        result = addition_subtraction.solve_addition_integer_arithmetic(result, exponentsMultiplicationResultsBigNumbers[i])
 
     return result
+
 
 # # Test
 x = BigNumber("18", Int32(10))
 y = BigNumber("10", Int32(10))
-print(division.solve_division_with_remainder(x, y))
-# print(solve_multiplication_primary(x, y))
-# print(division.solve_division_with_remainder(BigNumber("123", Int32(10)), BigNumber("456", Int32(10)))[1])
+print(solve_multiplication_primary(x, y))
+print(division.solve_division_with_remainder(BigNumber("123", Int32(10)), BigNumber("456", Int32(10)))[1])

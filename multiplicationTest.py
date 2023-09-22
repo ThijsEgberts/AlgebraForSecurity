@@ -34,10 +34,17 @@ class TestMultiplicationOperations(unittest.TestCase):
         result = multiplication_function(x, y)
         self.assertEqual(result.exponents, [6, 6, 7, 8, 9])
         self.assertEqual(result.isNegative, 0)
-        
 
-    # def test_multiplication_primary(self):
-    #     self.run_test_cases(solve_multiplication_primary)
+        # Test case 5: Multiplication of differen modulo numbers
+        # TODO dit is moeilijk :o
+        # x = createBigNumberFromExponents(14, [12, 1, 14], 0)
+        # y = createBigNumberFromExponents(14, [11, 13, 9], 0)
+        # result = solve_multiplication_primary(x, y)
+        # self.assertEqual(result.exponents, [5, 3, 1])
+        # self.assertEqual(result.isNegative, 0)
+
+    def test_multiplication_primary(self):
+        self.run_test_cases(solve_multiplication_primary)
 
     def test_multiplication_karatsuba(self):
         self.run_test_cases(solve_multiplication_karatsuba)
