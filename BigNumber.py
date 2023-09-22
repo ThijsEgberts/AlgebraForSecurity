@@ -23,17 +23,16 @@ class BigNumber:
         if stringNr[0] == "-":
             self.isNegative = 1
             stringNr = stringNr[1:]
-            print(stringNr)
         else:
             self.isNegative = 0
 
-        length = len(stringNr) - self.isNegative
+        length = len(stringNr)
 
         self.exponents = [None] * length #create a list of exponents with the length of the string
         
         #parse each digit in the string and convert it to a number in the exponent list
         for i in range(0, length): #skip the minus sign if the number is negative
-            match stringNr[i + self.isNegative]:
+            match stringNr[i]:
                 case '0':
                     self.exponents[i] = Int32(0)
                 case '1':
@@ -197,10 +196,8 @@ def matchExponentsLength(x : BigNumber, y : BigNumber):
             for i in range(len(y.exponents) - len(x.exponents)):
                 addLeadingZero(x)
 
-
 def addLeadingZero(x: BigNumber):
     x.exponents.insert(0, Int32(0))
-
 
 def copyBigNumber(x: BigNumber):
     return createBigNumberFromExponents(x.radix, x.exponents, x.isNegative)
