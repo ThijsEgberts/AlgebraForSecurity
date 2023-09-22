@@ -70,7 +70,8 @@ class BigNumber:
                     raise Exception('Radix out of bounds')
 
     def __str__(self):
-        return "[" + self.exponentsToString() + "]_" + str(self.radix)
+        #return "[" + self.exponentsToString() + "]_" + str(self.radix)
+        return self.exponentsToString()
 
     # flips the sign of the big number, ei -1 becomes 1
     def flipSign(self):
