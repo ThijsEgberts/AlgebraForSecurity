@@ -7,9 +7,9 @@ def solve_reduction(radix : Int32, x : str, mod : str):
     if mod == "0":
         return None
     
-    x = BigNumber(x, radix)
-    mod = BigNumber(mod, radix)
-    return reduce_number(x, mod)
+    x = BigNumber.BigNumber(x, radix)
+    mod = BigNumber.BigNumber(mod, radix)
+    return reduce_number(x, mod).exponentsToString()
 
 #reduces x modolu mod
 def reduce_number(x : BigNumber, mod : BigNumber):

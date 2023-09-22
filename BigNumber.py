@@ -85,17 +85,6 @@ class BigNumber:
         self.isNegative = sign
         return self
 
-    def exponentsToString(self):
-        output = ""
-        if(self.isNegative):
-            output = "-"
-        for exponent in self.exponents:
-            if (exponent >= 10):
-                output += string.ascii_uppercase[exponent - 10]
-            else:
-                output += str(exponent)
-
-        return output
     
     def removeLeadingZeroes(self):
         removeUntil = 0
@@ -109,6 +98,19 @@ class BigNumber:
         for i in range(0, removeUntil):
             del self.exponents[0]
 
+    def exponentsToString(self):
+        self.removeLeadingZeroes()
+        output = ""
+        if(self.isNegative):
+            output = "-"
+        for exponent in self.exponents:
+            if (exponent >= 10):
+                output += string.ascii_uppercase[exponent - 10]
+            else:
+                output += str(exponent)
+
+        return output
+    
 # TODO Dit kan sws wel iets compacter, letterlijk 2x dezelfde code :skull:
 def isGreaterThan(x: BigNumber, y: BigNumber):
     """
@@ -197,23 +199,18 @@ def matchExponentsLength(x : BigNumber, y : BigNumber):
             for i in range(len(y.exponents) - len(x.exponents)):
                 addLeadingZero(x)
 
-
 def addLeadingZero(x: BigNumber):
     x.exponents.insert(0, Int32(0))
-
 
 def copyBigNumber(x: BigNumber):
     return createBigNumberFromExponents(x.radix, x.exponents, x.isNegative)
 
 # Only works with positive shift
-
-
 def bitShift(original: BigNumber, shift: int):
     x = copyBigNumber(original)
     for _ in range(shift):
         x.exponents.append(0)
     return x
-
 
 def createBigNumberFromExponents(radix, exponents, isNegative):
     x = BigNumber("0", radix)
