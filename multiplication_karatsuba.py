@@ -4,7 +4,6 @@ from BigNumber import addLeadingZero
 from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 import addition_subtraction
-import subtraction
 from BigNumber import bitShift
 
 def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
