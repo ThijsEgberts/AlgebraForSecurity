@@ -26,17 +26,15 @@ class BigNumber:
         if stringNr[0] == "-":
             self.isNegative = 1
             stringNr = stringNr[1:]
-            print(stringNr)
         else:
             self.isNegative = 0
 
-        length = len(stringNr) - self.isNegative
+        length = len(stringNr)
 
-        # create a list of exponents with the length of the string
-        self.exponents = [None] * length
-
-        # parse each digit in the string and convert it to a number in the exponent list
-        for i in range(0, length):  # skip the minus sign if the number is negative
+        self.exponents = [None] * length #create a list of exponents with the length of the string
+        
+        #parse each digit in the string and convert it to a number in the exponent list
+        for i in range(0, length): #skip the minus sign if the number is negative
             match stringNr[i + self.isNegative]:
                 case '0':
                     self.exponents[i] = Int32(0)

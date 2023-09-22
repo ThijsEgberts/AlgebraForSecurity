@@ -23,6 +23,9 @@ def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
     if(x.isNegative != y.isNegative):
         negativeResult = 1
 
+    x.isNegative = 0
+    y.isNegative = 0
+
     if(n == 1):
         # Primitive multiplications
         return BigNumber(str(x.exponents[0] * y.exponents[0]), x.radix)

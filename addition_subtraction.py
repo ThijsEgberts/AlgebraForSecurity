@@ -20,7 +20,7 @@ def solve_substraction(type: str, x: BigNumber, y: BigNumber):
     if type == "integer_arithmetic":
         return solve_subtraction_integer_arithmetic(x, y)
     elif type == "modular_arithmetic":
-        return solve_subtraction_modular_arithmetic(x, y)
+        return 0#solve_subtraction_modular_arithmetic(x, y)
     else:
         raise Exception(
             "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
@@ -168,8 +168,8 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
             # borrow the 1
             borrow = 1
         i -= 1
-
-    # 4. If there is a carry left, we need to add it to the exponents.
+    
+    #4. If there is a carry left, we need to add it to the exponents.
     if borrow == 1:
         exponents.insert(0, 1)
 
