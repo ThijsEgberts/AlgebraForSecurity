@@ -1,6 +1,5 @@
 from BigNumber import BigNumber
 from BigNumber import createBigNumberFromExponents
-from BigNumber import matchExponentsLength
 from fixedint import Int32
 
 
@@ -78,7 +77,7 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
             return solve_subtraction_integer_arithmetic(y, x)
 
     # Match the exponent list length
-    matchExponentsLength(x, y)
+    x.matchExponentsLength(y)
 
     # 2.
     # If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed
@@ -138,7 +137,7 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     """
 
     # 1. Match the exponents of the two numbers.
-    matchExponentsLength(x, y)
+    x.matchExponentsLength(y)
 
     # 2. If the signs are different, we need to use addition
     #   a -  b = a - b

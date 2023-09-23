@@ -138,31 +138,28 @@ class BigNumber:
 
         return True if greater_or_equal else False
 
+    def matchExponentsLength(self, other: 'BigNumber'):
+        """
+        Matches the length of the exponents of this BigNumber and another BigNumber
+        by adding 0's to the front of the list.
+        """
+        if len(self.exponents) > len(other.exponents):
+            for i in range(len(self.exponents) - len(other.exponents)):
+                self.addLeadingZero(other)
+        elif len(self.exponents) < len(other.exponents):
+            for i in range(len(other.exponents) - len(self.exponents)):
+                other.addLeadingZero(self)
 
-def matchExponentsLength(x: BigNumber, y: BigNumber):
-    """
-    Matches the length of the exponents of two BigNumbers by adding 0's to the front of the list.
-    """
-    if len(x.exponents) > len(y.exponents):
-        for i in range(len(x.exponents) - len(y.exponents)):
-            addLeadingZero(y)
-    elif len(x.exponents) < len(y.exponents):
-        for i in range(len(y.exponents) - len(x.exponents)):
-            addLeadingZero(x)
+    def addLeadingZero(self):
+        self.exponents.insert(0, Int32(0))
 
-
-def addLeadingZero(x: BigNumber):
-    x.exponents.insert(0, Int32(0))
-
-# Only works with positive shift
-
-
-def bitShift(original: BigNumber, shift: int):
-    x = createBigNumberFromExponents(
-        original.radix, original.exponents, original.isNegative)
-    for _ in range(shift):
-        x.exponents.append(0)
-    return x
+    # Only works with positive shift
+    def bitShift(self, shift: int):
+        x = createBigNumberFromExponents(
+            self.radix, self.exponents, self.isNegative)
+        for _ in range(shift):
+            x.exponents.append(0)
+        return x
 
 
 def createBigNumberFromExponents(radix, exponents, isNegative):
