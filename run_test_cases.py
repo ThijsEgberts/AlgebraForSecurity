@@ -146,3 +146,26 @@ def runAll():
 # Multiplication tests
 # runSimpleIntMulti()
 # runRealisticIntMulti()
+
+# Modular Addition Subtraction tests
+# runSimpleModAddSub()
+# runRealisticModAddSub()
+
+# Modular Multiplication tests
+# runSimpleModMulti()
+# runRealisticModMulti()
+
+# Modular Inverse tests
+# runSimpleModInv()
+# runRealisticModInv()
+
+# Modular Reduction tests
+# runSimpleModRed()
+# runRealisticModRed()
+
+# Extended Euclidean Algorithm tests
+# runSimpleIntEucl()
+# runRealisticIntEucl()
+
+# All tests
+# runAll()
