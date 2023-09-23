@@ -64,14 +64,14 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'multiplication_primary'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(multiplication_primary.solve_multiplication_primary(exercise["radix"], exercise["x"], exercise["y"]))
+                return str(multiplication_primary.solve_multiplication_primary(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for multiplication_primary, only integer_arithmetic is supported")
 
         case {'operation': 'multiplication_karatsuba'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(multiplication_karatsuba.solve_multiplication_karatsuba(exercise["radix"], exercise["x"], exercise["y"]))
+                return str(multiplication_karatsuba.solve_multiplication_karatsuba(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for multiplication_karatsuba, only integer_arithmetic is supported")

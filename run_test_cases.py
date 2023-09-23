@@ -137,3 +137,12 @@ def runAll():
     runSimple()
     runRealistic()
     print("All test cases done.\n")
+
+
+# Addition Subtraction tests
+# runSimpleIntAddSub()
+# runRealisticIntAddSub()
+
+# Multiplication tests
+# runSimpleIntMulti()
+# runRealisticIntMulti()

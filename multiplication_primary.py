@@ -10,6 +10,7 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
     Solves the multiplication of two numbers using primary school multiplication.
 
     Args:
+        modulus (BigNumber): The modulus.
         x (BigNumber): The first number.
         y (BigNumber): The second number.
 
