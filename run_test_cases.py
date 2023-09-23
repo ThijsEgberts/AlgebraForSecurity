@@ -140,8 +140,8 @@ def runAll():
 
 
 # Addition Subtraction tests
-# runSimpleIntAddSub()
-# runRealisticIntAddSub()
+runSimpleIntAddSub()
+runRealisticIntAddSub()
 
 # Multiplication tests
 # runSimpleIntMulti()
