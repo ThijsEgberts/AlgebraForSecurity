@@ -6,6 +6,20 @@ from fixedint import Int32
 
 
 def solve_addition(type: str, x: BigNumber, y: BigNumber):
+    """
+    Perform addition of two BigNumbers based on the specified type.
+
+    Args:
+        type (str): The type of arithmetic to use for addition ("integer_arithmetic" or "modular_arithmetic").
+        x (BigNumber): The first BigNumber operand.
+        y (BigNumber): The second BigNumber operand.
+
+    Returns:
+        BigNumber: The result of the addition operation.
+
+    Raises:
+        Exception: If an invalid type is provided.
+    """
     if type == "integer_arithmetic":
         return solve_addition_integer_arithmetic(x, y)
     elif type == "modular_arithmetic":
@@ -15,14 +29,28 @@ def solve_addition(type: str, x: BigNumber, y: BigNumber):
             "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
 
 
-def solve_substraction(type: str, x: BigNumber, y: BigNumber):
+def solve_subtraction(type: str, x: BigNumber, y: BigNumber):
+    """
+    Perform subtraction of two BigNumbers based on the specified type.
+
+    Args:
+        type (str): The type of arithmetic to use for subtraction ("integer_arithmetic" or "modular_arithmetic").
+        x (BigNumber): The first BigNumber operand.
+        y (BigNumber): The second BigNumber operand.
+
+    Returns:
+        BigNumber: The result of the subtraction operation.
+
+    Raises:
+        Exception: If an invalid type is provided.
+    """
     if type == "integer_arithmetic":
         return solve_subtraction_integer_arithmetic(x, y)
     elif type == "modular_arithmetic":
         return 0  # solve_subtraction_modular_arithmetic(x, y)
     else:
         raise Exception(
-            "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
+            "Invalid type for subtraction, only integer_arithmetic and modular_arithmetic are supported")
 
 
 def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
