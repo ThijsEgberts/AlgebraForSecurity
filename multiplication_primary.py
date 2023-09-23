@@ -4,7 +4,8 @@ from fixedint import Int32
 import division
 import addition_subtraction
 
-def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> BigNumber:
+
+def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
     """
     Solves the multiplication of two numbers using primary school multiplication.
 
@@ -26,6 +27,11 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> BigNumber:
     # Multiply exponents from right to left
     for i in range(len(x.exponents) - 1, -1, -1):
         exponents_result = []
+
+        # Fill the result with zeros corresponding to the position of the exponent
+        for _ in range(len(x.exponents) - 1 - i):
+            exponents_result.append(Int32(0))
+
         for j in range(len(y.exponents) - 1, -1, -1):
             product = x.exponents[i] * y.exponents[j] + carry
 
@@ -36,10 +42,13 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> BigNumber:
                 result_big_number = BigNumber(str(product), x.radix)
                 div_remainder = division.solve_division_with_remainder(
                     result_big_number, BigNumber(str(x.radix), x.radix))
-                exponents_result.insert(0, div_remainder[1])
-                carry = Int32(div_remainder[0])
+                exponents_result.insert(0, div_remainder[1].exponents[0])
+                carry = Int32(div_remainder[0].exponents[0])
 
-        exponents_result.insert(0, carry)
+        # If there is a carry left, add it to the result
+        if carry != Int32(0):
+            exponents_result.insert(0, carry)
+
         carry = Int32(0)
         exponents_multiplication_results.append(exponents_result)
 
@@ -57,10 +66,4 @@ def solve_multiplication_primary(x : BigNumber, y : BigNumber) -> BigNumber:
     # Set the sign of the result
     result.isNegative = is_negative
 
-    return str(result)
-
-
-# Test
-x = BigNumber("18", Int32(10))
-y = BigNumber("10", Int32(10))
-print(solve_multiplication_primary(x, y))  # Output should be "180"
+    return result
