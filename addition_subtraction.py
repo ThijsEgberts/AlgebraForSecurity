@@ -1,4 +1,3 @@
-from traceback import print_exc
 from BigNumber import BigNumber, isGreaterThan
 from BigNumber import createBigNumberFromExponents
 from BigNumber import matchExponentsLength
