@@ -69,11 +69,11 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     #   a + -b = a - b
     #  -a + -b = -(a + b)
     if x.isNegative != y.isNegative:
-        if x.isNegative == 0:
-            y.isNegative = 0
+        if not x.isNegative:
+            y.flipSign()
             return solve_subtraction_integer_arithmetic(x, y)
         else:
-            x.isNegative = 0
+            x.flipSign()
             return solve_subtraction_integer_arithmetic(y, x)
 
     # Match the exponent list length
@@ -217,3 +217,9 @@ def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: Bi
         solve_subtraction_integer_arithmetic(x, y), modulus)[1]
 
     return remainder
+
+
+x = BigNumber("B68", 12)
+y = BigNumber("-50", 12)
+print(y.compare(x))
+print(solve_addition_integer_arithmetic(x, y))

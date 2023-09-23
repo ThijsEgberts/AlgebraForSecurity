@@ -3,7 +3,7 @@ import BigNumber as bn
 from addition_subtraction import solve_addition_integer_arithmetic, solve_subtraction_integer_arithmetic
 
 
-def solve_division_with_remainder(x: BigNumber, y: BigNumber):
+def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list:
     """
     Solves the division with remainder of two numbers.
     Returns the quotient and the remainder in form [quotient, remainder]
@@ -28,8 +28,3 @@ def solve_division_with_remainder(x: BigNumber, y: BigNumber):
     # Result contains the quotient and the remainder in form [quotient, remainder]
     result = [quotient, x]
     return result
-
-
-x = bn.createBigNumberFromExponents(10, [1, 2, 3], 0)
-y = bn.createBigNumberFromExponents(10, [1, 2, 3], 0)
-print(y.isGreaterOrEqual(x))

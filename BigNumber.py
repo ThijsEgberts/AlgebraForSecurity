@@ -127,14 +127,17 @@ class BigNumber:
             bool: True if the comparison condition is met, False otherwise.
         """
         if self.isNegative != other.isNegative:
-            return not self.isNegative if greater_or_equal else self.isNegative
+            return other.isNegative
 
-        if len(self.exponents) != len(other.exponents):
-            return len(self.exponents) > len(other.exponents) if greater_or_equal else len(self.exponents) < len(other.exponents)
+        # Match the length of the exponents
+        self.matchExponentsLength(other)
 
+        # Compare the exponents from left to right
         for i in range(len(self.exponents)):
-            if self.exponents[i] != other.exponents[i]:
-                return self.exponents[i] > other.exponents[i] if greater_or_equal else self.exponents[i] < other.exponents[i]
+            if self.exponents[i] > other.exponents[i]:
+                return True
+            elif self.exponents[i] < other.exponents[i]:
+                return False
 
         return True if greater_or_equal else False
 
@@ -145,10 +148,10 @@ class BigNumber:
         """
         if len(self.exponents) > len(other.exponents):
             for i in range(len(self.exponents) - len(other.exponents)):
-                self.addLeadingZero(other)
+                other.addLeadingZero()
         elif len(self.exponents) < len(other.exponents):
             for i in range(len(other.exponents) - len(self.exponents)):
-                other.addLeadingZero(self)
+                self.addLeadingZero()
 
     def addLeadingZero(self):
         self.exponents.insert(0, Int32(0))
@@ -167,3 +170,8 @@ def createBigNumberFromExponents(radix, exponents, isNegative):
     x.exponents = exponents.copy()
     x.isNegative = isNegative
     return x
+
+
+x = BigNumber("B68", 12)
+y = BigNumber("050", 12)
+print(y.compare(x))
