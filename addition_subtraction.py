@@ -60,8 +60,7 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     carry = Int32(0)
 
     # i counts from len(x.exponents)-1 to -1
-    i = len(x.exponents)-1
-    for _ in range(-1, len(x.exponents)-1):
+    for i in range(len(x.exponents) - 1, -1, -1):
         # No carry needed
         if x.exponents[i] + y.exponents[i] + carry < x.radix:
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry)
@@ -73,7 +72,6 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
 
             # Carry the 1
             carry = Int32(1)
-        i -= 1
 
     # 3.
     # If there is a carry left, we need to add it to the exponents
