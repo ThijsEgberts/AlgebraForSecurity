@@ -5,6 +5,7 @@ from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 import addition_subtraction
 from BigNumber import bitShift
+from multiplication_primary import solve_multiplication_primary
 
 def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
     """
@@ -28,7 +29,7 @@ def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
 
     if(n == 1):
         # Primitive multiplications
-        return BigNumber(str(x.exponents[0] * y.exponents[0]), x.radix)
+        return solve_multiplication_primary(x, y)
 
     #If n is odd, then n <- n + 1
     if(n % 2 == 1):
@@ -69,3 +70,5 @@ def solve_multiplication_karatsuba(x : BigNumber, y : BigNumber):
     z.isNegative = negativeResult
 
     return z
+
+print(solve_multiplication_karatsuba(BigNumber("9", 12), BigNumber("9", 12)))
