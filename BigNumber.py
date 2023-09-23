@@ -114,83 +114,29 @@ class BigNumber:
 
         return output
 
-# TODO Dit kan sws wel iets compacter, letterlijk 2x dezelfde code :skull:
+    def compare(self, other: 'BigNumber', greater_or_equal: bool = False) -> bool:
+        """
+        Compares this BigNumber to another BigNumber.
 
+        Args:
+            other (BigNumber): The BigNumber to compare with.
+            greater_or_equal (bool): If True, performs a greater than or equal to comparison.
+                                        If False, performs a greater than comparison.
 
-def isGreaterThan(x: BigNumber, y: BigNumber):
-    """
-    Checks if x is greater than y.
+        Returns:
+            bool: True if the comparison condition is met, False otherwise.
+        """
+        if self.isNegative != other.isNegative:
+            return not self.isNegative if greater_or_equal else self.isNegative
 
-    The algorithm is as follows:
-    1. Check if the signs are different
-    2. If the signs are different, return true if x is positive and y is negative, else return false
-    3. If the signs are the same, check the length of the exponents
-    4. If the length of the exponents is different, return true if x is longer than y, else return false
-    5. If the length of the exponents is the same, check the exponents from left to right
-    6. Return true if x is greater than y, else return false
-    """
+        if len(self.exponents) != len(other.exponents):
+            return len(self.exponents) > len(other.exponents) if greater_or_equal else len(self.exponents) < len(other.exponents)
 
-    # 1. Check if the signs are different
-    if x.isNegative != y.isNegative:
-        # 2. If the signs are different, return true if x is positive and y is negative, else return false
-        if x.isNegative == 0:
-            return True
-        else:
-            return False
+        for i in range(len(self.exponents)):
+            if self.exponents[i] != other.exponents[i]:
+                return self.exponents[i] > other.exponents[i] if greater_or_equal else self.exponents[i] < other.exponents[i]
 
-    # 3. If the signs are the same, check the length of the exponents
-    if len(x.exponents) > len(y.exponents):
-        # 4. If the length of the exponents is different, return true if x is longer than y, else return false
-        return True
-    elif len(x.exponents) < len(y.exponents):
-        return False
-    else:
-        # 5. If the length of the exponents is the same, check the exponents from left to right
-        for i in range(len(x.exponents)):
-            # 6. Return true if x is greater than y, else return false
-            if x.exponents[i] > y.exponents[i]:
-                return True
-            elif x.exponents[i] < y.exponents[i]:
-                return False
-    return False
-
-
-def isGreaterOrEqual(x: BigNumber, y: BigNumber):
-    """
-    Checks if x is greater or equal to y.
-
-    The algorithm is as follows:
-    1. Check if the signs are different
-    2. If the signs are different, return true if x is positive and y is negative, else return false
-    3. If the signs are the same, check the length of the exponents
-    4. If the length of the exponents is different, return true if x is longer than y, else return false
-    5. If the length of the exponents is the same, check the exponents from left to right
-    6. Return true if x is greater than y, return false if y is greater than x, else return true
-    """
-
-    # 1. Check if the signs are different
-    if x.isNegative != y.isNegative:
-        # 2. If the signs are different, return true if x is positive and y is negative, else return false
-        if x.isNegative == 0:
-            return True
-        else:
-            return False
-
-    # 3. If the signs are the same, check the length of the exponents
-    if len(x.exponents) > len(y.exponents):
-        # 4. If the length of the exponents is different, return true if x is longer than y, else return false
-        return True
-    elif len(x.exponents) < len(y.exponents):
-        return False
-    else:
-        # 5. If the length of the exponents is the same, check the exponents from left to right
-        for i in range(len(x.exponents)):
-            # 6. Return true if x is greater than y, else return false
-            if x.exponents[i] > y.exponents[i]:
-                return True
-            elif x.exponents[i] < y.exponents[i]:
-                return False
-    return True
+        return True if greater_or_equal else False
 
 
 def matchExponentsLength(x: BigNumber, y: BigNumber):

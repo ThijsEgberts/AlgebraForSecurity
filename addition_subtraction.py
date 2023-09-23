@@ -1,7 +1,6 @@
-from BigNumber import BigNumber, isGreaterThan
+from BigNumber import BigNumber
 from BigNumber import createBigNumberFromExponents
 from BigNumber import matchExponentsLength
-import BigNumber as bn
 from fixedint import Int32
 
 
@@ -166,7 +165,7 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     # If the second number is larger than the first, swap and mark that it needs inverting
     # a - b = -(b - a)
     swapSign = 0
-    if isGreaterThan(y, x):
+    if y.compare(x):
         x, y = y, x  # Swap x and y
         swapSign = 1
 

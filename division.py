@@ -1,6 +1,5 @@
 from BigNumber import BigNumber
 import BigNumber as bn
-from BigNumber import createBigNumberFromExponents
 from addition_subtraction import solve_addition_integer_arithmetic, solve_subtraction_integer_arithmetic
 
 
@@ -19,7 +18,7 @@ def solve_division_with_remainder(x: BigNumber, y: BigNumber):
 
     quotient = BigNumber("0", x.radix)
 
-    while bn.isGreaterOrEqual(x, y):
+    while x.compare(y, greater_or_equal=True):
         # Calculate the remainder after subtracting y from x
         x = solve_subtraction_integer_arithmetic(x, y)
         # Add 1 to the quotient
@@ -29,3 +28,8 @@ def solve_division_with_remainder(x: BigNumber, y: BigNumber):
     # Result contains the quotient and the remainder in form [quotient, remainder]
     result = [quotient, x]
     return result
+
+
+x = bn.createBigNumberFromExponents(10, [1, 2, 3], 0)
+y = bn.createBigNumberFromExponents(10, [1, 2, 3], 0)
+print(y.isGreaterOrEqual(x))
