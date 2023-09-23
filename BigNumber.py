@@ -12,9 +12,12 @@ class BigNumber:
     def __init__(self, string: string, radix: Int32) -> None:
         self.radix = Int32(radix)
         self.parseString(string, radix)
-    
-    #Parses a string representing a number to a BigNumber format
-    def parseString(self, stringNr : string, radix : Int32):
+
+    # Parses a string representing a number to a BigNumber format
+    def parseString(self, stringNr: string, radix: Int32):
+
+        if (stringNr == ""):
+            raise Exception('Empty string')
 
         if radix <= 0 or radix > 16:  # check correct format
             self.radix = Int32(radix)
@@ -28,10 +31,11 @@ class BigNumber:
 
         length = len(stringNr)
 
-        self.exponents = [None] * length #create a list of exponents with the length of the string
-        
-        #parse each digit in the string and convert it to a number in the exponent list
-        for i in range(0, length): #skip the minus sign if the number is negative
+        # create a list of exponents with the length of the string
+        self.exponents = [None] * length
+
+        # parse each digit in the string and convert it to a number in the exponent list
+        for i in range(0, length):  # skip the minus sign if the number is negative
             match stringNr[i]:
                 case '0':
                     self.exponents[i] = Int32(0)
@@ -69,7 +73,8 @@ class BigNumber:
                     raise Exception('Radix out of bounds')
 
     def __str__(self):
-        return "[" + self.exponentsToString() + "]_" + str(self.radix)
+        # return "[" + self.exponentsToString() + "]_" + str(self.radix)
+        return self.exponentsToString()
 
     # flips the sign of the big number, ei -1 becomes 1
     def flipSign(self):
@@ -84,7 +89,6 @@ class BigNumber:
         self.isNegative = sign
         return self
 
-    
     def removeLeadingZeroes(self):
         removeUntil = 0
 
@@ -93,14 +97,14 @@ class BigNumber:
                 removeUntil += 1
             else:
                 break
-        
+
         for i in range(0, removeUntil):
             del self.exponents[0]
 
     def exponentsToString(self):
         self.removeLeadingZeroes()
         output = ""
-        if(self.isNegative):
+        if (self.isNegative):
             output = "-"
         for exponent in self.exponents:
             if (exponent >= 10):
@@ -109,107 +113,54 @@ class BigNumber:
                 output += str(exponent)
 
         return output
-    
-# TODO Dit kan sws wel iets compacter, letterlijk 2x dezelfde code :skull:
-def isGreaterThan(x: BigNumber, y: BigNumber):
-    """
-    Checks if x is greater than y.
 
-    The algorithm is as follows:
-    1. Check if the signs are different
-    2. If the signs are different, return true if x is positive and y is negative, else return false
-    3. If the signs are the same, check the length of the exponents
-    4. If the length of the exponents is different, return true if x is longer than y, else return false
-    5. If the length of the exponents is the same, check the exponents from left to right
-    6. Return true if x is greater than y, else return false
-    """
-
-    # 1. Check if the signs are different
-    if x.isNegative != y.isNegative:
-        # 2. If the signs are different, return true if x is positive and y is negative, else return false
-        if x.isNegative == 0:
-            return True
-        else:
-            return False
-
-    # 3. If the signs are the same, check the length of the exponents
-    if len(x.exponents) > len(y.exponents):
-        # 4. If the length of the exponents is different, return true if x is longer than y, else return false
-        return True
-    elif len(x.exponents) < len(y.exponents):
-        return False
-    else:
-        # 5. If the length of the exponents is the same, check the exponents from left to right
-        for i in range(len(x.exponents)):
-            # 6. Return true if x is greater than y, else return false
-            if x.exponents[i] > y.exponents[i]:
-                return True
-            elif x.exponents[i] < y.exponents[i]:
-                return False
-    return False
-
-
-def isGreaterOrEqual(x: BigNumber, y: BigNumber):
-    """
-    Checks if x is greater or equal to y.
-
-    The algorithm is as follows:
-    1. Check if the signs are different
-    2. If the signs are different, return true if x is positive and y is negative, else return false
-    3. If the signs are the same, check the length of the exponents
-    4. If the length of the exponents is different, return true if x is longer than y, else return false
-    5. If the length of the exponents is the same, check the exponents from left to right
-    6. Return true if x is greater than y, return false if y is greater than x, else return true
-    """
-
-    # 1. Check if the signs are different
-    if x.isNegative != y.isNegative:
-        # 2. If the signs are different, return true if x is positive and y is negative, else return false
-        if x.isNegative == 0:
-            return True
-        else:
-            return False
-
-    # 3. If the signs are the same, check the length of the exponents
-    if len(x.exponents) > len(y.exponents):
-        # 4. If the length of the exponents is different, return true if x is longer than y, else return false
-        return True
-    elif len(x.exponents) < len(y.exponents):
-        return False
-    else:
-        # 5. If the length of the exponents is the same, check the exponents from left to right
-        for i in range(len(x.exponents)):
-            # 6. Return true if x is greater than y, else return false
-            if x.exponents[i] > y.exponents[i]:
-                return True
-            elif x.exponents[i] < y.exponents[i]:
-                return False
-    return True
-
-
-def matchExponentsLength(x : BigNumber, y : BigNumber):
+    def compare(self, other: 'BigNumber', greater_or_equal: bool = False) -> bool:
         """
-        Matches the length of the exponents of two BigNumbers by adding 0's to the front of the list.
+        Compares this BigNumber to another BigNumber.
+
+        Args:
+            other (BigNumber): The BigNumber to compare with.
+            greater_or_equal (bool): If True, performs a greater than or equal to comparison.
+                                        If False, performs a greater than comparison.
+
+        Returns:
+            bool: True if the comparison condition is met, False otherwise.
         """
-        if len(x.exponents) > len(y.exponents):
-            for i in range(len(x.exponents) - len(y.exponents)):
-                addLeadingZero(y)
-        elif len(x.exponents) < len(y.exponents):
-            for i in range(len(y.exponents) - len(x.exponents)):
-                addLeadingZero(x)
+        if self.isNegative != other.isNegative:
+            return not self.isNegative if greater_or_equal else self.isNegative
 
-def addLeadingZero(x: BigNumber):
-    x.exponents.insert(0, Int32(0))
+        if len(self.exponents) != len(other.exponents):
+            return len(self.exponents) > len(other.exponents) if greater_or_equal else len(self.exponents) < len(other.exponents)
 
-def copyBigNumber(x: BigNumber):
-    return createBigNumberFromExponents(x.radix, x.exponents, x.isNegative)
+        for i in range(len(self.exponents)):
+            if self.exponents[i] != other.exponents[i]:
+                return self.exponents[i] > other.exponents[i] if greater_or_equal else self.exponents[i] < other.exponents[i]
 
-# Only works with positive shift
-def bitShift(original: BigNumber, shift: int):
-    x = copyBigNumber(original)
-    for _ in range(shift):
-        x.exponents.append(0)
-    return x
+        return True if greater_or_equal else False
+
+    def matchExponentsLength(self, other: 'BigNumber'):
+        """
+        Matches the length of the exponents of this BigNumber and another BigNumber
+        by adding 0's to the front of the list.
+        """
+        if len(self.exponents) > len(other.exponents):
+            for i in range(len(self.exponents) - len(other.exponents)):
+                self.addLeadingZero(other)
+        elif len(self.exponents) < len(other.exponents):
+            for i in range(len(other.exponents) - len(self.exponents)):
+                other.addLeadingZero(self)
+
+    def addLeadingZero(self):
+        self.exponents.insert(0, Int32(0))
+
+    # Only works with positive shift
+    def bitShift(self, shift: int):
+        x = createBigNumberFromExponents(
+            self.radix, self.exponents, self.isNegative)
+        for _ in range(shift):
+            x.exponents.append(0)
+        return x
+
 
 def createBigNumberFromExponents(radix, exponents, isNegative):
     x = BigNumber("0", radix)

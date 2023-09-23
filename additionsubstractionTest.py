@@ -1,5 +1,5 @@
 import unittest
-from BigNumber import createBigNumberFromExponents, matchExponentsLength
+from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 from addition_subtraction import (
     solve_addition_integer_arithmetic,

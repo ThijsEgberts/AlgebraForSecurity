@@ -1,12 +1,23 @@
-from traceback import print_exc
-from BigNumber import BigNumber, copyBigNumber, isGreaterThan
+from BigNumber import BigNumber
 from BigNumber import createBigNumberFromExponents
-from BigNumber import matchExponentsLength
-import BigNumber as bn
 from fixedint import Int32
 
 
 def solve_addition(type: str, x: BigNumber, y: BigNumber):
+    """
+    Perform addition of two BigNumbers based on the specified type.
+
+    Args:
+        type (str): The type of arithmetic to use for addition ("integer_arithmetic" or "modular_arithmetic").
+        x (BigNumber): The first BigNumber operand.
+        y (BigNumber): The second BigNumber operand.
+
+    Returns:
+        BigNumber: The result of the addition operation.
+
+    Raises:
+        Exception: If an invalid type is provided.
+    """
     if type == "integer_arithmetic":
         return solve_addition_integer_arithmetic(x, y)
     elif type == "modular_arithmetic":
@@ -16,14 +27,28 @@ def solve_addition(type: str, x: BigNumber, y: BigNumber):
             "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
 
 
-def solve_substraction(type: str, x: BigNumber, y: BigNumber):
+def solve_subtraction(type: str, x: BigNumber, y: BigNumber):
+    """
+    Perform subtraction of two BigNumbers based on the specified type.
+
+    Args:
+        type (str): The type of arithmetic to use for subtraction ("integer_arithmetic" or "modular_arithmetic").
+        x (BigNumber): The first BigNumber operand.
+        y (BigNumber): The second BigNumber operand.
+
+    Returns:
+        BigNumber: The result of the subtraction operation.
+
+    Raises:
+        Exception: If an invalid type is provided.
+    """
     if type == "integer_arithmetic":
         return solve_subtraction_integer_arithmetic(x, y)
     elif type == "modular_arithmetic":
-        return 0#solve_subtraction_modular_arithmetic(x, y)
+        return 0  # solve_subtraction_modular_arithmetic(x, y)
     else:
         raise Exception(
-            "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
+            "Invalid type for subtraction, only integer_arithmetic and modular_arithmetic are supported")
 
 
 def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
@@ -52,7 +77,7 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
             return solve_subtraction_integer_arithmetic(y, x)
 
     # Match the exponent list length
-    matchExponentsLength(x, y)
+    x.matchExponentsLength(y)
 
     # 2.
     # If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed
@@ -60,8 +85,7 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     carry = Int32(0)
 
     # i counts from len(x.exponents)-1 to -1
-    i = len(x.exponents)-1
-    for _ in range(-1, len(x.exponents)-1):
+    for i in range(len(x.exponents) - 1, -1, -1):
         # No carry needed
         if x.exponents[i] + y.exponents[i] + carry < x.radix:
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry)
@@ -73,7 +97,6 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
 
             # Carry the 1
             carry = Int32(1)
-        i -= 1
 
     # 3.
     # If there is a carry left, we need to add it to the exponents
@@ -114,7 +137,7 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     """
 
     # 1. Match the exponents of the two numbers.
-    matchExponentsLength(x, y)
+    x.matchExponentsLength(y)
 
     # 2. If the signs are different, we need to use addition
     #   a -  b = a - b
@@ -136,17 +159,13 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
         x.isNegative = 0
         y.isNegative = 0
 
-        temp = copyBigNumber(y)
-        y = copyBigNumber(x)
-        x = temp
+        x, y = y, x  # Swap x and y
 
     # If the second number is larger than the first, swap and mark that it needs inverting
     # a - b = -(b - a)
     swapSign = 0
-    if isGreaterThan(y, x):
-        temp = copyBigNumber(y)
-        y = copyBigNumber(x)
-        x = temp
+    if y.compare(x):
+        x, y = y, x  # Swap x and y
         swapSign = 1
 
     # 3. If the signs are the same, we need to subtract the numbers starting with the last exponent and carry the 1 if needed
@@ -154,8 +173,7 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     borrow = 0
 
     # i counts from len(x.exponents)-1 to -1
-    i = len(x.exponents)-1
-    for _ in range(-1, len(x.exponents)-1):
+    for i in range(len(x.exponents) - 1, -1, -1):
         # No borrow needed
         if x.exponents[i] - y.exponents[i] - borrow >= 0:
             exponents.insert(0, x.exponents[i] - y.exponents[i] - borrow)
@@ -167,9 +185,8 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
 
             # borrow the 1
             borrow = 1
-        i -= 1
-    
-    #4. If there is a carry left, we need to add it to the exponents.
+
+    # 4. If there is a carry left, we need to add it to the exponents.
     if borrow == 1:
         exponents.insert(0, 1)
 
