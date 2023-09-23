@@ -2,8 +2,8 @@ from BigNumber import BigNumber
 from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 import addition_subtraction
-from BigNumber import bitShift
 from multiplication_primary import solve_multiplication_primary
+
 
 def solve_multiplication_karatsuba(x: BigNumber, y: BigNumber) -> BigNumber:
     """
