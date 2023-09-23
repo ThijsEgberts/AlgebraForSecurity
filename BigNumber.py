@@ -170,8 +170,3 @@ def createBigNumberFromExponents(radix, exponents, isNegative):
     x.exponents = exponents.copy()
     x.isNegative = isNegative
     return x
-
-
-x = BigNumber("B68", 12)
-y = BigNumber("050", 12)
-print(y.compare(x))

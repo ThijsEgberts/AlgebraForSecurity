@@ -217,9 +217,3 @@ def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: Bi
         solve_subtraction_integer_arithmetic(x, y), modulus)[1]
 
     return remainder
-
-
-x = BigNumber("B68", 12)
-y = BigNumber("-50", 12)
-print(y.compare(x))
-print(solve_addition_integer_arithmetic(x, y))
