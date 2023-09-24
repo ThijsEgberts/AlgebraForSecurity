@@ -22,8 +22,8 @@ def solve_multiplication_karatsuba(x: BigNumber, y: BigNumber) -> BigNumber:
     if (x.isNegative != y.isNegative):
         negativeResult = 1
 
-    x.isNegative = 0
-    y.isNegative = 0
+    x.setSign(0) #make x positive
+    y.setSign(0)
 
     if (n == 1):
         # Primitive multiplications
