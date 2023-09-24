@@ -120,6 +120,9 @@ def solve_addition_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNu
     remainder = solve_division_with_remainder(
         solve_addition_integer_arithmetic(x, y), modulus)[1]
 
+    if(remainder.isNegative):
+        remainder = solve_addition_integer_arithmetic(remainder, modulus)
+        
     return remainder
 
 
@@ -215,5 +218,8 @@ def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: Bi
     """
     remainder = solve_division_with_remainder(
         solve_subtraction_integer_arithmetic(x, y), modulus)[1]
+
+    if(remainder.isNegative):
+        remainder = solve_addition_integer_arithmetic(remainder, modulus)
 
     return remainder
