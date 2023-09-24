@@ -1,5 +1,4 @@
 import json
-
 from fixedint import Int32
 from BigNumber import BigNumber
 import addition_subtraction
@@ -25,10 +24,15 @@ def solve_exercise(exercise_location: str, answer_location: str, saveAnswer: boo
 
     if saveAnswer:
         # Save the answer
-        save_answer(answer, answer_location)
+        save_answer(answer, answer_location, exercise["operation"])
     else:
         answerDict = load_answer(answer_location)
-        print("The answer is correct: " + str(answerDict["answer"] == answer))
+        if exercise["operation"] == "extended_euclidean_algorithm":
+            print("The gcd is correct: " + str(answerDict["answer-gcd"] == answer[0]))
+            print("The a is correct: " + str(answerDict["answer-a"] == answer[1]))
+            print("The b is correct: " + str(answerDict["answer-b"] == answer[2]))
+        else:
+            print("The answer is correct: " + str(answerDict["answer"] == answer))
 
 
 def solve(exercise: dict) -> str:
@@ -78,7 +82,8 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'extended_euclidean_algorithm'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(extended_euclidean_algorithm.solve_extended_euclidean(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                gcd, x, y = extended_euclidean_algorithm.solve_extended_euclidean(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])))
+                return [str(gcd), str(x), str(y)]
             else:
                 raise Exception(
                     "Invalid type for extended_euclidean_algorithm, only integer_arithmetic is supported")
@@ -103,13 +108,16 @@ def solve(exercise: dict) -> str:
                             exercise["operation"] + ".")
 
 
-def save_answer(answer: int, answer_location: str):
+def save_answer(answer, answer_location: str, operation: str):
     """
     Saves the answer at the given location. 
     Using the JSON format "answer": "int".
     """
     # Create the answer object
-    answer_object = {"answer": answer}
+    if operation == "extended_euclidean_algorithm":
+        answer_object = {"answer-a" : answer[1], "answer-b" : answer[2], "answer-gcd" : answer[0]}
+    else:
+        answer_object = {"answer": answer}
     # Save the answer object to a JSON file
     with open(answer_location, 'w') as answer_file:
         json.dump(answer_object, answer_file)
