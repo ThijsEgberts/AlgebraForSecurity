@@ -1,9 +1,8 @@
 from BigNumber import BigNumber
-import BigNumber as bn
 from addition_subtraction import solve_addition_integer_arithmetic, solve_subtraction_integer_arithmetic
 
 
-def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list:
+def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list[BigNumber]:
     """
     Solves the division with remainder of two numbers.
     Returns the quotient and the remainder in form [quotient, remainder]
