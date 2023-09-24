@@ -3,52 +3,52 @@ from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 
 
-def solve_addition(type: str, x: BigNumber, y: BigNumber):
-    """
-    Perform addition of two BigNumbers based on the specified type.
+# def solve_addition(type: str, x: BigNumber, y: BigNumber):
+#     """
+#     Perform addition of two BigNumbers based on the specified type.
 
-    Args:
-        type (str): The type of arithmetic to use for addition ("integer_arithmetic" or "modular_arithmetic").
-        x (BigNumber): The first BigNumber operand.
-        y (BigNumber): The second BigNumber operand.
+#     Args:
+#         type (str): The type of arithmetic to use for addition ("integer_arithmetic" or "modular_arithmetic").
+#         x (BigNumber): The first BigNumber operand.
+#         y (BigNumber): The second BigNumber operand.
 
-    Returns:
-        BigNumber: The result of the addition operation.
+#     Returns:
+#         BigNumber: The result of the addition operation.
 
-    Raises:
-        Exception: If an invalid type is provided.
-    """
-    if type == "integer_arithmetic":
-        return solve_addition_integer_arithmetic(x, y)
-    elif type == "modular_arithmetic":
-        return solve_addition_modular_arithmetic(x, y)
-    else:
-        raise Exception(
-            "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
+#     Raises:
+#         Exception: If an invalid type is provided.
+#     """
+#     if type == "integer_arithmetic":
+#         return solve_addition_integer_arithmetic(x, y)
+#     elif type == "modular_arithmetic":
+#         return solve_addition_modular_arithmetic(x, y)
+#     else:
+#         raise Exception(
+#             "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
 
 
-def solve_subtraction(type: str, x: BigNumber, y: BigNumber):
-    """
-    Perform subtraction of two BigNumbers based on the specified type.
+# def solve_subtraction(type: str, x: BigNumber, y: BigNumber):
+#     """
+#     Perform subtraction of two BigNumbers based on the specified type.
 
-    Args:
-        type (str): The type of arithmetic to use for subtraction ("integer_arithmetic" or "modular_arithmetic").
-        x (BigNumber): The first BigNumber operand.
-        y (BigNumber): The second BigNumber operand.
+#     Args:
+#         type (str): The type of arithmetic to use for subtraction ("integer_arithmetic" or "modular_arithmetic").
+#         x (BigNumber): The first BigNumber operand.
+#         y (BigNumber): The second BigNumber operand.
 
-    Returns:
-        BigNumber: The result of the subtraction operation.
+#     Returns:
+#         BigNumber: The result of the subtraction operation.
 
-    Raises:
-        Exception: If an invalid type is provided.
-    """
-    if type == "integer_arithmetic":
-        return solve_subtraction_integer_arithmetic(x, y)
-    elif type == "modular_arithmetic":
-        return 0  # solve_subtraction_modular_arithmetic(x, y)
-    else:
-        raise Exception(
-            "Invalid type for subtraction, only integer_arithmetic and modular_arithmetic are supported")
+#     Raises:
+#         Exception: If an invalid type is provided.
+#     """
+#     if type == "integer_arithmetic":
+#         return solve_subtraction_integer_arithmetic(x, y)
+#     elif type == "modular_arithmetic":
+#         return 0  # solve_subtraction_modular_arithmetic(x, y)
+#     else:
+#         raise Exception(
+#             "Invalid type for subtraction, only integer_arithmetic and modular_arithmetic are supported")
 
 
 def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber:
@@ -95,8 +95,7 @@ def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber
             carry = Int32(0)
         # Carry needed :shook:
         elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
-            exponents.insert(
-                0, x.exponents[i] + y.exponents[i] + carry - x.radix)
+            exponents.insert(0, x.exponents[i] + y.exponents[i] + carry - x.radix)
 
             # Carry the 1
             carry = Int32(1)
@@ -146,13 +145,14 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
     y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
     
     #zero check because we have both positive and negative 0
-    xStr = str(x)
-    yStr = str(y)
-    if xStr == "0" and yStr == "0":
+    #TODO efficient zero check
+    xZero = x.isZero()
+    yZero = y.isZero()
+    if xZero and yZero:
         return y
-    elif xStr == "0" and yStr != "0":
+    elif xZero and not yZero:
         return y.flipSign()
-    elif xStr != "0" and yStr == "0":
+    elif not xZero and yZero:
         return x
     
     
@@ -214,10 +214,7 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
     result.removeLeadingZeroes()
 
     if swapSign:
-        if result.isNegative:
-            result.isNegative = 0
-        else:
-            result.isNegative = 1
+        result.flipSign()
 
     return result
 

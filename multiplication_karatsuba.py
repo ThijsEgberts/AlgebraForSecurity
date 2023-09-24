@@ -4,15 +4,7 @@ from fixedint import Int32
 import addition_subtraction
 from multiplication_primary import solve_multiplication_primary
 
-
-def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
-    """
-
-    """
-    #create copies so we don't mess stuff up with the original x and y
-    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
-    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
-    
+def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     x.matchExponentsLength(y)
     n = len(x.exponents)
 
@@ -77,3 +69,13 @@ def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
     z.isNegative = negativeResult
 
     return z
+
+def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
+    """
+
+    """
+    #create copies so we don't mess stuff up with the original x and y
+    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
+    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
+    
+    return multiplication_karatsuba_recurse(x, y)

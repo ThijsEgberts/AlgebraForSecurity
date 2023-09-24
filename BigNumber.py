@@ -113,6 +113,18 @@ class BigNumber:
                 output += str(exponent)
 
         return output
+    
+    def isZero(self) -> bool:
+        if len(self.exponents) == 1 and self.exponents[0] == Int32(0):
+            return True
+        else:
+            for i in range(len(self.exponents)): #in case of leading or trailing zeroes
+                if self.exponents[i] != Int32(0):
+                    return False
+            return True
+        
+    def returnOne():
+        return 
 
     def compare(self, other: 'BigNumber', greater_or_equal: bool = False) -> bool:
         """
