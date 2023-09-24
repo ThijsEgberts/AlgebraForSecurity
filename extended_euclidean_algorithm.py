@@ -4,15 +4,42 @@ from multiplication_karatsuba import solve_multiplication_karatsuba
 from addition_subtraction import solve_subtraction_integer_arithmetic
 from fixedint import Int32
 
-#done by thijs
+#source: https://www.baeldung.com/cs/extended-euclidean-algorithm
 def solve_extended_euclidean(a: BigNumber, b: BigNumber) -> (BigNumber, BigNumber, BigNumber):
+    #when a or b is 0, the other is the gcd
     if str(a) == "0":
         return b, BigNumber("0", a.radix), BigNumber("1", a.radix)
+    elif str(b) == "0":
+        return a, BigNumber("0", a.radix), BigNumber("1", a.radix)
     
-    gcd, x1, y1 = solve_extended_euclidean(solve_division_with_remainder(b, a)[1], a)
+    #gcd(a, b) = gcd(|a|, |b|)
+    a.setSign(0) #makes a positive
+    b.setSign(0)
     
-    x = solve_subtraction_integer_arithmetic(y1, solve_multiplication_karatsuba((solve_division_with_remainder(b, a)[0]), x1))
-    y = x1
+    #make sure a >= b
+    if not a.compare(b, False):
+        b, a = a, b    
+    
+    x2, x1, y2, y1 = BigNumber("1", a.radix), BigNumber("0", a.radix), BigNumber("0", a.radix), BigNumber("1", a.radix)
+    
+    while str(b) != "0":
+        q, r = solve_division_with_remainder(a, b)
+        
+        x = solve_subtraction_integer_arithmetic(x1, solve_multiplication_karatsuba(q,x2))
+        y = solve_subtraction_integer_arithmetic(y1, solve_multiplication_karatsuba(q,y2))
+        
+        x2 = x1
+        x1 = x
+        y2 = y1
+        y1 = y
+        a = b
+        b = r
+        
+    gcd = a
+    # gcd, x1, y1 = solve_extended_euclidean(solve_division_with_remainder(b, a)[1], a)
+    
+    # x = solve_subtraction_integer_arithmetic(y1, solve_multiplication_karatsuba((solve_division_with_remainder(b, a)[0]), x1))
+    # y = x1
     
     return gcd, x, y
 
@@ -20,6 +47,7 @@ def solve_extended_euclidean(a: BigNumber, b: BigNumber) -> (BigNumber, BigNumbe
 # https://brilliant.org/wiki/extended-euclidean-algorithm/
 def solve_extended_euclidean_algorithm(a, b):
     x, y, u, v = Int32(0),Int32(1),Int32(1),Int32(0)
+    
     while a != Int32(0):
         q, r = solve_division_with_remainder(x,y)
         m = solve_subtraction_integer_arithmetic(x, solve_multiplication_karatsuba(u,q))
