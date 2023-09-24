@@ -51,7 +51,7 @@ def solve_subtraction(type: str, x: BigNumber, y: BigNumber):
             "Invalid type for subtraction, only integer_arithmetic and modular_arithmetic are supported")
 
 
-def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
+def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber:
     """
     Solves the addition of two numbers in integer arithmetic.
 
@@ -62,6 +62,9 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     4. Return the result.
     """
 
+    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
+    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
+    
     # 1.
     # If the signs are different, we need to subtract the smaller number from the bigger number
     #   a +  b = a + b
@@ -126,7 +129,7 @@ def solve_addition_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNu
     return remainder
 
 
-def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
+def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber:
     """
     Solves the subtraction of two numbers in integer arithmetic.
 
@@ -138,7 +141,21 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     5. If there is a carry left, we need to add it to the exponents.
     6. Return the result.
     """
-
+    
+    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
+    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
+    
+    #zero check because we have both positive and negative 0
+    xStr = str(x)
+    yStr = str(y)
+    if xStr == "0" and yStr == "0":
+        return y
+    elif xStr == "0" and yStr != "0":
+        return y.flipSign()
+    elif xStr != "0" and yStr == "0":
+        return x
+    
+    
     # 1. Match the exponents of the two numbers.
     x.matchExponentsLength(y)
 
@@ -154,8 +171,7 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
         return temp
 
     if (not x.isNegative and y.isNegative):
-        y.isNegative = 0
-        return solve_addition_integer_arithmetic(x, y)
+        return solve_addition_integer_arithmetic(x, y.flipSign())
 
     # If both signs are negative, swap the parameters
     if x.isNegative and y.isNegative:
