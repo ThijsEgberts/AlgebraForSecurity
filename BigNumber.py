@@ -85,7 +85,7 @@ class BigNumber:
             self.isNegative = 1
             return self
 
-    def setSign(self, sign: bool):
+    def setSign(self, sign: int):
         self.isNegative = sign
         return self
 
