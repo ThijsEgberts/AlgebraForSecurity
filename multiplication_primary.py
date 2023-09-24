@@ -43,6 +43,7 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
                 result_big_number = BigNumber(str(product), x.radix)
                 div_remainder = division.solve_division_with_remainder(
                     result_big_number, BigNumber(str(x.radix), x.radix))
+                div_remainder[1].removeLeadingZeroes()
                 exponents_result.insert(0, div_remainder[1].exponents[0])
                 carry = Int32(div_remainder[0].exponents[0])
 
@@ -57,13 +58,12 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
     exponents_multiplication_results_big_numbers = [
         createBigNumberFromExponents(x.radix, exponents, is_negative) for exponents in exponents_multiplication_results
     ]
-
+    
     # Add the BigNumbers together
     result = BigNumber("0", x.radix)
     for exponents_big_number in exponents_multiplication_results_big_numbers:
         result = addition_subtraction.solve_addition_integer_arithmetic(
             result, exponents_big_number)
-
     # Set the sign of the result
     result.isNegative = is_negative
 
