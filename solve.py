@@ -72,7 +72,7 @@ def solve(exercise : dict) -> str:
             
         case {'operation': 'extended_euclidean_algorithm'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(extended_euclidean_algorithm.solve_extended_euclidean_algorithm(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(extended_euclidean_algorithm.solve_extended_euclidean(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
             else:
                 raise Exception("Invalid type for extended_euclidean_algorithm, only integer_arithmetic is supported")
             
