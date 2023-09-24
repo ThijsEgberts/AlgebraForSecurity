@@ -9,68 +9,142 @@ class BigNumber:
     isNegative = 0
 
     # Construct a BigNumber from a string
-    def __init__(self, string: string, radix: Int32) -> None:
+    # def __init__(self, string: string, radix: Int32) -> None:
+    #     self.radix = Int32(radix)
+    #     self.parseString(string, radix)
+    def __init__(self, radix: Int32, exponents: [Int32], isNegative: int) -> None:
         self.radix = Int32(radix)
-        self.parseString(string, radix)
+        self.exponents = exponents
+        self.isNegative = isNegative
 
-    # Parses a string representing a number to a BigNumber format
-    def parseString(self, stringNr: string, radix: Int32):
-
+    #python hacky way of making multiple constructors
+    @classmethod
+    def createNumberFromString(cls, stringNr: string, radix: Int32):
+        exponentList, sign = cls.parseString(stringNr, radix)
+        return cls(radix, exponentList, sign)
+    
+    @classmethod
+    def createZero(cls, radix : Int32):
+        return cls(radix, [Int32(0)], 0)
+    
+    @classmethod
+    def createOne(cls, radix : Int32):
+        return cls(radix, [Int32(1)], 0)
+    
+    def parseString(stringNr, radix):
         if (stringNr == ""):
             raise Exception('Empty string')
 
         if radix <= 0 or radix > 16:  # check correct format
-            self.radix = Int32(radix)
+            raise Exception('radix out of bounds')
 
         # check if the number is negative
         if stringNr[0] == "-":
-            self.isNegative = 1
+            isNegative_ = 1
             stringNr = stringNr[1:]
         else:
-            self.isNegative = 0
+            isNegative_ = 0
 
         length = len(stringNr)
 
         # create a list of exponents with the length of the string
-        self.exponents = [None] * length
+        exponents_ = [None] * length
 
         # parse each digit in the string and convert it to a number in the exponent list
-        for i in range(0, length):  # skip the minus sign if the number is negative
+        for i in range(length):
             match stringNr[i]:
                 case '0':
-                    self.exponents[i] = Int32(0)
+                    exponents_[i] = Int32(0)
                 case '1':
-                    self.exponents[i] = Int32(1)
+                    exponents_[i] = Int32(1)
                 case '2':
-                    self.exponents[i] = Int32(2)
+                    exponents_[i] = Int32(2)
                 case '3':
-                    self.exponents[i] = Int32(3)
+                    exponents_[i] = Int32(3)
                 case '4':
-                    self.exponents[i] = Int32(4)
+                    exponents_[i] = Int32(4)
                 case '5':
-                    self.exponents[i] = Int32(5)
+                    exponents_[i] = Int32(5)
                 case '6':
-                    self.exponents[i] = Int32(6)
+                    exponents_[i] = Int32(6)
                 case '7':
-                    self.exponents[i] = Int32(7)
+                    exponents_[i] = Int32(7)
                 case '8':
-                    self.exponents[i] = Int32(8)
+                    exponents_[i] = Int32(8)
                 case '9':
-                    self.exponents[i] = Int32(9)
+                    exponents_[i] = Int32(9)
                 case 'A':
-                    self.exponents[i] = Int32(10)
+                    exponents_[i] = Int32(10)
                 case 'B':
-                    self.exponents[i] = Int32(11)
+                    exponents_[i] = Int32(11)
                 case 'C':
-                    self.exponents[i] = Int32(12)
+                    exponents_[i] = Int32(12)
                 case 'D':
-                    self.exponents[i] = Int32(13)
+                    exponents_[i] = Int32(13)
                 case 'E':
-                    self.exponents[i] = Int32(14)
+                    exponents_[i] = Int32(14)
                 case 'F':
-                    self.exponents[i] = Int32(15)
-                case _:
-                    raise Exception('Radix out of bounds')
+                    exponents_[i] = Int32(15)
+        return exponents_, isNegative_
+    
+    # # Parses a string representing a number to a BigNumber format
+    # def parseString_(self, stringNr: string, radix: Int32):
+
+    #     if (stringNr == ""):
+    #         raise Exception('Empty string')
+
+    #     if radix > 0 and radix <= 16:  # check correct format
+    #         self.radix = Int32(radix)
+
+    #     # check if the number is negative
+    #     if stringNr[0] == "-":
+    #         self.isNegative = 1
+    #         stringNr = stringNr[1:]
+    #     else:
+    #         self.isNegative = 0
+
+    #     length = len(stringNr)
+
+    #     # create a list of exponents with the length of the string
+    #     self.exponents = [None] * length
+
+    #     # parse each digit in the string and convert it to a number in the exponent list
+    #     for i in range(0, length):  # skip the minus sign if the number is negative
+    #         match stringNr[i]:
+    #             case '0':
+    #                 self.exponents[i] = Int32(0)
+    #             case '1':
+    #                 self.exponents[i] = Int32(1)
+    #             case '2':
+    #                 self.exponents[i] = Int32(2)
+    #             case '3':
+    #                 self.exponents[i] = Int32(3)
+    #             case '4':
+    #                 self.exponents[i] = Int32(4)
+    #             case '5':
+    #                 self.exponents[i] = Int32(5)
+    #             case '6':
+    #                 self.exponents[i] = Int32(6)
+    #             case '7':
+    #                 self.exponents[i] = Int32(7)
+    #             case '8':
+    #                 self.exponents[i] = Int32(8)
+    #             case '9':
+    #                 self.exponents[i] = Int32(9)
+    #             case 'A':
+    #                 self.exponents[i] = Int32(10)
+    #             case 'B':
+    #                 self.exponents[i] = Int32(11)
+    #             case 'C':
+    #                 self.exponents[i] = Int32(12)
+    #             case 'D':
+    #                 self.exponents[i] = Int32(13)
+    #             case 'E':
+    #                 self.exponents[i] = Int32(14)
+    #             case 'F':
+    #                 self.exponents[i] = Int32(15)
+    #             case _:
+    #                 raise Exception('Radix out of bounds')
 
     def __str__(self):
         # return "[" + self.exponentsToString() + "]_" + str(self.radix)
@@ -123,9 +197,6 @@ class BigNumber:
                     return False
             return True
         
-    def returnOne():
-        return 
-
     def compare(self, other: 'BigNumber', greater_or_equal: bool = False) -> bool:
         """
         Compares this BigNumber to another BigNumber.
@@ -141,8 +212,11 @@ class BigNumber:
         if self.isNegative != other.isNegative:
             return other.isNegative
 
-        # Match the length of the exponents
-        self.matchExponentsLength(other)
+        #if a number has strictly more exponents its bigger
+        if len(self.exponents) > len(other.exponents):
+            return True
+        elif len(self.exponents) < len(other.exponents):
+            return False
 
         # Compare the exponents from left to right
         for i in range(len(self.exponents)):
@@ -170,15 +244,16 @@ class BigNumber:
 
     # Only works with positive shift
     def bitShift(self, shift: int):
-        x = createBigNumberFromExponents(
-            self.radix, self.exponents, self.isNegative)
+        # x = createBigNumberFromExponents(
+        #     self.radix, self.exponents, self.isNegative)
+        x = BigNumber(self.radix, self.exponents, self.isNegative)
         for _ in range(shift):
             x.exponents.append(0)
         return x
 
 
-def createBigNumberFromExponents(radix, exponents, isNegative):
-    x = BigNumber("0", radix)
-    x.exponents = exponents.copy()
-    x.isNegative = isNegative
-    return x
+# def createBigNumberFromExponents(radix, exponents, isNegative):
+#     x = BigNumber("0", radix)
+#     x.exponents = exponents.copy()
+#     x.isNegative = isNegative
+#     return x

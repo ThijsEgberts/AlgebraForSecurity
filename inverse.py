@@ -4,7 +4,7 @@ from reduction import solve_reduction
 
 
 def solve_inverse(x: BigNumber, mod: BigNumber) -> BigNumber:
-    if str(mod) == "0":
+    if mod.isZero():
         return None
     
     x = solve_reduction(x, mod)
@@ -12,7 +12,7 @@ def solve_inverse(x: BigNumber, mod: BigNumber) -> BigNumber:
     gcd, a = solve_extended_euclidean(x, mod) #gcd = a*x + b*mod
     
     #if gcd(x,mod) != 1, there exists no inverse
-    if gcd != 1:
+    if gcd != BigNumber.createOne(x.radix):
         return None
     
     if not a.isNegative:

@@ -42,9 +42,9 @@ def solve(exercise: dict) -> str:
     match exercise:
         case {'operation': 'addition'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(addition_subtraction.solve_addition_integer_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(addition_subtraction.solve_addition_integer_arithmetic(BigNumber.createNumberFromString(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["y"], Int32(exercise["radix"]))))
             elif exercise["type"] == "modular_arithmetic":
-                return str(addition_subtraction.solve_addition_modular_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
+                return str(addition_subtraction.solve_addition_modular_arithmetic(BigNumber.createNumberFromString(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["y"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["modulus"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
@@ -52,13 +52,14 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'subtraction'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(addition_subtraction.solve_subtraction_integer_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(addition_subtraction.solve_subtraction_integer_arithmetic(BigNumber.createNumberFromString(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["y"], Int32(exercise["radix"]))))
             elif exercise["type"] == "modular_arithmetic":
-                return str(addition_subtraction.solve_subtraction_modular_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
+                return str(addition_subtraction.solve_subtraction_modular_arithmetic(BigNumber.createNumberFromString(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["y"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["modulus"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for subtraction, only integer_arithmetic and modular_arithmetic are supported")
 
+        #TODO fix this
         case {'operation': 'multiplication'}:
             if exercise["type"] == "modular_arithmetic":
                 return str(multiplication_modular.solve_multiplication_modular(exercise["radix"], exercise["x"], exercise["y"]))
@@ -68,21 +69,21 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'multiplication_primary'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(multiplication_primary.solve_multiplication_primary(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(multiplication_primary.solve_multiplication_primary(BigNumber.createNumberFromString(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["y"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for multiplication_primary, only integer_arithmetic is supported")
 
         case {'operation': 'multiplication_karatsuba'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(multiplication_karatsuba.solve_multiplication_karatsuba(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(multiplication_karatsuba.solve_multiplication_karatsuba(BigNumber.createNumberFromString(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["y"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for multiplication_karatsuba, only integer_arithmetic is supported")
 
         case {'operation': 'extended_euclidean_algorithm'}:
             if exercise["type"] == "integer_arithmetic":
-                gcd, x, y = extended_euclidean_algorithm.solve_extended_euclidean(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])))
+                gcd, x, y = extended_euclidean_algorithm.solve_extended_euclidean(BigNumber.createNumberFromString(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["y"], Int32(exercise["radix"])))
                 return [str(gcd), str(x), str(y)]
             else:
                 raise Exception(
@@ -90,14 +91,14 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'reduction'}:
             if exercise["type"] == "modular_arithmetic":
-                return str(reduction.solve_reduction(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
+                return str(reduction.solve_reduction(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["modulus"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for reduction, only modular_arithmetic is supported")
 
         case {'operation': 'inversion'}:
             if exercise["type"] == "modular_arithmetic":
-                return str(inverse.solve_inverse(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
+                return str(inverse.solve_inverse(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber.createNumberFromString(exercise["modulus"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for inverse, only modular_arithmetic is supported")

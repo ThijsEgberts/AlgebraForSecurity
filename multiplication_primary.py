@@ -1,5 +1,5 @@
 from BigNumber import BigNumber
-from BigNumber import createBigNumberFromExponents
+# from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 import addition_subtraction
 
@@ -48,7 +48,8 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
                 exponents_result.insert(0, product)
                 carry = Int32(0)
             else:
-                result_big_number = createBigNumberFromExponents(Int32(x.radix), numberToBase(Int32(product), Int32(x.radix)), False)
+                result_big_number = BigNumber(Int32(x.radix), numberToBase(Int32(product), Int32(x.radix)), False)
+                # result_big_number = createBigNumberFromExponents(Int32(x.radix), numberToBase(Int32(product), Int32(x.radix)), False)
 
                 exponents_result.insert(0, result_big_number.exponents[-1])
                 carry = Int32(result_big_number.exponents[0])
@@ -62,11 +63,13 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
 
     # Convert the list of lists to a list of BigNumbers
     exponents_multiplication_results_big_numbers = [
-        createBigNumberFromExponents(x.radix, exponents, is_negative) for exponents in exponents_multiplication_results
+        BigNumber(x.radix, exponents, is_negative) for exponents in exponents_multiplication_results
+        # createBigNumberFromExponents(x.radix, exponents, is_negative) for exponents in exponents_multiplication_results
     ]
     
     # Add the BigNumbers together
-    result = BigNumber("0", x.radix)
+    result = BigNumber.createZero(x.radix)
+    # result = BigNumber("0", x.radix)
     for exponents_big_number in exponents_multiplication_results_big_numbers:
         result = addition_subtraction.solve_addition_integer_arithmetic(
             result, exponents_big_number)

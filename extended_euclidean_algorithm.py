@@ -1,4 +1,4 @@
-from BigNumber import BigNumber, createBigNumberFromExponents
+from BigNumber import BigNumber
 from division import solve_division_with_remainder
 from multiplication_karatsuba import solve_multiplication_karatsuba
 from addition_subtraction import solve_addition_integer_arithmetic, solve_subtraction_integer_arithmetic
@@ -10,18 +10,25 @@ from multiplication_primary import solve_multiplication_primary
 def solve_extended_euclidean(a_: BigNumber, b_: BigNumber) -> (BigNumber, BigNumber, BigNumber):
     #when a or b is 0, the other is the gcd
     if a_.isZero():
-        return b_, BigNumber("0", a_.radix), BigNumber("1", a_.radix)
+        return b_, BigNumber.createZero(a_.radix), BigNumber.createOne(a_.radix)
+        # return b_, BigNumber("0", a_.radix), BigNumber("1", a_.radix)
     elif b_.isZero():
-        return a_, BigNumber("0", a_.radix), BigNumber("1", a_.radix)
+        return a_, BigNumber.createZero(a_.radix), BigNumber.createOne(a_.radix)
+        # return a_, BigNumber("0", a_.radix), BigNumber("1", a_.radix)
     
-    a = createBigNumberFromExponents(a_.radix, a_.exponents, a_.isNegative)
-    b = createBigNumberFromExponents(b_.radix, b_.exponents, b_.isNegative)
+    a = BigNumber(a_.radix, a_.exponents, a_.isNegative)
+    b = BigNumber(b_.radix, b_.exponents, b_.isNegative)
+    # a = createBigNumberFromExponents(a_.radix, a_.exponents, a_.isNegative)
+    # b = createBigNumberFromExponents(b_.radix, b_.exponents, b_.isNegative)
+
     
     #make sure a >= b
     if not a.compare(b, False):
         b, a = a, b    
     
-    x, x1, y, y1 = BigNumber("1", a.radix), BigNumber("0", a.radix), BigNumber("0", a.radix), BigNumber("1", a.radix)
+    #TODO update
+    x, x1, y, y1 = BigNumber.createOne(a.radix), BigNumber.createZero(a.radix), BigNumber.createZero(a.radix), BigNumber.createOne(a.radix)
+    # x, x1, y, y1 = BigNumber("1", a.radix), BigNumber("0", a.radix), BigNumber("0", a.radix), BigNumber("1", a.radix)
     
     while not b.isZero():
         # print("new iter")

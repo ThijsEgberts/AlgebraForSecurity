@@ -1,8 +1,20 @@
 from BigNumber import BigNumber
-from BigNumber import createBigNumberFromExponents
+# from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 import addition_subtraction
 from multiplication_primary import solve_multiplication_primary
+
+def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
+    """
+
+    """
+    #create copies so we don't mess stuff up with the original x and y
+    x = BigNumber(x_.radix, x_.exponents, x_.isNegative)
+    y = BigNumber(y_.radix, y_.exponents, y_.isNegative)
+    # x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
+    # y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
+    
+    return multiplication_karatsuba_recurse(x, y)
 
 def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     x.matchExponentsLength(y)
@@ -30,15 +42,20 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
         y.addLeadingZero()
         n += 1
 
-    x_hi = createBigNumberFromExponents(
-        x.radix, x.exponents[:int(n/2)], x.isNegative)
-    x_lo = createBigNumberFromExponents(
-        x.radix, x.exponents[int(n/2):], x.isNegative)
+    x_hi = BigNumber(x.radix, x.exponents[:int(n/2)], x.isNegative)
+    x_lo = BigNumber(x.radix, x.exponents[int(n/2):], x.isNegative)
 
-    y_hi = createBigNumberFromExponents(
-        x.radix, y.exponents[:int(n/2)], y.isNegative)
-    y_lo = createBigNumberFromExponents(
-        x.radix, y.exponents[int(n/2):], y.isNegative)
+    y_hi = BigNumber(x.radix, y.exponents[:int(n/2)], y.isNegative)
+    y_lo = BigNumber(x.radix, y.exponents[int(n/2):], y.isNegative)
+    # x_hi = createBigNumberFromExponents(
+    #     x.radix, x.exponents[:int(n/2)], x.isNegative)
+    # x_lo = createBigNumberFromExponents(
+    #     x.radix, x.exponents[int(n/2):], x.isNegative)
+
+    # y_hi = createBigNumberFromExponents(
+    #     x.radix, y.exponents[:int(n/2)], y.isNegative)
+    # y_lo = createBigNumberFromExponents(
+    #     x.radix, y.exponents[int(n/2):], y.isNegative)
 
     z2 = solve_multiplication_karatsuba(x_hi,
                                         y_hi)
@@ -70,12 +87,3 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
 
     return z
 
-def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
-    """
-
-    """
-    #create copies so we don't mess stuff up with the original x and y
-    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
-    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
-    
-    return multiplication_karatsuba_recurse(x, y)

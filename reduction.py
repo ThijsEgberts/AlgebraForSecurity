@@ -3,8 +3,8 @@ import BigNumber
 import division
 
 #Solves a modular reduction
-def solve_reduction(x : BigNumber, mod : BigNumber) -> BigNumber:
-    if str(mod) == "0":
+def solve_reduction(x: BigNumber, mod: BigNumber) -> BigNumber:
+    if mod.isZero():
         return None
     elif not x.isNegative:
         #TODO implement also for negative x
