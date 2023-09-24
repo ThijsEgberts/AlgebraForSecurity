@@ -11,7 +11,7 @@ def solve_extended_euclidean(a: BigNumber, b: BigNumber) -> (BigNumber, BigNumbe
     
     gcd, x1, y1 = solve_extended_euclidean(solve_division_with_remainder(b, a)[1], a)
     
-    x = y1 - solve_multiplication_karatsuba((solve_division_with_remainder(b, a)[0]), x1)
+    x = solve_subtraction_integer_arithmetic(y1, solve_multiplication_karatsuba((solve_division_with_remainder(b, a)[0]), x1))
     y = x1
     
     return gcd, x, y
