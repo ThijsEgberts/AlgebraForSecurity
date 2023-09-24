@@ -148,8 +148,8 @@ def runAll():
 # runRealisticIntMulti()
 
 # Modular Addition Subtraction tests
-runSimpleModAddSub()
-runRealisticModAddSub()
+# runSimpleModAddSub()
+# runRealisticModAddSub()
 
 # Modular Multiplication tests
 # runSimpleModMulti()

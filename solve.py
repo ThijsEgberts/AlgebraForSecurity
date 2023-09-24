@@ -95,7 +95,7 @@ def solve(exercise: dict) -> str:
                 raise Exception(
                     "Invalid type for reduction, only modular_arithmetic is supported")
 
-        case {'operation': 'inverse'}:
+        case {'operation': 'inversion'}:
             if exercise["type"] == "modular_arithmetic":
                 return str(inverse.solve_inverse(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
             else:
