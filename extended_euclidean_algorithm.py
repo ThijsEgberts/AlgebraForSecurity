@@ -1,12 +1,13 @@
 import BigNumber
+from fixedint import Int32
 import division
 import addition_subtraction
 import multiplication_karatsuba
 
 # https://brilliant.org/wiki/extended-euclidean-algorithm/
 def solve_extended_euclidean_algorithm(a, b):
-    x, y, u, v = 0,1,1,0
-    while a != 0:
+    x, y, u, v = Int32(0),Int32(1),Int32(1),Int32(0)
+    while a != Int32(0):
         q, r = division.solve_division_with_remainder(x,y)
         m = addition_subtraction.solve_subtraction_integer_arithmetic(x,multiplication_karatsuba(u,q))
         n = addition_subtraction.solve_subtraction_integer_arithmetic(y,multiplication_karatsuba(v,q))
