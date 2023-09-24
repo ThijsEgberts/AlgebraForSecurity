@@ -5,11 +5,14 @@ import addition_subtraction
 from multiplication_primary import solve_multiplication_primary
 
 
-def solve_multiplication_karatsuba(x: BigNumber, y: BigNumber) -> BigNumber:
+def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
     """
 
     """
-
+    #create copies so we don't mess stuff up with the original x and y
+    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
+    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
+    
     x.matchExponentsLength(y)
     n = len(x.exponents)
 
@@ -21,7 +24,7 @@ def solve_multiplication_karatsuba(x: BigNumber, y: BigNumber) -> BigNumber:
     # -a * -b =  ab
     if (x.isNegative != y.isNegative):
         negativeResult = 1
-
+    
     x.setSign(0) #make x positive
     y.setSign(0)
 
