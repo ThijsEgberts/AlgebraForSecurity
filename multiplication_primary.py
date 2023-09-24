@@ -1,9 +1,17 @@
 from BigNumber import BigNumber
 from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
-import division
 import addition_subtraction
 
+# Code taken from https://stackoverflow.com/questions/2267362/how-to-convert-an-integer-to-a-string-in-any-base
+def numberToBase(n : Int32, b : Int32):
+    if n == 0:
+        return [0]
+    digits = []
+    while n:
+        digits.append(int(n % b))
+        n //= b
+    return digits[::-1]
 
 def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
     """
@@ -40,12 +48,10 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
                 exponents_result.insert(0, product)
                 carry = Int32(0)
             else:
-                result_big_number = BigNumber(str(product), x.radix)
-                div_remainder = division.solve_division_with_remainder(
-                    result_big_number, BigNumber(str(x.radix), x.radix))
-                div_remainder[1].removeLeadingZeroes()
-                exponents_result.insert(0, div_remainder[1].exponents[0])
-                carry = Int32(div_remainder[0].exponents[0])
+                result_big_number = createBigNumberFromExponents(Int32(x.radix), numberToBase(Int32(product), Int32(x.radix)), False)
+
+                exponents_result.insert(0, result_big_number.exponents[-1])
+                carry = Int32(result_big_number.exponents[0])
 
         # If there is a carry left, add it to the result
         if carry != Int32(0):

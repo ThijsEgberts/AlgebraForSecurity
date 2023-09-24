@@ -1,5 +1,4 @@
 from BigNumber import BigNumber
-import BigNumber as bn
 from addition_subtraction import solve_addition_integer_arithmetic, solve_subtraction_integer_arithmetic
 
 
@@ -28,3 +27,6 @@ def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list:
     # Result contains the quotient and the remainder in form [quotient, remainder]
     result = [quotient, x]
     return result
+
+print(solve_division_with_remainder(
+                    BigNumber("140", 16), BigNumber(str(16), 16))[0].exponents)
