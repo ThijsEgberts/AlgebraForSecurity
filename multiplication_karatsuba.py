@@ -18,7 +18,7 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     y.isNegative = 0
 
     # from about 40 digits primary school multiplication is faster
-    if (num_exponents <= 40):
+    if (num_exponents < 50):
         # Primitive multiplications
         return solve_multiplication_primary(x, y)
 
