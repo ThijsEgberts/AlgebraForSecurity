@@ -183,5 +183,5 @@ print(end)
 # runRealisticIntEucl()
 
 # All tests
-runAll()
+#runAll()
 # runRealisticIntMulti()

@@ -52,11 +52,11 @@ def division_by_subtraction_with_remainder(x_: BigNumber, y_: BigNumber) -> list
     quotient = BigNumber(x.radix, [0], 0)
     one = BigNumber(x.radix, [1], 0)
 
-    while xCopy.compare(yCopy, greater_or_equal=True):
+    while x.compare(y, greater_or_equal=True):
         # Calculate the remainder after subtracting y from x
-        xCopy = solve_subtraction_integer_arithmetic(xCopy, yCopy)
+        x = solve_subtraction_integer_arithmetic(x, y)
         # Add 1 to the quotient
         quotient = solve_addition_integer_arithmetic(quotient, one)
 
     # Result contains the quotient and the remainder in form [quotient, remainder]
-    return [quotient, xCopy]
+    return [quotient, x]
