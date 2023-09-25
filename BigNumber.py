@@ -1,27 +1,26 @@
-from fixedint import Int32, MutableInt32
 import string
 
 
 class BigNumber:
 
     exponents = []  # a list of exponents for the exponential representation of the number, so 3 in binary will be represented as [1,1]
-    radix = Int32(0)
+    radix = 0
     isNegative = False
 
     # Construct a BigNumber from an exponents list
-    def __init__(self, radix: Int32, exponents: list, isNegative: int) -> None:
-        self.radix = Int32(radix)
+    def __init__(self, radix: int, exponents: list, isNegative: bool) -> None:
+        self.radix = radix
         self.exponents = exponents
-        self.isNegative = isNegative
+        self.isNegative = bool(isNegative)
 
     # Parses a string representing a number to a BigNumber format
-    def parseString(self, stringNr: string, radix: Int32):
+    def parseString(self, stringNr: string, radix: int):
 
         if (stringNr == ""):
             raise Exception('Empty string')
 
         if radix <= 0 or radix > 16:  # check correct format
-            self.radix = Int32(radix)
+            self.radix = radix
 
         # check if the number is negative
         if stringNr[0] == "-":
@@ -39,37 +38,37 @@ class BigNumber:
         for i in range(0, length):  # skip the minus sign if the number is negative
             match stringNr[i]:
                 case '0':
-                    self.exponents[i] = Int32(0)
+                    self.exponents[i] = 0
                 case '1':
-                    self.exponents[i] = Int32(1)
+                    self.exponents[i] = 1
                 case '2':
-                    self.exponents[i] = Int32(2)
+                    self.exponents[i] = 2
                 case '3':
-                    self.exponents[i] = Int32(3)
+                    self.exponents[i] = 3
                 case '4':
-                    self.exponents[i] = Int32(4)
+                    self.exponents[i] = 4
                 case '5':
-                    self.exponents[i] = Int32(5)
+                    self.exponents[i] = 5
                 case '6':
-                    self.exponents[i] = Int32(6)
+                    self.exponents[i] = 6
                 case '7':
-                    self.exponents[i] = Int32(7)
+                    self.exponents[i] = 7
                 case '8':
-                    self.exponents[i] = Int32(8)
+                    self.exponents[i] = 8
                 case '9':
-                    self.exponents[i] = Int32(9)
+                    self.exponents[i] = 9
                 case 'A':
-                    self.exponents[i] = Int32(10)
+                    self.exponents[i] = 10
                 case 'B':
-                    self.exponents[i] = Int32(11)
+                    self.exponents[i] = 11
                 case 'C':
-                    self.exponents[i] = Int32(12)
+                    self.exponents[i] = 12
                 case 'D':
-                    self.exponents[i] = Int32(13)
+                    self.exponents[i] = 13
                 case 'E':
-                    self.exponents[i] = Int32(14)
+                    self.exponents[i] = 14
                 case 'F':
-                    self.exponents[i] = Int32(15)
+                    self.exponents[i] = 15
                 case _:
                     raise Exception('Radix out of bounds')
 
@@ -122,19 +121,10 @@ class BigNumber:
         return all(exponent == 0 for exponent in self.exponents)
 
     def isOne(self) -> bool:
-        if len(self.exponents) == 1 and self.exponents[0] == Int32(1):
+        if len(self.exponents) == 1 and self.exponents[0] == 1:
             return True
-        else:
-            for i in range(len(self.exponents)-1):  # in case of leading
-                if self.exponents[i] != Int32(0):
-                    return False
-            if self.exponents[len(self.exponents)-1] == Int32(1):
-                return True
-            else:
-                return False
 
-    def returnOne():
-        return
+        return all(exponent == 0 for i, exponent in enumerate(self.exponents) if i != len(self.exponents) - 1) and self.exponents[-1] == 1
 
     def compare(self, other: 'BigNumber', greater_or_equal: bool = False) -> bool:
         """
@@ -175,7 +165,7 @@ class BigNumber:
             self.exponents = [0] * abs(len_diff) + self.exponents
 
     def addLeadingZero(self):
-        self.exponents.insert(0, Int32(0))
+        self.exponents.insert(0, 0)
 
     # Shifts number x digits left, adding 0
     def shiftLeft(self, shift: int):
@@ -186,7 +176,7 @@ class BigNumber:
         return x
 
 
-def createBigNumberFromString(string: str, radix: Int32):
+def createBigNumberFromString(string: str, radix: int):
     bn = BigNumber(radix, [], 0)
     bn.parseString(string, radix)
     return bn

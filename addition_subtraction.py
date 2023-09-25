@@ -12,21 +12,16 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     """
     # Handle non-equal signs
     if x.isNegative != y.isNegative:
-        # Handle sign flip
-        flip_x = x.isNegative
-        flip_y = y.isNegative
-        if flip_x:
+        if x.isNegative:
             x.isNegative = False
-        if flip_y:
-            y.isNegative = False
-        # Calculate subtraction
-        result = solve_subtraction_integer_arithmetic(x, y)
-        # Restore signs
-        if flip_x:
+            result = solve_subtraction_integer_arithmetic(y, x)
             x.isNegative = True
-        if flip_y:
+            return result
+        else:
+            y.isNegative = False
+            result = solve_subtraction_integer_arithmetic(x, y)
             y.isNegative = True
-        return result
+            return result
 
     # Match the exponent list length
     x.matchExponentsLength(y)
@@ -84,16 +79,15 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     6. Return the result.
     """
 
-    # zero check because we have both positive and negative 0
-    xZero = x.isZero()
-    yZero = y.isZero()
-    if not (xZero and yZero): #check it here so we don't do all the other checks when we do a lot of subtractions
-        if xZero and yZero:
-            return BigNumber(x.radix, [0], False)
-        elif xZero and not yZero:
-            return BigNumber(y.radix, y.exponents, y.isNegative).flipSign()
-        elif not xZero and yZero:
-            return x
+    # Check for zero values
+    if x.isZero():
+        if y.isZero():
+            return BigNumber(x.radix, [0], 0)
+
+        # Flip the sign of y
+        return BigNumber(y.radix, y.exponents, not y.isNegative)
+    elif y.isZero():
+        return x
 
     # 1. Match the exponents of the two numbers.
     # x.matchExponentsLength(y)
@@ -103,42 +97,45 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     #  -a -  b = -(a + b)
     #   a - -b = a + b
     #  -a - -b = b - a
-    if (x.isNegative and not y.isNegative):
-        x.isNegative = 0
-        temp = solve_addition_integer_arithmetic(x, y)
-        temp.isNegative = 1
-        x.isNegative = 1
-        return temp
-
-    if (not x.isNegative and y.isNegative):
-        y.isNegative = 0
-        answer = solve_addition_integer_arithmetic(x, y)
-        y.isNegative = 1
-        return answer
-
-    # If both signs are negative, swap the parameters
-    if x.isNegative and y.isNegative:
-        x.isNegative = 0
-        y.isNegative = 0
-
-        x, y = y, x  # Swap x and y
+    if x.isNegative != y.isNegative:
+        if x.isNegative:
+            x.isNegative = False
+            result = solve_addition_integer_arithmetic(x, y)
+            x.isNegative = True
+            result.isNegative = True
+            return result
+        else:
+            y.isNegative = False
+            result = solve_addition_integer_arithmetic(x, y)
+            y.isNegative = True
+            return result
+    elif x.isNegative and y.isNegative:
+        # If both signs are negative, swap the parameters
+        x.isNegative = False
+        y.isNegative = False
+        result = solve_subtraction_integer_arithmetic(y, x)
+        x.isNegative = True
+        y.isNegative = True
+        return result
 
     # If the second number is larger than the first, swap and mark that it needs inverting
     # a - b = -(b - a)
-    swapSign = 0
     if y.compare(x):
-        x, y = y, x  # Swap x and y
-        swapSign = 1
+        result = solve_subtraction_integer_arithmetic(y, x)
+        result.isNegative = True
+        return result
 
     # 3. If the signs are the same, we need to subtract the numbers starting with the last exponent and carry the 1 if needed
-    
-    exponentsLenX = len(x.exponents) 
+
+    exponentsLenX = len(x.exponents)
     exponentsLenY = len(y.exponents)
-    cutoff = exponentsLenX - exponentsLenY - 1
-    exponents = x.exponents #we know the maximum size of the answer is the amount of digits of the largest operant
+    min_len = exponentsLenX - exponentsLenY - 1
+
+    # we know the maximum size of the answer is the amount of digits of the largest operant
+    exponents = x.exponents
     borrow = 0
     # i counts from len(x.exponents)-1 to -1
-    for i in range(exponentsLenX - 1, cutoff, -1):
+    for i in range(exponentsLenX - 1, min_len, -1):
         # Optimization: Calculute once
         subtraction = x.exponents[i] - y.exponents[i] - borrow
         # No borrow needed
@@ -153,21 +150,11 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
             # borrow the 1
             borrow = 1
 
-    # 4. If there is a carry left, we need to add it to the exponents.
-    # if borrow == 1:
-    #     exponents.append(1)
-
-    # Get rid of leading zeroes
-    result = BigNumber(x.radix, exponents, x.isNegative)
-    # result.removeLeadingZeroes()
-
-    if swapSign:
-        result.flipSign()
-    return result
+    return BigNumber(x.radix, exponents, x.isNegative)
 
 
 def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNumber) -> BigNumber:
-    from division import solve_division_with_remainder
+    from reduction import solve_reduction
     """
     Solves the subtraction of two numbers in modular arithmetic.
     
@@ -176,10 +163,4 @@ def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: Bi
     2. Solve the division with remainder of the result and the modulus.
     3. Return the remainder as a big number
     """
-    remainder = solve_division_with_remainder(
-        solve_subtraction_integer_arithmetic(x, y), modulus)[1]
-
-    if (remainder.isNegative):
-        remainder = solve_addition_integer_arithmetic(remainder, modulus)
-
-    return remainder
+    return solve_reduction(solve_subtraction_integer_arithmetic(x, y), modulus)
