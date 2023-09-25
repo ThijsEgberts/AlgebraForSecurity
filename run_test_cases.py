@@ -69,13 +69,16 @@ def runRealisticModAddSub():
 
 
 def runRealisticIntMulti():
+    print("realistic karatsuba")
     solve.solve_exercise("exercises\Realistic\Exercises\exercise3.json",
                          "exercises\Realistic\Answers\\answer3.json", False)
+    print("realistic primary")
     solve.solve_exercise("exercises\Realistic\Exercises\exercise7.json",
                          "exercises\Realistic\Answers\\answer7.json", False)
 
 
 def runRealisticModMulti():
+    print("realistic mod multi")
     solve.solve_exercise("exercises\Realistic\Exercises\exercise12.json",
                          "exercises\Realistic\Answers\\answer12.json", False)
     solve.solve_exercise("exercises\Realistic\Exercises\exercise13.json",
@@ -83,6 +86,7 @@ def runRealisticModMulti():
 
 
 def runRealisticModInv():
+    print("realistic inversion")
     solve.solve_exercise("exercises\Realistic\Exercises\exercise0.json",
                          "exercises\Realistic\Answers\\answer0.json", False)
     solve.solve_exercise("exercises\Realistic\Exercises\exercise9.json",
@@ -145,8 +149,8 @@ runSimpleIntAddSub()
 runRealisticIntAddSub()
 
 # Multiplication tests
-# runSimpleIntMulti()
-# runRealisticIntMulti()
+runSimpleIntMulti()
+runRealisticIntMulti()
 
 # Modular Addition Subtraction tests
 # runSimpleModAddSub()
