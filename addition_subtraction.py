@@ -84,21 +84,19 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     6. Return the result.
     """
 
-    # x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
-    # y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
-
     # zero check because we have both positive and negative 0
     xZero = x.isZero()
     yZero = y.isZero()
-    if xZero and yZero:
-        return BigNumber(y.radix, y.exponents, y.isNegative)
-    elif xZero and not yZero:
-        return BigNumber(y.radix, y.exponents, y.isNegative).flipSign()
-    elif not xZero and yZero:
-        return x
+    if not (xZero and yZero): #check it here so we don't do all the other checks when we do a lot of subtractions
+        if xZero and yZero:
+            return BigNumber(x.radix, [0], False)
+        elif xZero and not yZero:
+            return BigNumber(y.radix, y.exponents, y.isNegative).flipSign()
+        elif not xZero and yZero:
+            return x
 
     # 1. Match the exponents of the two numbers.
-    x.matchExponentsLength(y)
+    # x.matchExponentsLength(y)
 
     # 2. If the signs are different, we need to use addition
     #   a -  b = a - b
@@ -113,8 +111,9 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
         return temp
 
     if (not x.isNegative and y.isNegative):
-        answer = solve_addition_integer_arithmetic(x, y.flipSign())
-        y.flipSign()
+        y.isNegative = 0
+        answer = solve_addition_integer_arithmetic(x, y)
+        y.isNegative = 1
         return answer
 
     # If both signs are negative, swap the parameters
@@ -132,32 +131,35 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
         swapSign = 1
 
     # 3. If the signs are the same, we need to subtract the numbers starting with the last exponent and carry the 1 if needed
-    exponents = []
+    
+    exponentsLenX = len(x.exponents) 
+    exponentsLenY = len(y.exponents)
+    cutoff = exponentsLenX - exponentsLenY - 1
+    exponents = x.exponents #we know the maximum size of the answer is the amount of digits of the largest operant
     borrow = 0
-
     # i counts from len(x.exponents)-1 to -1
-    for i in range(len(x.exponents) - 1, -1, -1):
+    for i in range(exponentsLenX - 1, cutoff, -1):
         # Optimization: Calculute once
         subtraction = x.exponents[i] - y.exponents[i] - borrow
         # No borrow needed
         if subtraction >= 0:
-            exponents.insert(0, subtraction)
+            # exponents.insert(0, subtraction)
+            exponents[i] = subtraction
             borrow = 0
         # borrow needed :shook:
         elif subtraction < 0:
-            exponents.insert(
-                0, subtraction + x.radix)
-
+            # exponents.insert(0, subtraction + x.radix)
+            exponents[i] = subtraction + x.radix
             # borrow the 1
             borrow = 1
 
     # 4. If there is a carry left, we need to add it to the exponents.
-    if borrow == 1:
-        exponents.insert(0, 1)
+    # if borrow == 1:
+    #     exponents.append(1)
 
     # Get rid of leading zeroes
     result = BigNumber(x.radix, exponents, x.isNegative)
-    result.removeLeadingZeroes()
+    # result.removeLeadingZeroes()
 
     if swapSign:
         result.flipSign()
