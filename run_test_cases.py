@@ -161,11 +161,11 @@ def runAll():
 # runSimpleModMulti()
 # runRealisticModMulti()
 end = 0
-average = 1
+average = 10
 for i in range(average):
     start = time.time()
-    solve.solve_exercise("exercises\Realistic\Exercises\exercise8.json",
-                         "exercises\Realistic\Answers\\answer8.json", False)
+    solve.solve_exercise("exercises\Realistic\Exercises\exercise3.json",
+                         "exercises\Realistic\Answers\\answer3.json", False)
     end += time.time()-start
 end /= average
 print(end)
