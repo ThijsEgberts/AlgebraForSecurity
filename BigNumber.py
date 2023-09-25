@@ -8,10 +8,11 @@ class BigNumber:
     radix = Int32(0)
     isNegative = 0
 
-    # Construct a BigNumber from a string
-    def __init__(self, string: string, radix: Int32) -> None:
+    # Construct a BigNumber from an exponents list
+    def __init__(self, radix: Int32, exponents: list, isNegative: int) -> None:
         self.radix = Int32(radix)
-        self.parseString(string, radix)
+        self.exponents = exponents
+        self.isNegative = isNegative
 
     # Parses a string representing a number to a BigNumber format
     def parseString(self, stringNr: string, radix: Int32):
@@ -113,18 +114,18 @@ class BigNumber:
                 output += str(exponent)
 
         return output
-    
+
     def isZero(self) -> bool:
         if len(self.exponents) == 1 and self.exponents[0] == Int32(0):
             return True
         else:
-            for i in range(len(self.exponents)): #in case of leading or trailing zeroes
+            for i in range(len(self.exponents)):  # in case of leading or trailing zeroes
                 if self.exponents[i] != Int32(0):
                     return False
             return True
-        
+
     def returnOne():
-        return 
+        return
 
     def compare(self, other: 'BigNumber', greater_or_equal: bool = False) -> bool:
         """
@@ -170,15 +171,14 @@ class BigNumber:
 
     # Only works with positive shift
     def bitShift(self, shift: int):
-        x = createBigNumberFromExponents(
+        x = BigNumber(
             self.radix, self.exponents, self.isNegative)
         for _ in range(shift):
             x.exponents.append(0)
         return x
 
 
-def createBigNumberFromExponents(radix, exponents, isNegative):
-    x = BigNumber("0", radix)
-    x.exponents = exponents.copy()
-    x.isNegative = isNegative
-    return x
+def createBigNumberFromString(string: str, radix: Int32):
+    bn = BigNumber(radix, [], 0)
+    bn.parseString(string, radix)
+    return bn

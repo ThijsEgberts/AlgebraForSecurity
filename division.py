@@ -16,8 +16,8 @@ def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list[BigNumber]
     This is based on Euclid's algorithm.
     """
 
-    quotient = BigNumber("0", x.radix)
-    one = BigNumber("1", x.radix)
+    quotient = BigNumber(x.radix, [0], 0)
+    one = BigNumber(x.radix, [1], 0)
 
     while x.compare(y, greater_or_equal=True):
         # Calculate the remainder after subtracting y from x

@@ -1,5 +1,4 @@
 from BigNumber import BigNumber
-from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 
 
@@ -62,9 +61,9 @@ def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber
     4. Return the result.
     """
 
-    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
-    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
-    
+    x = BigNumber(x_.radix, x_.exponents, x_.isNegative)
+    y = BigNumber(y_.radix, y_.exponents, y_.isNegative)
+
     # 1.
     # If the signs are different, we need to subtract the smaller number from the bigger number
     #   a +  b = a + b
@@ -95,7 +94,8 @@ def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber
             carry = Int32(0)
         # Carry needed :shook:
         elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
-            exponents.insert(0, x.exponents[i] + y.exponents[i] + carry - x.radix)
+            exponents.insert(
+                0, x.exponents[i] + y.exponents[i] + carry - x.radix)
 
             # Carry the 1
             carry = Int32(1)
@@ -106,7 +106,7 @@ def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber
         exponents.insert(0, Int32(1))
 
     # 4. Return the bignumber
-    return createBigNumberFromExponents(x.radix, exponents, x.isNegative)
+    return BigNumber(x.radix, exponents, x.isNegative)
 
 
 def solve_addition_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNumber) -> BigNumber:
@@ -122,9 +122,9 @@ def solve_addition_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNu
     remainder = solve_division_with_remainder(
         solve_addition_integer_arithmetic(x, y), modulus)[1]
 
-    if(remainder.isNegative):
+    if (remainder.isNegative):
         remainder = solve_addition_integer_arithmetic(remainder, modulus)
-        
+
     return remainder
 
 
@@ -140,12 +140,12 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
     5. If there is a carry left, we need to add it to the exponents.
     6. Return the result.
     """
-    
-    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
-    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
-    
-    #zero check because we have both positive and negative 0
-    #TODO efficient zero check
+
+    x = BigNumber(x_.radix, x_.exponents, x_.isNegative)
+    y = BigNumber(y_.radix, y_.exponents, y_.isNegative)
+
+    # zero check because we have both positive and negative 0
+    # TODO efficient zero check
     xZero = x.isZero()
     yZero = y.isZero()
     if xZero and yZero:
@@ -154,8 +154,7 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
         return y.flipSign()
     elif not xZero and yZero:
         return x
-    
-    
+
     # 1. Match the exponents of the two numbers.
     x.matchExponentsLength(y)
 
@@ -210,7 +209,7 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
         exponents.insert(0, 1)
 
     # Get rid of leading zeroes
-    result = createBigNumberFromExponents(x.radix, exponents, x.isNegative)
+    result = BigNumber(x.radix, exponents, x.isNegative)
     result.removeLeadingZeroes()
 
     if swapSign:
@@ -232,7 +231,7 @@ def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: Bi
     remainder = solve_division_with_remainder(
         solve_subtraction_integer_arithmetic(x, y), modulus)[1]
 
-    if(remainder.isNegative):
+    if (remainder.isNegative):
         remainder = solve_addition_integer_arithmetic(remainder, modulus)
 
     return remainder
