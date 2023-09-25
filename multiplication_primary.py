@@ -33,14 +33,18 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
     result = BigNumber(x.radix, [0], False)
     carry = 0
 
+    # Precompute lengths of exponents arrays
+    len_x_exponents = len(x.exponents)
+    len_y_exponents = len(y.exponents)
+
     # Multiply exponents from right to left
-    for i in range(len(x.exponents) - 1, -1, -1):
+    for i in range(len_x_exponents - 1, -1, -1):
         exponents_result = []
 
         # Fill the result with zeros corresponding to the position of the exponent
-        exponents_result = [0] * (len(x.exponents) - 1 - i)
+        exponents_result = [0] * (len_x_exponents - 1 - i)
 
-        for j in range(len(y.exponents) - 1, -1, -1):
+        for j in range(len_y_exponents - 1, -1, -1):
             product = x.exponents[i] * y.exponents[j] + carry
 
             if product < x.radix:
