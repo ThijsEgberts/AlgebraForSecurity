@@ -127,9 +127,6 @@ class BigNumber:
 
         return all(exponent == Int32(0) for i, exponent in enumerate(self.exponents) if i != len(self.exponents) - 1) and self.exponents[-1] == Int32(1)
 
-    def returnOne():
-        return
-
     def compare(self, other: 'BigNumber', greater_or_equal: bool = False) -> bool:
         """
         Compares this BigNumber to another BigNumber.
