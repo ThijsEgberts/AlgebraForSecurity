@@ -71,9 +71,6 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     return z
 
 def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
-    """
-
-    """
     #create copies so we don't mess stuff up with the original x and y
     x = BigNumber(x_.radix, x_.exponents, x_.isNegative)
     y = BigNumber(y_.radix, y_.exponents, y_.isNegative)
