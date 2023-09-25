@@ -149,14 +149,16 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
 
     # i counts from len(x.exponents)-1 to -1
     for i in range(len(x.exponents) - 1, -1, -1):
+        # Optimization: Calculute once
+        subtraction = x.exponents[i] - y.exponents[i] - borrow
         # No borrow needed
-        if x.exponents[i] - y.exponents[i] - borrow >= 0:
-            exponents.insert(0, x.exponents[i] - y.exponents[i] - borrow)
+        if subtraction >= 0:
+            exponents.insert(0, subtraction)
             borrow = 0
         # borrow needed :shook:
-        elif x.exponents[i] - y.exponents[i] - borrow < 0:
+        elif subtraction < 0:
             exponents.insert(
-                0, x.exponents[i] - y.exponents[i] - borrow + x.radix)
+                0, subtraction + x.radix)
 
             # borrow the 1
             borrow = 1

@@ -151,17 +151,17 @@ def runAll():
 
 # Multiplication tests
 # runSimpleIntMulti()
-runRealisticIntMulti()
+# runRealisticIntMulti()
 
 # Modular Addition Subtraction tests
 # runSimpleModAddSub()
 # runRealisticModAddSub()
 
 # Modular Multiplication tests
-runSimpleModMulti()
-runRealisticModMulti()
+# runSimpleModMulti()
+# runRealisticModMulti()
 end = 0
-average = 100
+average = 1000
 for i in range(average):
     start = time.time()
     solve.solve_exercise("exercises\Realistic\Exercises\exercise4.json",
@@ -183,4 +183,4 @@ print(end)
 # runRealisticIntEucl()
 
 # All tests
-runRealisticIntMulti()
+# runRealisticIntMulti()
