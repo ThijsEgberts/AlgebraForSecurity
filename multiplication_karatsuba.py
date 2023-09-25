@@ -8,6 +8,11 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     x.matchExponentsLength(y)
     num_exponents = len(x.exponents)
 
+    # from about 40 digits primary school multiplication is faster
+    if (num_exponents < 50):
+        # Primitive multiplications
+        return solve_multiplication_primary(x, y)
+
     # If the signs are different, flip the sign at the end
     # a *  b =  ab
     # -a *  b = -ab
@@ -16,11 +21,6 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     is_result_negative = x.isNegative != y.isNegative
     x.isNegative = 0
     y.isNegative = 0
-
-    # from about 40 digits primary school multiplication is faster
-    if (num_exponents < 50):
-        # Primitive multiplications
-        return solve_multiplication_primary(x, y)
 
     # If num_exponents is odd, make it even
     if num_exponents % 2 == 1:
