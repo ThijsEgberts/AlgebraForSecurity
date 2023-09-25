@@ -116,10 +116,10 @@ class BigNumber:
         return output
 
     def isZero(self) -> bool:
-        if len(self.exponents) == 1 and self.exponents[0] == Int32(0):
+        if len(self.exponents) == 1 and self.exponents[0] == 0:
             return True
 
-        return all(exponent == Int32(0) for exponent in self.exponents)
+        return all(exponent == 0 for exponent in self.exponents)
 
     def isOne(self) -> bool:
         if len(self.exponents) == 1 and self.exponents[0] == Int32(1):
