@@ -124,14 +124,8 @@ class BigNumber:
     def isOne(self) -> bool:
         if len(self.exponents) == 1 and self.exponents[0] == Int32(1):
             return True
-        else:
-            for i in range(len(self.exponents)-1):  # in case of leading
-                if self.exponents[i] != Int32(0):
-                    return False
-            if self.exponents[len(self.exponents)-1] == Int32(1):
-                return True
-            else:
-                return False
+
+        return all(exponent == Int32(0) for i, exponent in enumerate(self.exponents) if i != len(self.exponents) - 1) and self.exponents[-1] == Int32(1)
 
     def returnOne():
         return
