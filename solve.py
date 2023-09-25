@@ -1,6 +1,6 @@
 import json
 from fixedint import Int32
-from BigNumber import BigNumber
+from BigNumber import createBigNumberFromString
 import addition_subtraction
 import multiplication_modular
 import multiplication_primary
@@ -28,12 +28,16 @@ def solve_exercise(exercise_location: str, answer_location: str, saveAnswer: boo
     else:
         answerDict = load_answer(answer_location)
         if exercise["operation"] == "extended_euclidean_algorithm":
-            print("The gcd is correct: " + str(answerDict["answer-gcd"] == answer[0]))
-            print("The a is correct: " + str(answerDict["answer-a"] == answer[1]))
-            print("The b is correct: " + str(answerDict["answer-b"] == answer[2]))
+            print("The gcd is correct: " +
+                  str(answerDict["answer-gcd"] == answer[0]))
+            print("The a is correct: " +
+                  str(answerDict["answer-a"] == answer[1]))
+            print("The b is correct: " +
+                  str(answerDict["answer-b"] == answer[2]))
         else:
-            
-            print("The answer is correct: " + str(answerDict["answer"] == answer))
+
+            print("The answer is correct: " +
+                  str(answerDict["answer"] == answer))
 
 
 def solve(exercise: dict) -> str:
@@ -43,9 +47,9 @@ def solve(exercise: dict) -> str:
     match exercise:
         case {'operation': 'addition'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(addition_subtraction.solve_addition_integer_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(addition_subtraction.solve_addition_integer_arithmetic(createBigNumberFromString(exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["y"], Int32(exercise["radix"]))))
             elif exercise["type"] == "modular_arithmetic":
-                return str(addition_subtraction.solve_addition_modular_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
+                return str(addition_subtraction.solve_addition_modular_arithmetic(createBigNumberFromString(exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["y"], Int32(exercise["radix"])), createBigNumberFromString(exercise["modulus"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
@@ -53,9 +57,9 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'subtraction'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(addition_subtraction.solve_subtraction_integer_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(addition_subtraction.solve_subtraction_integer_arithmetic(createBigNumberFromString(exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["y"], Int32(exercise["radix"]))))
             elif exercise["type"] == "modular_arithmetic":
-                return str(addition_subtraction.solve_subtraction_modular_arithmetic(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
+                return str(addition_subtraction.solve_subtraction_modular_arithmetic(createBigNumberFromString(exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["y"], Int32(exercise["radix"])), createBigNumberFromString(exercise["modulus"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for subtraction, only integer_arithmetic and modular_arithmetic are supported")
@@ -69,21 +73,22 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'multiplication_primary'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(multiplication_primary.solve_multiplication_primary(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(multiplication_primary.solve_multiplication_primary(createBigNumberFromString(exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["y"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for multiplication_primary, only integer_arithmetic is supported")
 
         case {'operation': 'multiplication_karatsuba'}:
             if exercise["type"] == "integer_arithmetic":
-                return str(multiplication_karatsuba.solve_multiplication_karatsuba(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"]))))
+                return str(multiplication_karatsuba.solve_multiplication_karatsuba(createBigNumberFromString(exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["y"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for multiplication_karatsuba, only integer_arithmetic is supported")
 
         case {'operation': 'extended_euclidean_algorithm'}:
             if exercise["type"] == "integer_arithmetic":
-                gcd, x, y = extended_euclidean_algorithm.solve_extended_euclidean(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["y"], Int32(exercise["radix"])))
+                gcd, x, y = extended_euclidean_algorithm.solve_extended_euclidean(createBigNumberFromString(
+                    exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["y"], Int32(exercise["radix"])))
                 return [str(gcd), str(x), str(y)]
             else:
                 raise Exception(
@@ -91,7 +96,8 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'reduction'}:
             if exercise["type"] == "modular_arithmetic":
-                ans =reduction.solve_reduction(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"])))
+                ans = reduction.solve_reduction(createBigNumberFromString(exercise["x"], Int32(
+                    exercise["radix"])), createBigNumberFromString(exercise["modulus"], Int32(exercise["radix"])))
                 if ans != None:
                     return str(ans)
                 else:
@@ -102,7 +108,7 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'inversion'}:
             if exercise["type"] == "modular_arithmetic":
-                return str(inverse.solve_inverse(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
+                return str(inverse.solve_inverse(createBigNumberFromString(exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["modulus"], Int32(exercise["radix"]))))
             else:
                 raise Exception(
                     "Invalid type for inverse, only modular_arithmetic is supported")
@@ -120,7 +126,8 @@ def save_answer(answer, answer_location: str, operation: str):
     """
     # Create the answer object
     if operation == "extended_euclidean_algorithm":
-        answer_object = {"answer-a" : answer[1], "answer-b" : answer[2], "answer-gcd" : answer[0]}
+        answer_object = {
+            "answer-a": answer[1], "answer-b": answer[2], "answer-gcd": answer[0]}
     else:
         answer_object = {"answer": answer}
     # Save the answer object to a JSON file

@@ -1,4 +1,5 @@
 import solve
+import time
 
 # Simple test cases
 
@@ -145,8 +146,8 @@ def runAll():
 
 
 # Addition Subtraction tests
-runSimpleIntAddSub()
-runRealisticIntAddSub()
+# runSimpleIntAddSub()
+# runRealisticIntAddSub()
 
 # Multiplication tests
 runSimpleIntMulti()
@@ -159,18 +160,23 @@ runRealisticIntMulti()
 # Modular Multiplication tests
 # runSimpleModMulti()
 # runRealisticModMulti()
+start = time.time()
+solve.solve_exercise("exercises\Realistic\Exercises\exercise7.json",
+                     "exercises\Realistic\Answers\\answer7.json", False)
+end = start - time.time()
+print(end)
 
 # Modular Inverse tests
 # runSimpleModInv()
 # runRealisticModInv()
 
 # Modular Reduction tests
-runSimpleModRed()
-runRealisticModRed()
+# runSimpleModRed()
+# runRealisticModRed()
 
 # Extended Euclidean Algorithm tests
-runSimpleIntEucl()
-runRealisticIntEucl()
+# runSimpleIntEucl()
+# runRealisticIntEucl()
 
 # All tests
 # runAll()
