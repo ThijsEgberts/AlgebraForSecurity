@@ -1,29 +1,30 @@
-from BigNumber import BigNumber, createBigNumberFromExponents
+from BigNumber import BigNumber
 from division import solve_division_with_remainder
-from multiplication_karatsuba import solve_multiplication_karatsuba
-from addition_subtraction import solve_addition_integer_arithmetic, solve_subtraction_integer_arithmetic
+from addition_subtraction import solve_subtraction_integer_arithmetic
 from fixedint import Int32
 
 from multiplication_primary import solve_multiplication_primary
 
-#source: https://www.baeldung.com/cs/extended-euclidean-algorithm
+# source: https://www.baeldung.com/cs/extended-euclidean-algorithm
+
+
 def solve_extended_euclidean(a_: BigNumber, b_: BigNumber) -> (BigNumber, BigNumber, BigNumber):
     # when a or b is 0, the other is the gcd
     if a_.isZero():
-        return b_, BigNumber("0", a_.radix), BigNumber("1", a_.radix)
+        return b_, BigNumber(a_.radix, [0], 0), BigNumber(a_.radix, [1], 0)
     elif b_.isZero():
-        return a_, BigNumber("1", a_.radix), BigNumber("0", a_.radix)
-    
-    a = createBigNumberFromExponents(a_.radix, a_.exponents, a_.isNegative)
-    b = createBigNumberFromExponents(b_.radix, b_.exponents, b_.isNegative)
-    
+        return a_, BigNumber(a_.radix, [1], 0), BigNumber(a_.radix, [0], 0)
+
+    a = BigNumber(a_.radix, a_.exponents, a_.isNegative)
+    b = BigNumber(b_.radix, b_.exponents, b_.isNegative)
+
     # make sure a >= b
     if not a.compare(b, False):
-        b, a = a, b    
-    
-    x, x1, y, y1 = BigNumber("1", a.radix), BigNumber("0", a.radix), BigNumber("0", a.radix), BigNumber("1", a.radix)
-    
-    # repeat until gcd(a,0) = a
+        b, a = a, b
+
+    x, x1, y, y1 = BigNumber(a.radix, [1], 0), BigNumber(
+        a.radix, [0], 0), BigNumber(a.radix, [0], 0), BigNumber(a.radix, [1], 0)
+
     while not b.isZero():
         q, r = solve_division_with_remainder(a, b)
         
@@ -69,7 +70,7 @@ print("gcd same:", str(gcd) == str(gcd1))
 # # https://brilliant.org/wiki/extended-euclidean-algorithm/
 # def solve_extended_euclidean_algorithm(a, b):
 #     x, y, u, v = Int32(0),Int32(1),Int32(1),Int32(0)
-    
+
 #     while a != Int32(0):
 #         q, r = solve_division_with_remainder(x,y)
 #         m = solve_subtraction_integer_arithmetic(x, solve_multiplication_karatsuba(u,q))
@@ -89,7 +90,7 @@ print("gcd same:", str(gcd) == str(gcd1))
 #     # take the smallest number and the remainder of the division and repeat process
 #     if x >= y:
 #         return solve_euclidean_algorithm(y, r)
-#     else: 
+#     else:
 #         return solve_euclidean_algorithm(x,r)
 
 # gcd_, x_, y_ = solve_extended_euclidean(BigNumber("254", Int32(10)), BigNumber("44", Int32(10)))

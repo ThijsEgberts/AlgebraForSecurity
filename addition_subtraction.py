@@ -1,5 +1,4 @@
 from BigNumber import BigNumber
-from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 
 
@@ -51,7 +50,8 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
             carry = Int32(0)
         # Carry needed :shook:
         elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
-            exponents.insert(0, x.exponents[i] + y.exponents[i] + carry - x.radix)
+            exponents.insert(
+                0, x.exponents[i] + y.exponents[i] + carry - x.radix)
 
             # Carry the 1
             carry = Int32(1)
@@ -62,7 +62,7 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
         exponents.insert(0, Int32(1))
 
     # 4. Return the bignumber
-    return createBigNumberFromExponents(x.radix, exponents, x.isNegative)
+    return BigNumber(x.radix, exponents, x.isNegative)
 
 
 def solve_addition_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNumber) -> BigNumber:
@@ -78,9 +78,9 @@ def solve_addition_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNu
     remainder = solve_division_with_remainder(
         solve_addition_integer_arithmetic(x, y), modulus)[1]
 
-    if(remainder.isNegative):
+    if (remainder.isNegative):
         remainder = solve_addition_integer_arithmetic(remainder, modulus)
-        
+
     return remainder
 
 
@@ -108,9 +108,8 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     elif xZero and not yZero:
         return createBigNumberFromExponents(y.radix, y.exponents, y.isNegative).flipSign()
     elif not xZero and yZero:
-        return createBigNumberFromExponents(x.radix, x.exponents, x.isNegative)
-    
-    
+        return x
+
     # 1. Match the exponents of the two numbers.
     x.matchExponentsLength(y)
 
@@ -167,7 +166,7 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
         exponents.insert(0, 1)
 
     # Get rid of leading zeroes
-    result = createBigNumberFromExponents(x.radix, exponents, x.isNegative)
+    result = BigNumber(x.radix, exponents, x.isNegative)
     result.removeLeadingZeroes()
 
     if swapSign:
@@ -190,7 +189,7 @@ def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: Bi
     remainder = solve_division_with_remainder(
         solve_subtraction_integer_arithmetic(x, y), modulus)[1]
 
-    if(remainder.isNegative):
+    if (remainder.isNegative):
         remainder = solve_addition_integer_arithmetic(remainder, modulus)
 
     return remainder
