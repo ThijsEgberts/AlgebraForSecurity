@@ -150,8 +150,8 @@ def runAll():
 # runRealisticIntAddSub()
 
 # Multiplication tests
-runSimpleIntMulti()
-runRealisticIntMulti()
+# runSimpleIntMulti()
+# runRealisticIntMulti()
 
 # Modular Addition Subtraction tests
 # runSimpleModAddSub()
@@ -160,10 +160,14 @@ runRealisticIntMulti()
 # Modular Multiplication tests
 # runSimpleModMulti()
 # runRealisticModMulti()
-start = time.time()
-solve.solve_exercise("exercises\Realistic\Exercises\exercise7.json",
-                     "exercises\Realistic\Answers\\answer7.json", False)
-end = start - time.time()
+end = 0
+average = 2
+for i in range(average):
+    start = time.time()
+    solve.solve_exercise("exercises\Realistic\Exercises\exercise3.json",
+                         "exercises\Realistic\Answers\\answer3.json", False)
+    end += time.time()-start
+end /= average
 print(end)
 
 # Modular Inverse tests
