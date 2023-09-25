@@ -1,4 +1,3 @@
-from fixedint import Int32
 from BigNumber import BigNumber
 from addition_subtraction import solve_addition_integer_arithmetic, solve_subtraction_integer_arithmetic
 
@@ -29,6 +28,3 @@ def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list[BigNumber]
     # Result contains the quotient and the remainder in form [quotient, remainder]
     result = [quotient, x]
     return result
-
-# q, r = solve_division_with_remainder(BigNumber("E718278883287382932", Int32(16)), BigNumber("A73838474763626438", Int32(16)))
-# print("q:",q,"r:",r)
