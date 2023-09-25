@@ -6,7 +6,7 @@ class BigNumber:
 
     exponents = []  # a list of exponents for the exponential representation of the number, so 3 in binary will be represented as [1,1]
     radix = Int32(0)
-    isNegative = 0
+    isNegative = False
 
     # Construct a BigNumber from an exponents list
     def __init__(self, radix: Int32, exponents: list, isNegative: int) -> None:
@@ -25,10 +25,10 @@ class BigNumber:
 
         # check if the number is negative
         if stringNr[0] == "-":
-            self.isNegative = 1
+            self.isNegative = True
             stringNr = stringNr[1:]
         else:
-            self.isNegative = 0
+            self.isNegative = False
 
         length = len(stringNr)
 
@@ -80,14 +80,14 @@ class BigNumber:
     # flips the sign of the big number, ei -1 becomes 1
     def flipSign(self):
         if bool(self.isNegative):
-            self.isNegative = 0
+            self.isNegative = False
             return self
         else:
-            self.isNegative = 1
+            self.isNegative = True
             return self
 
-    def setSign(self, sign: int):
-        self.isNegative = sign
+    def setSign(self, sign: bool):
+        self.isNegative = bool(sign)
         return self
 
     def removeLeadingZeroes(self):
@@ -135,7 +135,7 @@ class BigNumber:
                 return True
             else:
                 return False
-            
+
     def returnOne():
         return
 
