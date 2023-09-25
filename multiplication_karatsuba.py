@@ -5,13 +5,17 @@ from multiplication_primary import solve_multiplication_primary
 
 
 def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
-    x.matchExponentsLength(y)
-    num_exponents = len(x.exponents)
+
+    x_len = len(x.exponents)
+    y_len = len(y.exponents)
 
     # from about 40 digits primary school multiplication is faster
-    if (num_exponents < 50):
+    if (x_len < 50 or y_len < 50):
         # Primitive multiplications
         return solve_multiplication_primary(x, y)
+
+    x.matchExponentsLength(y)
+    num_exponents = len(x.exponents)
 
     # If the signs are different, flip the sign at the end
     # a *  b =  ab
