@@ -90,6 +90,7 @@ def runRealisticModInv():
 
 
 def runRealisticModRed():
+    print("realistic reduction")
     solve.solve_exercise("exercises\Realistic\Exercises\exercise2.json",
                          "exercises\Realistic\Answers\\answer2.json", False)
     solve.solve_exercise("exercises\Realistic\Exercises\exercise5.json",
@@ -140,8 +141,8 @@ def runAll():
 
 
 # Addition Subtraction tests
-# runSimpleIntAddSub()
-# runRealisticIntAddSub()
+runSimpleIntAddSub()
+runRealisticIntAddSub()
 
 # Multiplication tests
 # runSimpleIntMulti()
@@ -160,12 +161,12 @@ def runAll():
 # runRealisticModInv()
 
 # Modular Reduction tests
-# runSimpleModRed()
-# runRealisticModRed()
+runSimpleModRed()
+runRealisticModRed()
 
 # Extended Euclidean Algorithm tests
-# runSimpleIntEucl()
-# runRealisticIntEucl()
+runSimpleIntEucl()
+runRealisticIntEucl()
 
 # All tests
 # runAll()

@@ -34,8 +34,8 @@ def solve_extended_euclidean(a_: BigNumber, b_: BigNumber) -> (BigNumber, BigNum
         # qy2 = solve_multiplication_primary(q,y1)
         # print("qy2 =", str(q), "*", str(y2), "=", str(qy2))
         # y = solve_subtraction_integer_arithmetic(y2, qy2)
-        x, x1 = x1, solve_subtraction_integer_arithmetic(x, solve_multiplication_karatsuba(q,x1))
-        y, y1 = y1, solve_subtraction_integer_arithmetic(y, solve_multiplication_karatsuba(q,y1))
+        x, x1 = x1, solve_subtraction_integer_arithmetic(x, solve_multiplication_primary(q,x1))
+        y, y1 = y1, solve_subtraction_integer_arithmetic(y, solve_multiplication_primary(q,y1))
         
         # print("q:", str(q), "r:", str(r), "x:", str(x), "x1:", str(x1), "x2:", str(x2), "y:", str(y), "y1:", str(y1), "y2:", str(y2))
         

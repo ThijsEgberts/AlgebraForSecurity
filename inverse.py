@@ -4,7 +4,7 @@ from reduction import solve_reduction
 
 
 def solve_inverse(x: BigNumber, mod: BigNumber) -> BigNumber:
-    if str(mod) == "0":
+    if mod.isZero():
         return None
     
     x = solve_reduction(x, mod)

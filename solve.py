@@ -32,6 +32,7 @@ def solve_exercise(exercise_location: str, answer_location: str, saveAnswer: boo
             print("The a is correct: " + str(answerDict["answer-a"] == answer[1]))
             print("The b is correct: " + str(answerDict["answer-b"] == answer[2]))
         else:
+            
             print("The answer is correct: " + str(answerDict["answer"] == answer))
 
 
@@ -90,7 +91,11 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'reduction'}:
             if exercise["type"] == "modular_arithmetic":
-                return str(reduction.solve_reduction(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"]))))
+                ans =reduction.solve_reduction(BigNumber(exercise["x"], Int32(exercise["radix"])), BigNumber(exercise["modulus"], Int32(exercise["radix"])))
+                if ans != None:
+                    return str(ans)
+                else:
+                    return None
             else:
                 raise Exception(
                     "Invalid type for reduction, only modular_arithmetic is supported")
