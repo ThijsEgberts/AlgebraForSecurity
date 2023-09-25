@@ -1,9 +1,7 @@
 from BigNumber import BigNumber
 from division import solve_division_with_remainder
 from addition_subtraction import solve_subtraction_integer_arithmetic
-from fixedint import Int32
-
-from multiplication_primary import solve_multiplication_primary
+from multiplication_karatsuba import solve_multiplication_karatsuba
 
 # source: https://www.baeldung.com/cs/extended-euclidean-algorithm
 
@@ -29,10 +27,12 @@ def solve_extended_euclidean(a_: BigNumber, b_: BigNumber) -> (BigNumber, BigNum
 
     while not b.isZero():
         q, r = solve_division_with_remainder(a, b)
-        
-        x, x1 = x1, solve_subtraction_integer_arithmetic(x, solve_multiplication_primary(q,x1))
-        y, y1 = y1, solve_subtraction_integer_arithmetic(y, solve_multiplication_primary(q,y1))
-    
+
+        x, x1 = x1, solve_subtraction_integer_arithmetic(
+            x, solve_multiplication_karatsuba(q, x1))
+        y, y1 = y1, solve_subtraction_integer_arithmetic(
+            y, solve_multiplication_karatsuba(q, y1))
+
         a = b
         b = r
     gcd = a

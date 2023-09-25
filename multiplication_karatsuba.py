@@ -1,17 +1,19 @@
-# Import necessary modules and functions
 from BigNumber import BigNumber
+from fixedint import Int32
 import addition_subtraction
 from multiplication_primary import solve_multiplication_primary
 
-# Function to perform Karatsuba multiplication recursively
-
 
 def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
-    # Ensure that the exponents of both numbers are the same
     x.matchExponentsLength(y)
     num_exponents = len(x.exponents)
 
-    # Determine the sign of the result based on the signs of input numbers
+    # from about 40 digits primary school multiplication is faster
+    if (num_exponents < 50):
+        # Primitive multiplications
+        return solve_multiplication_primary(x, y)
+
+    # If the signs are different, flip the sign at the end
     # a *  b =  ab
     # -a *  b = -ab
     # a * -b = -ab
@@ -20,26 +22,19 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     x.isNegative = 0
     y.isNegative = 0
 
-    #from about 40 digits primary school multiplication is faster
-    if (n <= 40):
-        # Primitive multiplications
-        return solve_multiplication_primary(x, y)
-
-    # If num_exponents is odd, make it even by adding leading zeros
+    # If num_exponents is odd, make it even
     if num_exponents % 2 == 1:
         x.addLeadingZero()
         y.addLeadingZero()
         num_exponents += 1
 
     num_exponents_half = num_exponents // 2
-    # Split the input numbers into high and low parts
     x_high = BigNumber(x.radix, x.exponents[:num_exponents_half], x.isNegative)
     x_low = BigNumber(x.radix, x.exponents[num_exponents_half:], x.isNegative)
 
     y_high = BigNumber(x.radix, y.exponents[:num_exponents_half], y.isNegative)
     y_low = BigNumber(x.radix, y.exponents[num_exponents_half:], y.isNegative)
 
-    # Calculate intermediate results
     z2 = solve_multiplication_karatsuba(x_high, y_high)
     z0 = solve_multiplication_karatsuba(x_low, y_low)
 
@@ -64,13 +59,10 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
         z0
     )
 
-    # Remove leading zeroes and set the sign of the result
     temp2.removeLeadingZeroes()
     temp2.isNegative = is_result_negative
 
     return temp2
-
-# Function to perform Karatsuba multiplication
 
 
 def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
@@ -78,5 +70,4 @@ def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
     x = BigNumber(x_.radix, x_.exponents, x_.isNegative)
     y = BigNumber(y_.radix, y_.exponents, y_.isNegative)
 
-    # Call the recursive Karatsuba multiplication function
     return multiplication_karatsuba_recurse(x, y)
