@@ -19,12 +19,11 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
     Solves the multiplication of two numbers using primary school multiplication.
 
     Args:
-        modulus (BigNumber): The modulus.
         x (BigNumber): The first number.
         y (BigNumber): The second number.
 
     Returns:
-        str: The result of the multiplication as a string.
+        BigNumber: The result of the multiplication as a BigNumber.
     """
 
     # Determine the sign of the result
@@ -39,8 +38,7 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
         exponents_result = []
 
         # Fill the result with zeros corresponding to the position of the exponent
-        for _ in range(len(x.exponents) - 1 - i):
-            exponents_result.append(0)
+        exponents_result = [0] * (len(x.exponents) - 1 - i)
 
         for j in range(len(y.exponents) - 1, -1, -1):
             product = x.exponents[i] * y.exponents[j] + carry
