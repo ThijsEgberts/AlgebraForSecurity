@@ -65,5 +65,3 @@ def solve_multiplication_primary(x: BigNumber, y: BigNumber) -> BigNumber:
             result, BigNumber(x.radix, exponents_result, is_negative))
     return result
 
-
-# print(numberToBase(Int32(230), Int32(16)))

@@ -1,8 +1,6 @@
 from BigNumber import BigNumber
-from fixedint import Int32
 import addition_subtraction
 from multiplication_primary import solve_multiplication_primary
-
 
 def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
 

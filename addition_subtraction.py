@@ -1,7 +1,7 @@
 from BigNumber import BigNumber
 
 
-def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
+def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber:
     """
     Solves the addition of two numbers in integer arithmetic.
     The algorithm is as follows:
@@ -10,6 +10,10 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     3. If there is a carry left, we need to add it to the exponents.
     4. Return the result.
     """
+
+    x = BigNumber(x_.radix, x_.exponents.copy(), x_.isNegative)
+    y = BigNumber(y_.radix, y_.exponents.copy(), y_.isNegative)
+
     # Handle non-equal signs
     if x.isNegative != y.isNegative:
         if x.isNegative:
@@ -66,7 +70,7 @@ def solve_addition_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNu
     return remainder
 
 
-def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
+def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber:
     """
     Solves the subtraction of two numbers in integer arithmetic.
 
@@ -78,6 +82,9 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     5. If there is a carry left, we need to add it to the exponents.
     6. Return the result.
     """
+
+    x = BigNumber(x_.radix, x_.exponents.copy(), x_.isNegative)
+    y = BigNumber(y_.radix, y_.exponents.copy(), y_.isNegative)
 
     # Check for zero values
     if x.isZero():
