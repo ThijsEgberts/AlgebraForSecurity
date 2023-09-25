@@ -171,12 +171,11 @@ class BigNumber:
         Matches the length of the exponents of this BigNumber and another BigNumber
         by adding 0's to the front of the list.
         """
-        if len(self.exponents) > len(other.exponents):
-            for i in range(len(self.exponents) - len(other.exponents)):
-                other.addLeadingZero()
-        elif len(self.exponents) < len(other.exponents):
-            for i in range(len(other.exponents) - len(self.exponents)):
-                self.addLeadingZero()
+        len_diff = len(self.exponents) - len(other.exponents)
+        if len_diff > 0:
+            other.exponents = [0] * len_diff + other.exponents
+        elif len_diff < 0:
+            self.exponents = [0] * abs(len_diff) + self.exponents
 
     def addLeadingZero(self):
         self.exponents.insert(0, Int32(0))
