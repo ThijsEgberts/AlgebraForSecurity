@@ -9,13 +9,13 @@ def solve_inverse(x: BigNumber, mod: BigNumber) -> BigNumber:
     
     x = solve_reduction(x, mod)
     
-    gcd, a = solve_extended_euclidean(x, mod) #gcd = a*x + b*mod
+    gcd, a, b = solve_extended_euclidean(x, mod) #gcd = a*x + b*mod
     
     #if gcd(x,mod) != 1, there exists no inverse
-    if gcd != 1:
+    if not gcd.isOne():
         return None
     
     if not a.isNegative:
         return a
     else:
-        return solve_reduction(a) #reduce to the non-negative representative
+        return solve_reduction(a, mod) #reduce to the non-negative representative
