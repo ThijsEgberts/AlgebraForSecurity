@@ -10,6 +10,7 @@ def solve_reduction(x: BigNumber, mod: BigNumber) -> BigNumber:
     if mod.isZero():
         return None
     result = division.solve_division_with_remainder(x, mod)[1]
+
     if not result.isNegative:
         return result
     else:

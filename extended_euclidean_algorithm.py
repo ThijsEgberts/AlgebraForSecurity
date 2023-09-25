@@ -13,8 +13,8 @@ def solve_extended_euclidean(a_: BigNumber, b_: BigNumber) -> (BigNumber, BigNum
     elif b_.isZero():
         return a_, BigNumber(a_.radix, [1], 0), BigNumber(a_.radix, [0], 0)
 
-    a = BigNumber(a_.radix, a_.exponents, a_.isNegative)
-    b = BigNumber(b_.radix, b_.exponents, b_.isNegative)
+    a = BigNumber(a_.radix, a_.exponents.copy(), a_.isNegative)
+    b = BigNumber(b_.radix, b_.exponents.copy(), b_.isNegative)
 
     # make sure a >= b
     swapAnswers = False
