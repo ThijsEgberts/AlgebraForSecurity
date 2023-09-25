@@ -161,13 +161,13 @@ def runAll():
 # runSimpleModMulti()
 # runRealisticModMulti()
 end = 0
-average = 1
+average = 1000
 for i in range(average):
     start = time.time()
-    solve.solve_exercise("exercises\Realistic\Exercises\exercise8.json",
-                         "exercises\Realistic\Answers\\answer8.json", False)
+    solve.solve_exercise("exercises\Realistic\Exercises\exercise6.json",
+                         "exercises\Realistic\Answers\\answer6.json", False)
     end += time.time()-start
-end /= average
+# end /= average
 print(end)
 
 # Modular Inverse tests
