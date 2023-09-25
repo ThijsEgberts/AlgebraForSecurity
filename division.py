@@ -53,10 +53,17 @@ def division_by_subtraction_with_remainder(x_: BigNumber, y_: BigNumber) -> list
 
     This is based on Euclid's algorithm.
     """
+
     x = BigNumber(x_.radix, x_.exponents.copy(), x_.isNegative)
     y = BigNumber(y_.radix, y_.exponents.copy(), y_.isNegative)
 
-    #print(str(x) + " / " + str(y))
+    #  a /  b =   a / b
+    # -a /  b = -(a / b)
+    #  a / -b = -(a / b)
+    # -a / -b =   a / b
+    is_result_negative = x.isNegative != y.isNegative
+    x.isNegative = 0
+    y.isNegative = 0
 
     quotient = BigNumber(x.radix, [0], 0)
     one = BigNumber(x.radix, [1], 0)
@@ -69,6 +76,8 @@ def division_by_subtraction_with_remainder(x_: BigNumber, y_: BigNumber) -> list
 
     quotient.removeLeadingZeroes()
     x.removeLeadingZeroes()
+
+    quotient.isNegative = is_result_negative
 
     # Result contains the quotient and the remainder in form [quotient, remainder]
     return [quotient, x]
