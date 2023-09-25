@@ -4,63 +4,51 @@ from BigNumber import BigNumber
 def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     """
     Solves the addition of two numbers in integer arithmetic.
-
     The algorithm is as follows:
     1. If the signs are different, we need to subtract the smaller number from the bigger number and return the result with the sign of the bigger number.
     2. If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed.
     3. If there is a carry left, we need to add it to the exponents.
     4. Return the result.
     """
-
-    # x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
-    # y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
-
-    # 1.
-    # If the signs are different, we need to subtract the smaller number from the bigger number
-    #   a +  b = a + b
-    #  -a +  b = b - a
-    #   a + -b = a - b
-    #  -a + -b = -(a + b)
+    # Handle non-equal signs
     if x.isNegative != y.isNegative:
-        if not x.isNegative:
-            y.isNegative = False
-            ans = solve_subtraction_integer_arithmetic(x, y)
-            y.isNegative = True
-            return ans
-        else:
+        # Handle sign flip
+        flip_x = x.isNegative
+        flip_y = y.isNegative
+        if flip_x:
             x.isNegative = False
-            ans = solve_subtraction_integer_arithmetic(y, x)
+        if flip_y:
+            y.isNegative = False
+        # Calculate subtraction
+        result = solve_subtraction_integer_arithmetic(x, y)
+        # Restore signs
+        if flip_x:
             x.isNegative = True
-            return ans
+        if flip_y:
+            y.isNegative = True
+        return result
 
     # Match the exponent list length
     x.matchExponentsLength(y)
 
-    # 2.
-    # If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed
-    exponents = []
+    # Initialize variables
+    exp_len = len(x.exponents)
+    exponents = [0] * exp_len  # Preallocate the exponents list
     carry = 0
 
-    # i counts from len(x.exponents)-1 to -1
-    for i in range(len(x.exponents) - 1, -1, -1):
-        # No carry needed
-        if x.exponents[i] + y.exponents[i] + carry < x.radix:
-            exponents.insert(0, x.exponents[i] + y.exponents[i] + carry)
-            carry = 0
-        # Carry needed :shook:
-        elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
-            exponents.insert(
-                0, x.exponents[i] + y.exponents[i] + carry - x.radix)
+    # Calculate the addition of exponents
+    for i in range(exp_len - 1, -1, -1):
+        # Calculate the total addition of the exponents
+        total = x.exponents[i] + y.exponents[i] + carry
+        # Use a modular division to get the remainder and the carry, this will always be smaller than the (radix-1) * 2 (so max 30 for F+F)
+        carry, remainder = divmod(total, x.radix)
+        exponents[i] = remainder
 
-            # Carry the 1
-            carry = 1
+    # If there is a carry left, add it to the exponents
+    if carry > 0:
+        exponents.insert(0, carry)
 
-    # 3.
-    # If there is a carry left, we need to add it to the exponents
-    if carry == 1:
-        exponents.insert(0, 1)
-
-    # 4. Return the bignumber
+    # Create and return the result BigNumber
     return BigNumber(x.radix, exponents, x.isNegative)
 
 
