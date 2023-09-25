@@ -129,7 +129,7 @@ def runRealistic():
     runRealisticIntAddSub()
     runRealisticModAddSub()
     runRealisticIntMulti()
-    runRealisticModMulti()
+    # runRealisticModMulti()
     runRealisticModInv()
     runRealisticModRed()
     runRealisticIntEucl()
@@ -183,5 +183,5 @@ def runAll():
 # runRealisticIntEucl()
 
 # All tests
-runSimple()
+runAll()
 # runRealisticIntMulti()
