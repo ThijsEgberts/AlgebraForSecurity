@@ -1,5 +1,4 @@
 from BigNumber import BigNumber
-from fixedint import Int32
 
 
 def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
@@ -24,14 +23,14 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     #  -a + -b = -(a + b)
     if x.isNegative != y.isNegative:
         if not x.isNegative:
-            y.flipSign()
+            y.isNegative = False
             ans = solve_subtraction_integer_arithmetic(x, y)
-            y.flipSign()
+            y.isNegative = True
             return ans
         else:
-            x.flipSign()
+            x.isNegative = False
             ans = solve_subtraction_integer_arithmetic(y, x)
-            x.flipSign()
+            x.isNegative = True
             return ans
 
     # Match the exponent list length
@@ -40,26 +39,26 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     # 2.
     # If the signs are the same, we need to add the numbers starting with the last exponent and carry the 1 if needed
     exponents = []
-    carry = Int32(0)
+    carry = 0
 
     # i counts from len(x.exponents)-1 to -1
     for i in range(len(x.exponents) - 1, -1, -1):
         # No carry needed
         if x.exponents[i] + y.exponents[i] + carry < x.radix:
             exponents.insert(0, x.exponents[i] + y.exponents[i] + carry)
-            carry = Int32(0)
+            carry = 0
         # Carry needed :shook:
         elif x.exponents[i] + y.exponents[i] + carry >= x.radix:
             exponents.insert(
                 0, x.exponents[i] + y.exponents[i] + carry - x.radix)
 
             # Carry the 1
-            carry = Int32(1)
+            carry = 1
 
     # 3.
     # If there is a carry left, we need to add it to the exponents
     if carry == 1:
-        exponents.insert(0, Int32(1))
+        exponents.insert(0, 1)
 
     # 4. Return the bignumber
     return BigNumber(x.radix, exponents, x.isNegative)
@@ -122,15 +121,16 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
         x.isNegative = 0
         temp = solve_addition_integer_arithmetic(x, y)
         temp.isNegative = 1
+        x.isNegative = 1
         return temp
 
     if (not x.isNegative and y.isNegative):
-        return solve_addition_integer_arithmetic(x, y.flipSign())
+        answer = solve_addition_integer_arithmetic(x, y.flipSign())
+        y.flipSign()
+        return answer
 
     # If both signs are negative, swap the parameters
-    flipSign = False
     if x.isNegative and y.isNegative:
-        flipSign = True
         x.isNegative = 0
         y.isNegative = 0
 
@@ -170,8 +170,6 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     result.removeLeadingZeroes()
 
     if swapSign:
-        result.flipSign()
-    if flipSign:  # restore the sign
         result.flipSign()
     return result
 

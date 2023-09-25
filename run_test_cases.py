@@ -160,11 +160,15 @@ runRealisticIntMulti()
 # Modular Multiplication tests
 runSimpleModMulti()
 runRealisticModMulti()
-# start = time.time()
-# solve.solve_exercise("exercises\Realistic\Exercises\exercise7.json",
-#                      "exercises\Realistic\Answers\\answer7.json", False)
-# end = start - time.time()
-# print(end)
+# end = 0
+average = 100
+for i in range(average):
+    start = time.time()
+    solve.solve_exercise("exercises\Realistic\Exercises\exercise4.json",
+                         "exercises\Realistic\Answers\\answer4.json", False)
+    end += time.time()-start
+# end /= average
+print(end)
 
 # Modular Inverse tests
 # runSimpleModInv()
