@@ -10,7 +10,7 @@ import reduction
 import inverse
 
 
-def solve_exercise(exercise_location: str, answer_location: str, saveAnswer: bool):
+def solve_exercise(exercise_location: str, answer_location: str, saveAnswer: bool = True):
     """
     Solves the exercise at the given location and saves the answer at the given location.
     """
