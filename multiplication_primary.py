@@ -2,8 +2,6 @@ from BigNumber import BigNumber
 import addition_subtraction
 
 # Code taken from https://stackoverflow.com/questions/2267362/how-to-convert-an-integer-to-a-string-in-any-base
-
-
 def numberToBase(n: int, b: int):
     if n == 0:
         return [0]
