@@ -12,7 +12,7 @@ def solve_extended_euclidean(a_: BigNumber, b_: BigNumber) -> (BigNumber, BigNum
     if a_.isZero():
         return b_, BigNumber("0", a_.radix), BigNumber("1", a_.radix)
     elif b_.isZero():
-        return a_, BigNumber("0", a_.radix), BigNumber("1", a_.radix)
+        return a_, BigNumber("1", a_.radix), BigNumber("0", a_.radix)
     
     a = createBigNumberFromExponents(a_.radix, a_.exponents, a_.isNegative)
     b = createBigNumberFromExponents(b_.radix, b_.exponents, b_.isNegative)
