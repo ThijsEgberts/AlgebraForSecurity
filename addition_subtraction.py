@@ -12,21 +12,16 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     """
     # Handle non-equal signs
     if x.isNegative != y.isNegative:
-        # Handle sign flip
-        flip_x = x.isNegative
-        flip_y = y.isNegative
-        if flip_x:
+        if x.isNegative:
             x.isNegative = False
-        if flip_y:
-            y.isNegative = False
-        # Calculate subtraction
-        result = solve_subtraction_integer_arithmetic(x, y)
-        # Restore signs
-        if flip_x:
+            result = solve_subtraction_integer_arithmetic(y, x)
             x.isNegative = True
-        if flip_y:
+            return result
+        else:
+            y.isNegative = False
+            result = solve_subtraction_integer_arithmetic(x, y)
             y.isNegative = True
-        return result
+            return result
 
     # Match the exponent list length
     x.matchExponentsLength(y)
@@ -104,7 +99,9 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
     #  -a - -b = b - a
     if x.isNegative != y.isNegative:
         if x.isNegative:
+            x.isNegative = False
             result = solve_addition_integer_arithmetic(x, y)
+            x.isNegative = True
             result.isNegative = True
             return result
         else:
@@ -157,7 +154,7 @@ def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumbe
 
 
 def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNumber) -> BigNumber:
-    from division import solve_division_with_remainder
+    from reduction import solve_reduction
     """
     Solves the subtraction of two numbers in modular arithmetic.
     
@@ -166,15 +163,4 @@ def solve_subtraction_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: Bi
     2. Solve the division with remainder of the result and the modulus.
     3. Return the remainder as a big number
     """
-    remainder = solve_division_with_remainder(
-        solve_subtraction_integer_arithmetic(x, y), modulus)[1]
-
-    if (remainder.isNegative):
-        remainder = solve_addition_integer_arithmetic(remainder, modulus)
-
-    return remainder
-
-
-x = BigNumber(10, [5, 4, 3], 0)
-y = BigNumber(10, [1, 2, 3], 1)
-result = solve_subtraction_integer_arithmetic(x, y)
+    return solve_reduction(solve_subtraction_integer_arithmetic(x, y), modulus)

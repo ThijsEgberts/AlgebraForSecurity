@@ -8,10 +8,10 @@ class BigNumber:
     isNegative = False
 
     # Construct a BigNumber from an exponents list
-    def __init__(self, radix: int, exponents: list, isNegative: int) -> None:
+    def __init__(self, radix: int, exponents: list, isNegative: bool) -> None:
         self.radix = radix
         self.exponents = exponents
-        self.isNegative = isNegative
+        self.isNegative = bool(isNegative)
 
     # Parses a string representing a number to a BigNumber format
     def parseString(self, stringNr: string, radix: int):
