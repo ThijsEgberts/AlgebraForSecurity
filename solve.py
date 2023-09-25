@@ -74,7 +74,7 @@ def solve(exercise: dict) -> str:
 
         case {'operation': 'multiplication'}:
             if exercise["type"] == "modular_arithmetic":
-                ans = multiplication_modular.solve_multiplication_modular(exercise["radix"], exercise["x"], exercise["y"])
+                ans = multiplication_modular.solve_multiplication_modular(createBigNumberFromString(exercise["x"], Int32(exercise["radix"])), createBigNumberFromString(exercise["y"], Int32(exercise["radix"])), createBigNumberFromString(exercise["modulus"], Int32(exercise["radix"])))
                 if ans != None:
                     return str(ans)
                 else:

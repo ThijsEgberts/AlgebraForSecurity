@@ -150,7 +150,7 @@ def runAll():
 # runRealisticIntAddSub()
 
 # Multiplication tests
-runSimpleIntMulti()
+# runSimpleIntMulti()
 runRealisticIntMulti()
 
 # Modular Addition Subtraction tests
@@ -158,13 +158,13 @@ runRealisticIntMulti()
 # runRealisticModAddSub()
 
 # Modular Multiplication tests
-# runSimpleModMulti()
-# runRealisticModMulti()
-start = time.time()
-solve.solve_exercise("exercises\Realistic\Exercises\exercise7.json",
-                     "exercises\Realistic\Answers\\answer7.json", False)
-end = start - time.time()
-print(end)
+runSimpleModMulti()
+runRealisticModMulti()
+# start = time.time()
+# solve.solve_exercise("exercises\Realistic\Exercises\exercise7.json",
+#                      "exercises\Realistic\Answers\\answer7.json", False)
+# end = start - time.time()
+# print(end)
 
 # Modular Inverse tests
 # runSimpleModInv()

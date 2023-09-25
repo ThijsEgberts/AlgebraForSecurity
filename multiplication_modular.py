@@ -1,11 +1,14 @@
 
 from BigNumber import BigNumber
 import division
-import multiplication_karatsuba
+from reduction import solve_reduction
+import multiplication_primary
 
 
 def solve_multiplication_modular(x: BigNumber, y: BigNumber, mod : BigNumber) -> BigNumber:
-    x_reduce = division.solve_reduction(x, mod)[1]
-    y_reduce = division.solve_reduction(x, mod)[1]
-    mult_reduce = multiplication_karatsuba.solve_multiplication_karatsuba(x_reduce, y_reduce)
-    return division.solve_reduction(mult_reduce, mod)
+    if mod.isZero():
+        return None
+    x_reduce = solve_reduction(x, mod)
+    y_reduce = solve_reduction(y, mod)
+    mult_reduce = multiplication_primary.solve_multiplication_primary(x_reduce, y_reduce)
+    return solve_reduction(mult_reduce, mod)
