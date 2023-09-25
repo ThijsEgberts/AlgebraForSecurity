@@ -1,5 +1,4 @@
 from BigNumber import BigNumber
-from fixedint import Int32
 
 
 def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
