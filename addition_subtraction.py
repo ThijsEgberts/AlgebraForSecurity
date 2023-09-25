@@ -3,55 +3,7 @@ from BigNumber import createBigNumberFromExponents
 from fixedint import Int32
 
 
-# def solve_addition(type: str, x: BigNumber, y: BigNumber):
-#     """
-#     Perform addition of two BigNumbers based on the specified type.
-
-#     Args:
-#         type (str): The type of arithmetic to use for addition ("integer_arithmetic" or "modular_arithmetic").
-#         x (BigNumber): The first BigNumber operand.
-#         y (BigNumber): The second BigNumber operand.
-
-#     Returns:
-#         BigNumber: The result of the addition operation.
-
-#     Raises:
-#         Exception: If an invalid type is provided.
-#     """
-#     if type == "integer_arithmetic":
-#         return solve_addition_integer_arithmetic(x, y)
-#     elif type == "modular_arithmetic":
-#         return solve_addition_modular_arithmetic(x, y)
-#     else:
-#         raise Exception(
-#             "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
-
-
-# def solve_subtraction(type: str, x: BigNumber, y: BigNumber):
-#     """
-#     Perform subtraction of two BigNumbers based on the specified type.
-
-#     Args:
-#         type (str): The type of arithmetic to use for subtraction ("integer_arithmetic" or "modular_arithmetic").
-#         x (BigNumber): The first BigNumber operand.
-#         y (BigNumber): The second BigNumber operand.
-
-#     Returns:
-#         BigNumber: The result of the subtraction operation.
-
-#     Raises:
-#         Exception: If an invalid type is provided.
-#     """
-#     if type == "integer_arithmetic":
-#         return solve_subtraction_integer_arithmetic(x, y)
-#     elif type == "modular_arithmetic":
-#         return 0  # solve_subtraction_modular_arithmetic(x, y)
-#     else:
-#         raise Exception(
-#             "Invalid type for subtraction, only integer_arithmetic and modular_arithmetic are supported")
-
-
-def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber:
+def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     """
     Solves the addition of two numbers in integer arithmetic.
 
@@ -62,8 +14,8 @@ def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber
     4. Return the result.
     """
 
-    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
-    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
+    # x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
+    # y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
     
     # 1.
     # If the signs are different, we need to subtract the smaller number from the bigger number
@@ -74,10 +26,14 @@ def solve_addition_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber
     if x.isNegative != y.isNegative:
         if not x.isNegative:
             y.flipSign()
-            return solve_subtraction_integer_arithmetic(x, y)
+            ans = solve_subtraction_integer_arithmetic(x, y)
+            y.flipSign()
+            return ans
         else:
             x.flipSign()
-            return solve_subtraction_integer_arithmetic(y, x)
+            ans = solve_subtraction_integer_arithmetic(y, x)
+            x.flipSign()
+            return ans
 
     # Match the exponent list length
     x.matchExponentsLength(y)
@@ -128,7 +84,7 @@ def solve_addition_modular_arithmetic(x: BigNumber, y: BigNumber, modulus: BigNu
     return remainder
 
 
-def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNumber:
+def solve_subtraction_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     """
     Solves the subtraction of two numbers in integer arithmetic.
 
@@ -141,19 +97,18 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
     6. Return the result.
     """
     
-    x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
-    y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
+    # x = createBigNumberFromExponents(x_.radix, x_.exponents, x_.isNegative)
+    # y = createBigNumberFromExponents(y_.radix, y_.exponents, y_.isNegative)
     
     #zero check because we have both positive and negative 0
-    #TODO efficient zero check
     xZero = x.isZero()
     yZero = y.isZero()
     if xZero and yZero:
-        return y
+        return createBigNumberFromExponents(y.radix, y.exponents, y.isNegative)
     elif xZero and not yZero:
-        return y.flipSign()
+        return createBigNumberFromExponents(y.radix, y.exponents, y.isNegative).flipSign()
     elif not xZero and yZero:
-        return x
+        return createBigNumberFromExponents(x.radix, x.exponents, x.isNegative)
     
     
     # 1. Match the exponents of the two numbers.
@@ -174,7 +129,9 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
         return solve_addition_integer_arithmetic(x, y.flipSign())
 
     # If both signs are negative, swap the parameters
+    flipSign = False
     if x.isNegative and y.isNegative:
+        flipSign = True
         x.isNegative = 0
         y.isNegative = 0
 
@@ -215,7 +172,8 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
 
     if swapSign:
         result.flipSign()
-
+    if flipSign: #restore the sign
+        result.flipSign()
     return result
 
 
