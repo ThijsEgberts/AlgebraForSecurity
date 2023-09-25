@@ -177,10 +177,10 @@ class BigNumber:
     def addLeadingZero(self):
         self.exponents.insert(0, Int32(0))
 
-    # Only works with positive shift
-    def bitShift(self, shift: int):
+    # Shifts number x digits left, adding 0
+    def shiftLeft(self, shift: int):
         x = BigNumber(
-            self.radix, self.exponents, self.isNegative)
+            self.radix, self.exponents.copy(), self.isNegative)
         for _ in range(shift):
             x.exponents.append(0)
         return x

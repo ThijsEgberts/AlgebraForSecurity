@@ -57,8 +57,8 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
 
     temp2 = addition_subtraction.solve_addition_integer_arithmetic(
         addition_subtraction.solve_addition_integer_arithmetic(
-            z2.bitShift(num_exponents),
-            temp1.bitShift(num_exponents_half)
+            z2.shiftLeft(num_exponents),
+            temp1.shiftLeft(num_exponents_half)
         ),
         z0
     )
@@ -71,7 +71,7 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
 
 def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
     # Create copies so we don't modify the original x and y
-    x = BigNumber(x_.radix, x_.exponents, x_.isNegative)
-    y = BigNumber(y_.radix, y_.exponents, y_.isNegative)
+    x = BigNumber(x_.radix, x_.exponents.copy(), x_.isNegative)
+    y = BigNumber(y_.radix, y_.exponents.copy(), y_.isNegative)
 
     return multiplication_karatsuba_recurse(x, y)
