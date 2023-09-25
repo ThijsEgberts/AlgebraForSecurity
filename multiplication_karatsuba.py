@@ -7,16 +7,15 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     x.matchExponentsLength(y)
     n = len(x.exponents)
 
-    negativeResult = 0
     # If the signs are different, flip the sign at the end
     # a *  b =  ab
     # -a *  b = -ab
     # a * -b = -ab
     # -a * -b =  ab
-    negative_result = x.isNegative != y.isNegative
+    negativeResult = x.isNegative != y.isNegative
     
-    x.setSign(0) #make x positive
-    y.setSign(0)
+    x.isNegative = 0
+    y.isNegative = 0
 
     if (n == 1):
         # Primitive multiplications
@@ -65,15 +64,12 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
         z0)
 
     z.removeLeadingZeroes()
-    
+
     z.isNegative = negativeResult
 
     return z
 
 def solve_multiplication_karatsuba(x_: BigNumber, y_: BigNumber) -> BigNumber:
-    """
-
-    """
     #create copies so we don't mess stuff up with the original x and y
     x = BigNumber(x_.radix, x_.exponents, x_.isNegative)
     y = BigNumber(y_.radix, y_.exponents, y_.isNegative)
