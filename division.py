@@ -2,7 +2,7 @@ from BigNumber import BigNumber
 from addition_subtraction import solve_addition_integer_arithmetic, solve_subtraction_integer_arithmetic
 
 
-def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list[BigNumber]:
+def repeatedMin_division(x: BigNumber, y: BigNumber) -> list[BigNumber]:
     """
     Solves the division with remainder of two numbers.
     Returns the quotient and the remainder in form [quotient, remainder]
@@ -26,3 +26,22 @@ def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list[BigNumber]
 
     # Result contains the quotient and the remainder in form [quotient, remainder]
     return [quotient, x]
+
+# def long_division(x: BigNumber, y: BigNumber) -> list[BigNumber]:
+#     if len(x.exponents) < len(y.exponents):
+#         return (0, x)
+    
+#     r = x
+#     k = len(x.exponents) - len(y.exponents) + 1
+#     q = [None] * k #according to the lecture notes this will be the size of q
+#     for i in range(k-1, -1, -1):
+#         q[i] = r // x.radix ** i * 
+    
+    return None
+
+def solve_division_with_remainder(x: BigNumber, y: BigNumber) -> list[BigNumber]:
+    return repeatedMin_division(x, y)
+    # if len(x.exponents) - len(x.exponents) <= 10:
+    #     return repeatedMin_division(x, y)
+    # else:
+    #     return long_division(x, y)

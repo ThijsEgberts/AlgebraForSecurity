@@ -14,7 +14,6 @@ def solve_inverse(x: BigNumber, mod: BigNumber) -> BigNumber:
     #if gcd(x,mod) != 1, there exists no inverse
     if not gcd.isOne():
         return None
-    
     if not a.isNegative:
         return a
     else:

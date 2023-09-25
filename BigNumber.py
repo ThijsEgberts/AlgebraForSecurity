@@ -130,9 +130,6 @@ class BigNumber:
             else:
                 return False
 
-    def returnOne():
-        return
-
     def compare(self, other: 'BigNumber', greater_or_equal: bool = False) -> bool:
         """
         Compares this BigNumber to another BigNumber.
