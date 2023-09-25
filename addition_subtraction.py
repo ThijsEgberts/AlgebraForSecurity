@@ -23,14 +23,14 @@ def solve_addition_integer_arithmetic(x: BigNumber, y: BigNumber) -> BigNumber:
     #  -a + -b = -(a + b)
     if x.isNegative != y.isNegative:
         if not x.isNegative:
-            y.flipSign()
+            y.isNegative = False
             ans = solve_subtraction_integer_arithmetic(x, y)
-            y.flipSign()
+            y.isNegative = True
             return ans
         else:
-            x.flipSign()
+            x.isNegative = False
             ans = solve_subtraction_integer_arithmetic(y, x)
-            x.flipSign()
+            x.isNegative = True
             return ans
 
     # Match the exponent list length
