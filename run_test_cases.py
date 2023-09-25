@@ -160,7 +160,7 @@ runRealisticIntMulti()
 # Modular Multiplication tests
 runSimpleModMulti()
 runRealisticModMulti()
-# end = 0
+end = 0
 average = 100
 for i in range(average):
     start = time.time()
@@ -183,4 +183,4 @@ print(end)
 # runRealisticIntEucl()
 
 # All tests
-# runAll()
+runRealisticIntMulti()

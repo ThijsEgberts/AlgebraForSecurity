@@ -13,8 +13,7 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     # -a *  b = -ab
     # a * -b = -ab
     # -a * -b =  ab
-    if (x.isNegative != y.isNegative):
-        negativeResult = 1
+    negative_result = x.isNegative != y.isNegative
     
     x.setSign(0) #make x positive
     y.setSign(0)
@@ -29,15 +28,17 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
         y.addLeadingZero()
         n += 1
 
+
+    n_half = n // 2
     x_hi = BigNumber(
-        x.radix, x.exponents[:int(n/2)], x.isNegative)
+        x.radix, x.exponents[:n_half], x.isNegative)
     x_lo = BigNumber(
-        x.radix, x.exponents[int(n/2):], x.isNegative)
+        x.radix, x.exponents[n_half:], x.isNegative)
 
     y_hi = BigNumber(
-        x.radix, y.exponents[:int(n/2)], y.isNegative)
+        x.radix, y.exponents[:n_half], y.isNegative)
     y_lo = BigNumber(
-        x.radix, y.exponents[int(n/2):], y.isNegative)
+        x.radix, y.exponents[n_half:], y.isNegative)
 
     z2 = solve_multiplication_karatsuba(x_hi,
                                         y_hi)
@@ -64,7 +65,7 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
         z0)
 
     z.removeLeadingZeroes()
-
+    
     z.isNegative = negativeResult
 
     return z
