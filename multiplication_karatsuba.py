@@ -1,5 +1,4 @@
 from BigNumber import BigNumber
-from fixedint import Int32
 import addition_subtraction
 from multiplication_primary import solve_multiplication_primary
 
@@ -17,7 +16,8 @@ def multiplication_karatsuba_recurse(x: BigNumber, y: BigNumber) -> BigNumber:
     x.isNegative = 0
     y.isNegative = 0
 
-    if (n == 1):
+    #from about 40 digits primary school multiplication is faster
+    if (n <= 40):
         # Primitive multiplications
         return solve_multiplication_primary(x, y)
 
