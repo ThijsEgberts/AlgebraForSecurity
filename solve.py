@@ -94,12 +94,17 @@ def save_answer(answer, answer_location: str, operation: str):
     Using the JSON format "answer": "int".
     """
     # Create the answer object
-    # TODO fix this
-    # if operation == "extended_euclidean_algorithm":
-    #     answer_object = {
-    #         "answer-a": answer[1], "answer-b": answer[2], "answer-gcd": answer[0]}
-    # else:
-    #     answer_object = {"answer": answer}
+    if operation == "extended_euclidean_algorithm":
+        answer_object = {
+            "answer-a": answer[1], "answer-b": answer[2], "answer-gcd": answer[0]}
+
+    elif operation == "long_division":
+        answer_object = {
+            "answer-q": answer[0], "answer-r": answer[1]
+        }
+    else:
+        answer_object = {"answer": answer}
+
     # Save the answer object to a JSON file
     with open(answer_location, 'w') as answer_file:
         json.dump(answer_object, answer_file)
