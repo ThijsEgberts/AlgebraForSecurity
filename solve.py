@@ -1,4 +1,17 @@
 import json
+import polynomial_addition_subtraction
+import polynomial_multiplication
+import polynomial_long_division
+import polynomial_irreducable_element_generator
+import polynomial_extended_euclidean_algorithm
+import polynomial_irreducability_check
+import finitefield_addition_subtraction
+import finitefield_division
+import finitefield_inversion
+import finitefield_multiplication
+import finitefield_primitive_element_generator
+import finitefield_primitivity_check
+
 
 def solve_exercise(exercise_location: str, answer_location: str):
     """
@@ -6,12 +19,13 @@ def solve_exercise(exercise_location: str, answer_location: str):
     """
     # Load the exercise and return the JSON object (See Assignment 2.3)
     exercise = load_exercise(exercise_location)
-    
+
     # Solve the exercise and returns a JSON object with the answer(s) (see Assignment 2.4)
     answer = solve(exercise)
 
     # Save the answer
     save_answer(answer, answer_location, exercise["operation"])
+
 
 def solve(exercise: dict) -> str:
     """
@@ -19,7 +33,54 @@ def solve(exercise: dict) -> str:
     """
     match exercise:
         case {'task': 'addition'}:
-            if(exercise)            
+            if (exercise['type'] == 'polynomial_arithmetic'):
+                return polynomial_addition_subtraction.solve_addition_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+            if (exercise['type'] == "finite_field_arithmetic"):
+                return finitefield_addition_subtraction.solve_addition_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus']).toString()
+
+        case {'task': 'subtraction'}:
+            if (exercise['type'] == 'polynomial_arithmetic'):
+                return polynomial_addition_subtraction.solve_subtraction_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+            if (exercise['type'] == "finite_field_arithmetic"):
+                return finitefield_addition_subtraction.solve_subtraction_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus']).toString()
+
+        case {'task': 'multiplication'}:
+            if (exercise['type'] == 'polynomial_arithmetic'):
+                return polynomial_multiplication.solve_multiplication_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+            if (exercise['type'] == "finite_field_arithmetic"):
+                return finitefield_multiplication.solve_multiplication_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus']).toString()
+
+        case {'task': 'long_division'}:
+            if (exercise['type'] == 'polynomial_arithmetic'):
+                return polynomial_long_division.solve_long_division_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+
+        case {'task': 'extended_euclidean_algorithm'}:
+            if (exercise['type'] == 'polynomial_arithmetic'):
+                return polynomial_extended_euclidean_algorithm.solve_extended_euclidean_algorithm_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+
+        case {'task': 'irreducibility_check'}:
+            if (exercise['type'] == 'polynomial_arithmetic'):
+                return polynomial_irreducability_check.solve_irreducability_check_polynomial_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+
+        case {'task': 'irreducable_element_generator'}:
+            if (exercise['type'] == 'polynomial_arithmetic'):
+                return polynomial_irreducable_element_generator.solve_irreducable_element_generator_polynomial_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+
+        case {'task': 'division'}:
+            if (exercise['type'] == 'finite_field_arithmetic'):
+                return finitefield_division.solve_division_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus']).toString()
+
+        case {'task': 'inversion'}:
+            if (exercise['type'] == 'finite_field_arithmetic'):
+                return finitefield_inversion.solve_inversion_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+
+        case {'task': 'primitivity_check'}:
+            if (exercise['type'] == 'finite_field_arithmetic'):
+                return finitefield_primitivity_check.solve_primitivity_check_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+
+        case {'task': 'primitive_element_generator'}:
+            if (exercise['type'] == 'finite_field_arithmetic'):
+                return finitefield_primitive_element_generator.solve_primitive_element_generator_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
 
         # Invalid operation
         case _:
@@ -33,11 +94,12 @@ def save_answer(answer, answer_location: str, operation: str):
     Using the JSON format "answer": "int".
     """
     # Create the answer object
-    if operation == "extended_euclidean_algorithm":
-        answer_object = {
-            "answer-a": answer[1], "answer-b": answer[2], "answer-gcd": answer[0]}
-    else:
-        answer_object = {"answer": answer}
+    # TODO fix this
+    # if operation == "extended_euclidean_algorithm":
+    #     answer_object = {
+    #         "answer-a": answer[1], "answer-b": answer[2], "answer-gcd": answer[0]}
+    # else:
+    #     answer_object = {"answer": answer}
     # Save the answer object to a JSON file
     with open(answer_location, 'w') as answer_file:
         json.dump(answer_object, answer_file)
