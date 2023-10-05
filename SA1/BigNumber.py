@@ -35,7 +35,7 @@ class BigNumber:
         self.exponents = [None] * length
 
         # parse each digit in the string and convert it to a number in the exponent list
-        for i in range(0, length):  # skip the minus sign if the number is negative
+        for i in range(0, length):
             match stringNr[i]:
                 case '0':
                     self.exponents[i] = 0
@@ -73,7 +73,6 @@ class BigNumber:
                     raise Exception('Radix out of bounds')
 
     def __str__(self):
-        # return "[" + self.exponentsToString() + "]_" + str(self.radix)
         return self.exponentsToString()
 
     # flips the sign of the big number, ei -1 becomes 1
@@ -101,6 +100,7 @@ class BigNumber:
         for i in range(0, removeUntil):
             del self.exponents[0]
 
+    #prints out the exponent list as a string, e.i. the base radix representation of the number
     def exponentsToString(self):
         self.removeLeadingZeroes()
         output = ""

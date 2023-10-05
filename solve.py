@@ -9,44 +9,18 @@ import reduction
 import inverse
 
 
-def solve_exercise(exercise_location: str, answer_location: str, saveAnswer: bool = True):
+def solve_exercise(exercise_location: str, answer_location: str):
     """
     Solves the exercise at the given location and saves the answer at the given location.
     """
     # Load the exercise and return the JSON object (See Assignment 2.3)
     exercise = load_exercise(exercise_location)
+    
     # Solve the exercise and returns a JSON object with the answer(s) (see Assignment 2.4)
-
-    print(exercise_location)
-    start = time.time()
-
     answer = solve(exercise)
 
-    diff = time.time()-start
-    if(diff > 5):
-        print("Code executed too slowly! " + str(diff) + " seconds")
-
-    # Print the answer
-    print("The answer is: " + str(answer))
-
-    if saveAnswer:
-        # Save the answer
-        save_answer(answer, answer_location, exercise["operation"])
-    else:
-        answerDict = load_answer(answer_location)
-        if exercise["operation"] == "extended_euclidean_algorithm":
-            print("The gcd is correct: " +
-                  str(answerDict["answer-gcd"] == answer[0]))
-            print("The a is correct: " +
-                  str(answerDict["answer-a"] == answer[1]))
-            print("The b is correct: " +
-                  str(answerDict["answer-b"] == answer[2]))
-        else:
-
-            print("The answer is correct: " +
-                  str(answerDict["answer"] == answer))
-
-    print()
+    # Save the answer
+    save_answer(answer, answer_location, exercise["operation"])
 
 def solve(exercise: dict) -> str:
     """
@@ -66,8 +40,7 @@ def solve(exercise: dict) -> str:
             else:
                 raise Exception(
                     "Invalid type for addition, only integer_arithmetic and modular_arithmetic are supported")
-            # return addition.solve_addition(exercise["type"], exercise["radix"], exercise["x"], exercise["y"])
-
+        
         case {'operation': 'subtraction'}:
             if exercise["type"] == "integer_arithmetic":
                 return str(addition_subtraction.solve_subtraction_integer_arithmetic(createBigNumberFromString(exercise["x"], exercise["radix"]), createBigNumberFromString(exercise["y"], exercise["radix"])))
@@ -198,6 +171,3 @@ def load_answer(answer_location: str):
         answer = answer_file.read()
     # Return the exercise
     return json.loads(answer)
-
-### run the solver###
-# solve_exercise("exercises\Simple\Exercises\exercise6.json", "exercises\Simple\Answers\\answer6.json", False)

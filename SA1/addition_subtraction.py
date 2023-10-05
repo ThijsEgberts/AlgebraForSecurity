@@ -147,14 +147,11 @@ def solve_subtraction_integer_arithmetic(x_: BigNumber, y_: BigNumber) -> BigNum
         subtraction = x.exponents[i] - y.exponents[i] - borrow
         # No borrow needed
         if subtraction >= 0:
-            # exponents.insert(0, subtraction)
             exponents[i] = subtraction
             borrow = 0
-        # borrow needed :shook:
+        # borrow needed
         elif subtraction < 0:
-            # exponents.insert(0, subtraction + x.radix)
             exponents[i] = subtraction + x.radix
-            # borrow the 1
             borrow = 1
 
     return BigNumber(x.radix, exponents, x.isNegative)
