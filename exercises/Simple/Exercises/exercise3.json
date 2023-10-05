@@ -1,8 +1,0 @@
-{
-    "type": "integer_arithmetic",
-    "operation": "multiplication_karatsuba",
-    "radix": 12,
-    "x": "29",
-    "y": "-39",
-    "points": 0.5
-}

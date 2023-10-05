@@ -1,8 +1,0 @@
-{
-    "type": "integer_arithmetic",
-    "operation": "multiplication_primary",
-    "radix": 10,
-    "x": "-22",
-    "y": "22",
-    "points": 0.5
-}

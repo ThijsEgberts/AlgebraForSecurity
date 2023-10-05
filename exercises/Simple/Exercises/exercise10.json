@@ -1,9 +1,0 @@
-{
-    "type": "modular_arithmetic",
-    "operation": "multiplication",
-    "radix": 10,
-    "x": "15",
-    "y": "56",
-    "modulus": "71",
-    "points": 0.5
-}

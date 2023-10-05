@@ -1,8 +1,0 @@
-{
-    "type": "modular_arithmetic",
-    "operation": "reduction",
-    "radix": 10,
-    "x": "18",
-    "modulus": "17",
-    "points": 0.5
-}

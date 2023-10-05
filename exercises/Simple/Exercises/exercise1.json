@@ -1,8 +1,0 @@
-{
-    "type": "integer_arithmetic",
-    "operation": "subtraction",
-    "radix": 11,
-    "x": "-24",
-    "y": "39",
-    "points": 0.5
-}
