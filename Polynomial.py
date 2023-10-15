@@ -14,7 +14,8 @@ class Polynomial:
     # Parses a string representing a coefficients to a Polynomial format
     def parseString(self, stringNr: string, radix: int):
         """
-        Parses a string representing a coefficients to a Polynomial format. Coefficients are split by spaces.
+        Parses a string representing a coefficients to a Polynomial format. Coefficients are split by spaces. 
+        String starts with the lowest degree coefficient and ends with the highest degree coefficient.
 
         Args:
             stringNr (string): The string to parse.
