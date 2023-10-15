@@ -193,6 +193,12 @@ class Polynomial:
 
         return result
 
+    def copy(self):
+        """
+        Returns a copy of the Polynomial.
+        """
+        return Polynomial(self.radix, self.coefficients.copy())
+
 
 def createPolynomialFromString(string: str, radix: int):
     """
