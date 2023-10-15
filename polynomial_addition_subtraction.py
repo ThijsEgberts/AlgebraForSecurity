@@ -22,26 +22,25 @@ def solve_addition_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polynomia
         else:
             return x.copy()
 
-    # TODO Optimization: if x has more coefficients than y, only add the number of coefficients y originally had and then return (since all others are 0 anyway)
-    # Match the exponent list length
-    x.matchcoefficientsLength(y)
+    # Initialize variables with following optimization:
+    # If x has more coefficients than y, only add the number of coefficients of y and copy the rest of the x exponents
+    if len(x.coefficients) > len(y.coefficients):
+        exp_len = len(y.coefficients)
 
-    # Initialize variables
-    exp_len = len(x.coefficients)
-    coefficients = [0] * exp_len  # Preallocate the coefficients list
-    carry = 0
+    else:
+        # Match the coefficients of the two numbers.
+        x.matchcoefficientsLength(y)
+        exp_len = len(x.coefficients)
+
+    coefficients = x.coefficients.copy()  # Preallocate the coefficients list
 
     # Calculate the addition of coefficients
     for i in range(exp_len):
         # Calculate the total addition of the coefficients
-        total = x.coefficients[i] + y.coefficients[i] + carry
-        # Use a modular division to get the remainder and the carry
+        total = x.coefficients[i] + y.coefficients[i]
+        # Use a modular division to get the remainder and the carry, carry is ignored
         carry, remainder = divmod(total, x.radix)
         coefficients[i] = remainder
-
-    # If there is a carry left, add it to the coefficients
-    if carry > 0:
-        coefficients.append(carry)
 
     # Create and return the result BigNumber
     return Polynomial(x.radix, coefficients)
@@ -50,6 +49,10 @@ def solve_addition_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polynomia
 def solve_subtraction_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polynomial:
     """
     Solves the subtraction of two polynomials in Z_p[x]. 
+
+    Args:
+        x (Polynomial): The first polynomial.
+        y (Polynomial): The second polynomial.
     """
 
     # Check for zero values
@@ -76,17 +79,10 @@ def solve_subtraction_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polyno
 
     coefficients = x.coefficients.copy()  # Preallocate the coefficients list
 
-    borrow = 0
     for i in range(exp_len):
-        subtraction = x.coefficients[i] - y.coefficients[i] - borrow
+        subtraction = x.coefficients[i] - y.coefficients[i]
 
-        # No borrow needed
-        if subtraction >= 0:
-            coefficients[i] = subtraction
-            borrow = 0
-        # borrow needed
-        elif subtraction < 0:
-            coefficients[i] = subtraction + x.radix
-            borrow = 1
+        borrow, remainder = divmod(subtraction, x.radix)  # Borrow is ignored
+        coefficients[i] = remainder
 
     return Polynomial(x.radix, coefficients)
