@@ -22,28 +22,29 @@ def solve_addition_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polynomia
         else:
             return x.copy()
 
+    # TODO Optimization: if x has more coefficients than y, only add the number of coefficients y originally had and then return (since all others are 0 anyway)
     # Match the exponent list length
     x.matchcoefficientsLength(y)
 
     # Initialize variables
-    exp_len = len(x.exponents)
-    exponents = [0] * exp_len  # Preallocate the exponents list
+    exp_len = len(x.coefficients)
+    coefficients = [0] * exp_len  # Preallocate the coefficients list
     carry = 0
 
-    # Calculate the addition of exponents
+    # Calculate the addition of coefficients
     for i in range(exp_len):
-        # Calculate the total addition of the exponents
-        total = x.exponents[i] + y.exponents[i] + carry
+        # Calculate the total addition of the coefficients
+        total = x.coefficients[i] + y.coefficients[i] + carry
         # Use a modular division to get the remainder and the carry
         carry, remainder = divmod(total, x.radix)
-        exponents[i] = remainder
+        coefficients[i] = remainder
 
-    # If there is a carry left, add it to the exponents
+    # If there is a carry left, add it to the coefficients
     if carry > 0:
-        exponents.append(carry)
+        coefficients.append(carry)
 
     # Create and return the result BigNumber
-    return Polynomial(x.radix, exponents)
+    return Polynomial(x.radix, coefficients)
 
 
 def solve_subtraction_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polynomial:
@@ -63,24 +64,30 @@ def solve_subtraction_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polyno
     elif y.isZero():
         return x.copy()
 
-    # Match the exponents of the two numbers.
+    # TODO Optimization: if x has more coefficients than y, only subtract the number of coefficients y originally had and then return (since all others are 0 anyway)
+    # Match the coefficients of the two numbers.
     x.matchcoefficientsLength(y)
 
     # Initialize variables
-    exp_len = len(x.exponents)
-    exponents = [0]*exp_len  # Preallocate the exponents list
+    exp_len = len(x.coefficients)
+    coefficients = [0]*exp_len  # Preallocate the coefficients list
 
     borrow = 0
     for i in range(exp_len):
-        subtraction = x.exponents[i] - y.exponents[i] - borrow
+        subtraction = x.coefficients[i] - y.coefficients[i] - borrow
 
         # No borrow needed
         if subtraction >= 0:
-            exponents[i] = subtraction
+            coefficients[i] = subtraction
             borrow = 0
         # borrow needed
         elif subtraction < 0:
-            exponents[i] = subtraction + x.radix
+            coefficients[i] = subtraction + x.radix
             borrow = 1
 
-    return Polynomial(x.radix, exponents)
+    return Polynomial(x.radix, coefficients)
+
+
+x = Polynomial(10, [1, 2, 3])
+y = Polynomial(10, [1, 2, 3])
+print(solve_subtraction_integer_arithmetic(x, y))
