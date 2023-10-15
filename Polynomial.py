@@ -167,9 +167,9 @@ class Polynomial:
         """
         len_diff = len(self.coefficients) - len(other.coefficients)
         if len_diff > 0:
-            other.coefficients = [0] * len_diff + other.coefficients
+            other.coefficients = other.coefficients + [0] * len_diff
         elif len_diff < 0:
-            self.coefficients = [0] * abs(len_diff) + self.coefficients
+            self.coefficients = self.coefficients + [0] * abs(len_diff)
 
     def addLeadingZero(self):
         """
