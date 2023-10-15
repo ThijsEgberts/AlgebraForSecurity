@@ -1,0 +1,20 @@
+{
+    "type": "finite_field_arithmetic",
+    "task": "addition",
+    "integer_modulus": 5,
+    "f": [
+        0,
+        2
+    ],
+    "g": [
+        4,
+        3
+    ],
+    "polynomial_modulus": [
+        1,
+        4,
+        1,
+        1
+    ],
+    "points": 0.5
+}

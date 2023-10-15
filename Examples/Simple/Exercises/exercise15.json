@@ -1,0 +1,16 @@
+{
+    "type": "finite_field_arithmetic",
+    "task": "inversion",
+    "integer_modulus": 3,
+    "f": [
+        2,
+        1
+    ],
+    "polynomial_modulus": [
+        1,
+        1,
+        2,
+        1
+    ],
+    "points": 0.5
+}

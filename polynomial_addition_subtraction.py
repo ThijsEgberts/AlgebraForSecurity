@@ -13,12 +13,12 @@ def solve_addition_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> Polyno
     # Check for zero values
     if x.isZero():
         if y.isZero():
-            return Polynomial(x.radix, [0])
+            return Polynomial(x.modulo, [0])
         else:
             return y.copy()
     elif y.isZero():
         if x.isZero():
-            return Polynomial(x.radix, [0])
+            return Polynomial(x.modulo, [0])
         else:
             return x.copy()
 
@@ -39,11 +39,11 @@ def solve_addition_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> Polyno
         # Calculate the total addition of the coefficients
         total = x.coefficients[i] + y.coefficients[i]
         # Use a modular division to get the remainder and the carry, carry is ignored
-        carry, remainder = divmod(total, x.radix)
+        carry, remainder = divmod(total, x.modulo)
         coefficients[i] = remainder
 
     # Create and return the result BigNumber
-    return Polynomial(x.radix, coefficients)
+    return Polynomial(x.modulo, coefficients)
 
 
 def solve_subtraction_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> Polynomial:
@@ -58,12 +58,12 @@ def solve_subtraction_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> Pol
     # Check for zero values
     if x.isZero():
         if y.isZero():
-            return Polynomial(x.radix, [0])
+            return Polynomial(x.modulo, [0])
         else:
             # return y with all the signs of the coefficients inverted
             inverted_coefficients = [
-                x.radix - coefficient for coefficient in y.coefficients]
-            return Polynomial(x.radix, inverted_coefficients)
+                x.modulo - coefficient for coefficient in y.coefficients]
+            return Polynomial(x.modulo, inverted_coefficients)
     elif y.isZero():
         return x.copy()
 
@@ -82,7 +82,7 @@ def solve_subtraction_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> Pol
     for i in range(exp_len):
         subtraction = x.coefficients[i] - y.coefficients[i]
 
-        borrow, remainder = divmod(subtraction, x.radix)  # Borrow is ignored
+        borrow, remainder = divmod(subtraction, x.modulo)  # Borrow is ignored
         coefficients[i] = remainder
 
-    return Polynomial(x.radix, coefficients)
+    return Polynomial(x.modulo, coefficients)

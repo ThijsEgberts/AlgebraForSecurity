@@ -1,0 +1,7 @@
+{
+    "type": "polynomial_arithmetic",
+    "task": "irreducible_element_generation",
+    "integer_modulus": 5,
+    "degree": 5,
+    "points": 0.5
+}

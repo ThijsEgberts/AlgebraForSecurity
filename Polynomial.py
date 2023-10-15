@@ -4,33 +4,33 @@ import string
 class Polynomial:
 
     coefficients = []  # a list of coefficients for the representation of the polynomial, with the lowest degree first
-    radix = 0
+    modulo = 0
 
     # Construct a Polynomial from an coefficients list
-    def __init__(self, radix: int, coefficients: list) -> None:
+    def __init__(self, modulo: int, coefficients: list) -> None:
         """
         Construct a Polynomial from an coefficients list.
 
         Args:
-            radix (int): The radix of the coefficients.
+            modulo (int): The modulo of the coefficients.
             coefficients (list): The coefficients of the Polynomial. The first element is the lowest degree coefficient.
         """
-        self.radix = radix
+        self.modulo = modulo
         self.coefficients = coefficients
 
     # Parses a string representing a coefficients to a Polynomial format
-    def parseString(self, stringNr: str, radix: int):
+    def parseString(self, stringNr: str, modulo: int):
         """
         Parses a string representing a coefficients to a Polynomial format. Coefficients are split by spaces. 
         String starts with the lowest degree coefficient and ends with the highest degree coefficient.
 
         Args:
             stringNr (string): The string to parse.
-            radix (int): The radix of the coefficients.
+            modulo (int): The modulo of the coefficients.
 
         Raises: 
             Exception: If the string is empty.
-            Exception: If the radix is out of bounds.
+            Exception: If the modulo is out of bounds.
             Exception: If the string contains an invalid character. 
             Exception: If the coefficients contain an invalid coefficient.
             Exception: If the last coefficient is zero.       
@@ -39,13 +39,13 @@ class Polynomial:
         if (stringNr == ""):
             raise Exception('Empty string')
 
-        if not (509 >= radix and radix >= 2):  # check correct format
-            raise Exception('Radix out of bounds')
+        if not (509 >= modulo and modulo >= 2):  # check correct format
+            raise Exception('modulo out of bounds')
 
         if not all(char in string.printable for char in stringNr):
             raise Exception('Invalid character')
 
-        self.radix = radix
+        self.modulo = modulo
 
         # split the string into a list of coefficients
         stringNr = stringNr.split(' ')
@@ -58,8 +58,8 @@ class Polynomial:
         for i in range(0, length):
             self.coefficients[i] = int(stringNr[i])
 
-        # Check if each integer is between 0 and radix - 1 (ignoring negative sign)
-        if not all(0 <= abs(coefficient) < radix for coefficient in self.coefficients):
+        # Check if each integer is between 0 and modulo - 1 (ignoring negative sign)
+        if not all(0 <= abs(coefficient) < modulo for coefficient in self.coefficients):
             raise Exception('Invalid coefficient')
 
         # Check if last coefficient is non-zero
@@ -86,22 +86,27 @@ class Polynomial:
             # If the coefficient is not zero, add it to the string representation
             if self.coefficients[i] != 0:
 
-                # If the coefficient is negative, add a minus sign
-                if self.coefficients[i] < 0:
-                    poly_str += "-"
-
                 # If the coefficient is not the first coefficient, add a space
                 if i != len(self.coefficients) - 1:
                     poly_str += " "
 
-                # Add the coefficient to the string representation
-                poly_str += str(abs(self.coefficients[i]))
+                # If the coefficient is negative, add a minus sign
+                if self.coefficients[i] < 0:
+                    poly_str += "- "
+                elif i != len(self.coefficients) - 1:
+                    poly_str += "+ "
+
+                
+                # If the coefficient is not |1| or it is the first coefficient, add it to the string
+                if abs(self.coefficients[i]) != 1 or i == 0:
+                    poly_str += str(abs(self.coefficients[i]))
+
                 # If the coefficient is not the first coefficient, add an x
                 if i != 0:
                     poly_str += "x"
 
-                # If the coefficient is not the first coefficient, add the degree
-                if i != 0:
+                # If the coefficient is not the first or second coefficient, add the degree
+                if i > 1:
                     poly_str += "^" + str(i)
 
         return poly_str
@@ -197,14 +202,14 @@ class Polynomial:
         """
         Returns a copy of the Polynomial.
         """
-        return Polynomial(self.radix, self.coefficients.copy())
+        return Polynomial(self.modulo, self.coefficients.copy())
 
 
-def createPolynomialFromString(string: str, radix: int):
+def createPolynomialFromString(string: str, modulo: int):
     """
     Creates a Polynomial from a string.
     """
 
-    poly = Polynomial(radix, [])
-    poly.parseString(string, radix)
+    poly = Polynomial(modulo, [])
+    poly.parseString(string, modulo)
     return poly

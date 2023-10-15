@@ -1,0 +1,16 @@
+{
+    "type": "polynomial_arithmetic",
+    "task": "long_division",
+    "integer_modulus": 5,
+    "f": [
+        3,
+        2
+    ],
+    "g": [
+        0,
+        1,
+        1,
+        2
+    ],
+    "points": 0.5
+}

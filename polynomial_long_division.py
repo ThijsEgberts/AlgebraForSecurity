@@ -18,7 +18,7 @@ def solve_long_division(x: Polynomial, y: Polynomial) -> Polynomial:
     if y.isZero():
         raise ValueError("The divisor (d) cannot be zero.")
 
-    q = Polynomial(x.radix, [])  # Initialize the quotient as zero
+    q = Polynomial(x.modulo, [])  # Initialize the quotient as zero
     r = x.copy()  # Initialize the remainder as the dividend
 
     while not r.isZero() and r.degree() >= y.degree():
@@ -28,7 +28,7 @@ def solve_long_division(x: Polynomial, y: Polynomial) -> Polynomial:
 
         # Calculate the term to divide leading terms
         remainder, quotient = divmod(lead_r, lead_d)
-        t = Polynomial(x.radix, [quotient])
+        t = Polynomial(x.modulo, [quotient])
 
         # Update the quotient and remainder
         q = solve_addition_polynomial_arithmetic(q, t)
