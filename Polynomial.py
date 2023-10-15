@@ -19,7 +19,7 @@ class Polynomial:
         self.coefficients = coefficients
 
     # Parses a string representing a coefficients to a Polynomial format
-    def parseString(self, stringNr: string, radix: int):
+    def parseString(self, stringNr: str, radix: int):
         """
         Parses a string representing a coefficients to a Polynomial format. Coefficients are split by spaces. 
         String starts with the lowest degree coefficient and ends with the highest degree coefficient.
@@ -58,13 +58,6 @@ class Polynomial:
         for i in range(0, length):
             self.coefficients[i] = int(stringNr[i])
 
-        # create a list of coefficients with the length of the string
-        self.coefficients = [None] * length
-
-        # parse each digit in the string and convert it to a number in the coefficient list
-        for i in range(0, length):
-            self.coefficients[i] = int(stringNr[i])
-
         # Check if each integer is between 0 and radix - 1 (ignoring negative sign)
         if not all(0 <= abs(coefficient) < radix for coefficient in self.coefficients):
             raise Exception('Invalid coefficient')
@@ -83,7 +76,7 @@ class Polynomial:
         # If the Polynomial is zero, return 0
         if self.isZero():
             return "0"
-        
+
         # Initialize an empty string to store the string representation
         poly_str = ""
 
@@ -110,26 +103,28 @@ class Polynomial:
                 # If the coefficient is not the first coefficient, add the degree
                 if i != 0:
                     poly_str += "^" + str(i)
-    
+
+        return poly_str
+
     def degree(self) -> int:
         """
         Returns the degree of the Polynomial.
         """
-        return len(self.coefficients) - 1        
-
+        return len(self.coefficients) - 1
 
     def removeLeadingZeroes(self):
         """
         Removes leading zeroes from the Polynomial. So polynomial 0X^5 + 2X^4 becomes 2X^4.
         """
-        # Loop from the right to the left
-        for i in range(len(self.coefficients) - 1, -1, -1):
-            # If the coefficient is not zero, break
+        # Find the index of the first non-zero coefficient from the left
+        first_non_zero_index = len(self.coefficients)-1
+        for i in range(len(self.coefficients)-1, -1, -1):
             if self.coefficients[i] != 0:
+                first_non_zero_index = i
                 break
-            # If the coefficient is zero, remove it
-            else:
-                self.coefficients.pop(i)
+
+        # Use list slicing to create a new list with coefficients after the first non-zero coefficient
+        self.coefficients = self.coefficients[:first_non_zero_index + 1]
 
     def isZero(self) -> bool:
         """
@@ -177,9 +172,33 @@ class Polynomial:
             self.coefficients = [0] * abs(len_diff) + self.coefficients
 
     def addLeadingZero(self):
+        """
+        Adds a leading zero to the Polynomial.
+        """
         self.coefficients.insert(0, 0)
 
+    def evaluate(self, x: int) -> int:
+        """
+        Evaluates the Polynomial at a given value of x.
+
+        Args:
+            x (int): The value of x to evaluate the Polynomial at.
+
+        Returns:
+            int: The result of the evaluation.
+        """
+        result = 0
+        for i in range(len(self.coefficients)):
+            result += self.coefficients[i] * (x ** i)
+
+        return result
+
+
 def createPolynomialFromString(string: str, radix: int):
-    poly = Polynomial(radix, [], 0)
+    """
+    Creates a Polynomial from a string.
+    """
+
+    poly = Polynomial(radix, [])
     poly.parseString(string, radix)
     return poly
