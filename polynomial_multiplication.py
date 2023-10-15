@@ -41,8 +41,8 @@ def solve_multiplication_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> 
 
     return result
 
-x = Polynomial(2, [1, 0, 1])
-y = Polynomial(2, [1, 0, 1, 1])
-z = solve_multiplication_polynomial_arithmetic(x, y)
-print("(" + str(x) + ") * (" + str(y) + ") = " + str(z))
-print(z.coefficients)
+#x = Polynomial(2, [1, 0, 1])
+#y = Polynomial(2, [1, 0, 1, 1])
+#z = solve_multiplication_polynomial_arithmetic(x, y)
+#print("(" + str(x) + ") * (" + str(y) + ") = " + str(z))
+#print(z.coefficients)
