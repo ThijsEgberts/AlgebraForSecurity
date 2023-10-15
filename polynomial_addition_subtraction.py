@@ -64,13 +64,17 @@ def solve_subtraction_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polyno
     elif y.isZero():
         return x.copy()
 
-    # TODO Optimization: if x has more coefficients than y, only subtract the number of coefficients y originally had and then return (since all others are 0 anyway)
-    # Match the coefficients of the two numbers.
-    x.matchcoefficientsLength(y)
+    # Initialize variables with following optimization:
+    # If x has more coefficients than y, only subtract the number of coefficients of y and copy the rest of the x exponents
+    if len(x.coefficients) > len(y.coefficients):
+        exp_len = len(y.coefficients)
 
-    # Initialize variables
-    exp_len = len(x.coefficients)
-    coefficients = [0]*exp_len  # Preallocate the coefficients list
+    else:
+        # Match the coefficients of the two numbers.
+        x.matchcoefficientsLength(y)
+        exp_len = len(x.coefficients)
+
+    coefficients = x.coefficients.copy()  # Preallocate the coefficients list
 
     borrow = 0
     for i in range(exp_len):
@@ -86,8 +90,3 @@ def solve_subtraction_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polyno
             borrow = 1
 
     return Polynomial(x.radix, coefficients)
-
-
-x = Polynomial(10, [1, 2, 3])
-y = Polynomial(10, [1, 2, 3])
-print(solve_subtraction_integer_arithmetic(x, y))
