@@ -76,44 +76,69 @@ class Polynomial:
     # TODO fix every function below this line
 
     def __str__(self):
-        return self.coefficientsToString()
+        """
+        Returns a string representation of the Polynomial.
+        """
 
-    # flips the sign of the big number, ei -1 becomes 1
-    def flipSign(self):
-        if bool(self.isNegative):
-            self.isNegative = False
-            return self
-        else:
-            self.isNegative = True
-            return self
+        # If the Polynomial is zero, return 0
+        if self.isZero():
+            return "0"
+        
+        # Initialize an empty string to store the string representation
+        poly_str = ""
 
-    def setSign(self, sign: bool):
-        self.isNegative = bool(sign)
-        return self
+        # Loop through the coefficients in reverse order
+        for i in range(len(self.coefficients) - 1, -1, -1):
+
+            # If the coefficient is not zero, add it to the string representation
+            if self.coefficients[i] != 0:
+
+                # If the coefficient is negative, add a minus sign
+                if self.coefficients[i] < 0:
+                    poly_str += "-"
+
+                # If the coefficient is not the first coefficient, add a space
+                if i != len(self.coefficients) - 1:
+                    poly_str += " "
+
+                # Add the coefficient to the string representation
+                poly_str += str(abs(self.coefficients[i]))
+                # If the coefficient is not the first coefficient, add an x
+                if i != 0:
+                    poly_str += "x"
+
+                # If the coefficient is not the first coefficient, add the degree
+                if i != 0:
+                    poly_str += "^" + str(i)
+    
+    def degree(self) -> int:
+        """
+        Returns the degree of the Polynomial.
+        """
+        return len(self.coefficients) - 1        
+
 
     def removeLeadingZeroes(self):
-        removeUntil = 0
-
-        for i in range(0, len(self.coefficients) - 1):
-            if self.coefficients[i] == 0:
-                removeUntil += 1
-            else:
+        """
+        Removes leading zeroes from the Polynomial. So polynomial 0X^5 + 2X^4 becomes 2X^4.
+        """
+        # Loop from the right to the left
+        for i in range(len(self.coefficients) - 1, -1, -1):
+            # If the coefficient is not zero, break
+            if self.coefficients[i] != 0:
                 break
-
-        for i in range(0, removeUntil):
-            del self.coefficients[0]
+            # If the coefficient is zero, remove it
+            else:
+                self.coefficients.pop(i)
 
     def isZero(self) -> bool:
+        """
+        Returns True if the Polynomial is zero, False otherwise.
+        """
         if len(self.coefficients) == 1 and self.coefficients[0] == 0:
             return True
 
         return all(coefficient == 0 for coefficient in self.coefficients)
-
-    def isOne(self) -> bool:
-        if len(self.coefficients) == 1 and self.coefficients[0] == 1:
-            return True
-
-        return all(coefficient == 0 for i, coefficient in enumerate(self.coefficients) if i != len(self.coefficients) - 1) and self.coefficients[-1] == 1
 
     def compare(self, other: 'Polynomial', greater_or_equal: bool = False) -> bool:
         """
@@ -127,8 +152,6 @@ class Polynomial:
         Returns:
             bool: True if the comparison condition is met, False otherwise.
         """
-        if self.isNegative != other.isNegative:
-            return other.isNegative
 
         # Match the length of the coefficients
         self.matchcoefficientsLength(other)
@@ -155,15 +178,6 @@ class Polynomial:
 
     def addLeadingZero(self):
         self.coefficients.insert(0, 0)
-
-    # Shifts number x digits left, adding 0
-    def shiftLeft(self, shift: int):
-        x = Polynomial(
-            self.radix, self.coefficients.copy(), self.isNegative)
-        for _ in range(shift):
-            x.coefficients.append(0)
-        return x
-
 
 def createPolynomialFromString(string: str, radix: int):
     poly = Polynomial(radix, [], 0)
