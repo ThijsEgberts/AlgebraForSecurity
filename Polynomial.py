@@ -3,11 +3,18 @@ import string
 
 class Polynomial:
 
-    coefficients = []  # a list of coefficients for the representation of the polynomial
+    coefficients = []  # a list of coefficients for the representation of the polynomial, with the lowest degree first
     radix = 0
 
     # Construct a Polynomial from an coefficients list
     def __init__(self, radix: int, coefficients: list) -> None:
+        """
+        Construct a Polynomial from an coefficients list.
+
+        Args:
+            radix (int): The radix of the coefficients.
+            coefficients (list): The coefficients of the Polynomial. The first element is the lowest degree coefficient.
+        """
         self.radix = radix
         self.coefficients = coefficients
 
