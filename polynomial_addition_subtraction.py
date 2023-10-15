@@ -1,7 +1,7 @@
 from Polynomial import Polynomial
 
 
-def solve_addition_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polynomial:
+def solve_addition_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> Polynomial:
     """
     Solves the addition of two polynomials in Z_p[x].
 
@@ -46,7 +46,7 @@ def solve_addition_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polynomia
     return Polynomial(x.radix, coefficients)
 
 
-def solve_subtraction_integer_arithmetic(x: Polynomial, y: Polynomial) -> Polynomial:
+def solve_subtraction_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> Polynomial:
     """
     Solves the subtraction of two polynomials in Z_p[x]. 
 
