@@ -205,7 +205,7 @@ class Polynomial:
         return Polynomial(self.modulo, self.coefficients.copy())
 
 
-def createPolynomialFromString(string: str, modulo: int):
+def createPolynomialFromString(string: str, modulo: int) -> Polynomial:
     """
     Creates a Polynomial from a string.
     """
@@ -213,3 +213,17 @@ def createPolynomialFromString(string: str, modulo: int):
     poly = Polynomial(modulo, [])
     poly.parseString(string, modulo)
     return poly
+
+def createZero(modulo: int) -> Polynomial:
+    """
+    Creates a zero polynomial
+    """
+
+    return Polynomial(modulo, [0])
+
+def createOne(modulo: int) -> Polynomial:
+    """
+    Creates a one polynomial
+    """
+
+    return Polynomial(modulo, [1])

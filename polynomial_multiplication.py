@@ -25,11 +25,6 @@ def solve_multiplication_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> 
             product = x.coefficients[i] * y.coefficients[j]
 
             coefficient_result.insert(0, product % x.modulo)
-            #if product < x.modulo:
-            #    coefficient_result.insert(0, product)
-            #else:
-            #    result_number = numberToBase(product, x.modulo)
-            #    coefficient_result.insert(0, result_number[-1])
 
         # Fill the result with zeros corresponding to the position of the exponent
         coefficient_result = [0] * i + coefficient_result
@@ -40,9 +35,3 @@ def solve_multiplication_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> 
         result.removeLeadingZeroes()
 
     return result
-
-#x = Polynomial(2, [1, 0, 1])
-#y = Polynomial(2, [1, 0, 1, 1])
-#z = solve_multiplication_polynomial_arithmetic(x, y)
-#print("(" + str(x) + ") * (" + str(y) + ") = " + str(z))
-#print(z.coefficients)
