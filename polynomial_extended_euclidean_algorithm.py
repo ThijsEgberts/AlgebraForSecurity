@@ -43,17 +43,17 @@ def solve_extended_euclidean(a_: Polynomial, b_: Polynomial) -> (Polynomial, Pol
     else:
         return gcd, x, y
 
-x = Polynomial(2, [
-        0,
-        0,
-        1,
-        1
-    ])
-y = Polynomial(2, [
-        1,
-        1,
-        1
-    ])
-a, b, c = solve_extended_euclidean(x, y)
-print(a, b, c)
-print(a.coefficients, b.coefficients, c.coefficients)
+# x = Polynomial(2, [
+#         0,
+#         0,
+#         1,
+#         1
+#     ])
+# y = Polynomial(2, [
+#         1,
+#         1,
+#         1
+#     ])
+# a, b, c = solve_extended_euclidean(x, y)
+# print(a, b, c)
+# print(a.coefficients, b.coefficients, c.coefficients)
