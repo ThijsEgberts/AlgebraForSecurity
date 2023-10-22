@@ -13,6 +13,14 @@ def long_division_with_remainder(x_: BigNumber, y_: BigNumber) -> list[BigNumber
     x = BigNumber(x_.radix, x_.exponents.copy(), x_.isNegative)
     y = BigNumber(y_.radix, y_.exponents.copy(), y_.isNegative)
 
+    # Check if either x_ or y_ is negative
+    is_result_negative = x.isNegative != y.isNegative
+
+    if x.isNegative:
+        x.isNegative = False
+    if y.isNegative:
+        y.isNegative = False
+
     x.removeLeadingZeroes()
     y.removeLeadingZeroes()
 
@@ -34,10 +42,11 @@ def long_division_with_remainder(x_: BigNumber, y_: BigNumber) -> list[BigNumber
         q.exponents[k - i - 1] = division_by_subtraction_with_remainder(r, y.shiftLeft(i))[0].exponents[0]
         #2.3
         r = solve_subtraction_integer_arithmetic(r, solve_multiplication_karatsuba(BigNumber(x.radix, [q.exponents[k - i - 1]], 0), y).shiftLeft(i))
-
+    
     q.removeLeadingZeroes()
     r.removeLeadingZeroes()
-
+    r.setSign(is_result_negative)
+    q.setSign(is_result_negative)
     return q, r
 
 def division_by_subtraction_with_remainder(x_: BigNumber, y_: BigNumber) -> list[BigNumber]:
@@ -80,3 +89,6 @@ def division_by_subtraction_with_remainder(x_: BigNumber, y_: BigNumber) -> list
 
     # Result contains the quotient and the remainder in form [quotient, remainder]
     return [quotient, x]
+
+y = BigNumber(10, [1, 9, 3], 1)
+mod = BigNumber(10, [1, 0], 0)

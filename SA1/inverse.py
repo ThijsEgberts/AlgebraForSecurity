@@ -10,7 +10,7 @@ def solve_inverse(x: BigNumber, mod: BigNumber) -> BigNumber:
         return None
 
     x = solve_reduction(x, mod)
-
+    
     gcd, a, _ = solve_extended_euclidean(x, mod)  # gcd = a*x + b*mod
 
     # if gcd(x,mod) != 1, there exists no inverse
