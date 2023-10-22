@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, 'SA1')
 from inverse import solve_inverse
 from BigNumber import BigNumber
-import time
+import math
 
 
 def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
@@ -56,8 +56,8 @@ def solve_int_inverse(x : int, mod : int):
     x, mod = abs(x), abs(mod)
 
     # split x and mod into a list of digits
-    xl = [int(i) for i in str(x)]
-    modl = [int(i) for i in str(mod)]
+    xl = [(x//(10**i))%10 for i in range(math.ceil(math.log(x, 10)), -1, -1)][bool(math.log(x,10)%1):]
+    modl = [(mod//(10**i))%10 for i in range(math.ceil(math.log(mod, 10)), -1, -1)][bool(math.log(mod,10)%1):]
     xb = BigNumber(mod, xl, xn)
     modb = BigNumber(mod, modl, modn)
 
