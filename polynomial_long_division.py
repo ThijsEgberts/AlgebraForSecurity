@@ -34,6 +34,7 @@ def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
         inverse_time_x = solve_multiplication_polynomial_arithmetic(leading_coefficient_inverse, x_to_power)
         q = solve_addition_polynomial_arithmetic(q, inverse_time_x)
         r = solve_subtraction_polynomial_arithmetic(r, solve_multiplication_polynomial_arithmetic(inverse_time_x, b))
+        r.removeLeadingZeroes()
 
     return q, r
 
@@ -55,4 +56,5 @@ def solve_int_inverse(x : int, mod : int):
     
 x = Polynomial(10, [1, 2, 3, 4, 5])
 y = Polynomial(10, [1, 2, 3])
+print(solve_long_division(x, y)[0])
 print(solve_long_division(x, y)[1])
