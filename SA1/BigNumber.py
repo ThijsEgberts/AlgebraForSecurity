@@ -174,6 +174,9 @@ class BigNumber:
         for _ in range(shift):
             x.exponents.append(0)
         return x
+    
+    def toInt(self):
+        return int(self.exponentsToString(), self.radix)
 
 
 def createBigNumberFromString(string: str, radix: int):
