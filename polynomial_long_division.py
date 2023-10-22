@@ -28,11 +28,15 @@ def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
     r = Polynomial(a.modulo, a.coefficients.copy())
 
     while(r.degree() >= b.degree()):
-        # (lc(r ) · lc(b)−1) · X^(deg(r )−deg(b))
+        # (lc(r ) · lc(b)^(−1))
         leading_coefficient_inverse = Polynomial(a.modulo, [r.getLeadingCoefficient() * solve_int_inverse(b.getLeadingCoefficient(), a.modulo)])
+        # X^(deg(r )−deg(b))
         x_to_power = Polynomial(a.modulo, [1 if i == r.degree() - b.degree() else 0 for i in range(r.degree() - b.degree() + 1)])
+        # (lc(r ) · lc(b)^(−1)) · X^(deg(r )−deg(b))
         inverse_time_x = solve_multiplication_polynomial_arithmetic(leading_coefficient_inverse, x_to_power)
+        # q = q + (lc(r ) · lc(b)^(−1)) · X^(deg(r )−deg(b))
         q = solve_addition_polynomial_arithmetic(q, inverse_time_x)
+        # r = r - (lc(r ) · lc(b)^(−1)) · X^(deg(r )−deg(b)) · b
         r = solve_subtraction_polynomial_arithmetic(r, solve_multiplication_polynomial_arithmetic(inverse_time_x, b))
         r.removeLeadingZeroes()
 
@@ -53,8 +57,3 @@ def solve_int_inverse(x : int, mod : int):
     modb = BigNumber(mod, modl, modn)
 
     return solve_inverse(xb, modb).toInt()
-    
-x = Polynomial(10, [1, 2, 3, 4, 5])
-y = Polynomial(10, [1, 2, 3])
-print(solve_long_division(x, y)[0])
-print(solve_long_division(x, y)[1])
