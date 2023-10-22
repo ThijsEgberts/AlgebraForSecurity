@@ -6,6 +6,7 @@ import sys
 sys.path.insert(0, 'SA1')
 from inverse import solve_inverse
 from BigNumber import BigNumber
+import time
 
 
 def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
@@ -25,13 +26,14 @@ def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
         return Polynomial(a.modulo, [1])
     
     q = Polynomial(a.modulo, [0])
-    r = Polynomial(a.modulo, a.coefficients.copy())
+    r = a.copy()
 
     while(r.degree() >= b.degree()):
+        rdegree, bdegree = r.degree(), b.degree()
         # (lc(r ) · lc(b)^(−1))
         leading_coefficient_inverse = Polynomial(a.modulo, [r.getLeadingCoefficient() * solve_int_inverse(b.getLeadingCoefficient(), a.modulo)])
         # X^(deg(r )−deg(b))
-        x_to_power = Polynomial(a.modulo, [1 if i == r.degree() - b.degree() else 0 for i in range(r.degree() - b.degree() + 1)])
+        x_to_power = Polynomial(a.modulo, [1 if i == rdegree - bdegree else 0 for i in range(rdegree - bdegree + 1)])
         # (lc(r ) · lc(b)^(−1)) · X^(deg(r )−deg(b))
         inverse_time_x = solve_multiplication_polynomial_arithmetic(leading_coefficient_inverse, x_to_power)
         # q = q + (lc(r ) · lc(b)^(−1)) · X^(deg(r )−deg(b))
