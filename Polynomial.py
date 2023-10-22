@@ -197,6 +197,12 @@ class Polynomial:
             result += self.coefficients[i] * (x ** i)
 
         return result
+    
+    def getLeadingCoefficient(self) -> int:
+        """
+        Returns the leading coefficient of the Polynomial.
+        """
+        return self.coefficients[-1]
 
     def copy(self):
         """
