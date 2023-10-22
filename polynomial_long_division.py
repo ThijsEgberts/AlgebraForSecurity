@@ -43,6 +43,9 @@ def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
     return q, r
 
 def solve_int_inverse(x : int, mod : int):
+    """
+    Solves the inverse of an integer x in Z_mod using SA1 code.
+    """
     xn, modn = False, False
     if(x < 0):
         xn = True
