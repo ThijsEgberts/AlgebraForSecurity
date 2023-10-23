@@ -66,14 +66,18 @@ class Polynomial:
         if self.coefficients[-1] == 0:
             raise Exception('Last coefficient is zero')
 
-    # TODO fix every function below this line
 
-#this function is not needed besides debugging
     def __str__(self):
         """
         Returns a string representation of the Polynomial.
         """
 
+        return str(self.coefficients)
+        return self.fancyPolyStringFormat()
+    
+    # TODO fix every function below this line
+
+    def fancyPolyStringFormat(self):
         # If the Polynomial is zero, return 0
         if self.isZero():
             return "0"
@@ -113,7 +117,7 @@ class Polynomial:
                     poly_str += "^" + str(i)
 
         return poly_str
-
+    
     def degree(self) -> int:
         """
         Returns the degree of the Polynomial.
