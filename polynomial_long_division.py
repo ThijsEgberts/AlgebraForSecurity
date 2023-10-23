@@ -4,9 +4,9 @@ from polynomial_addition_subtraction import solve_subtraction_polynomial_arithme
 from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
 import sys
 sys.path.insert(0, 'SA1')
-from inverse import solve_inverse
-from BigNumber import BigNumber
 import math
+from SA1.BigNumber import BigNumber
+from SA1.inverse import solve_inverse
 
 
 def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
