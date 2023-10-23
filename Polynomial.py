@@ -68,6 +68,7 @@ class Polynomial:
 
     # TODO fix every function below this line
 
+#this function is not needed besides debugging
     def __str__(self):
         """
         Returns a string representation of the Polynomial.
@@ -85,15 +86,17 @@ class Polynomial:
 
             # If the coefficient is not zero, add it to the string representation
             if self.coefficients[i] != 0:
-
+                
+                isLeadingCoefficient = i == len(self.coefficients) - 1 #
+                    
                 # If the coefficient is not the first coefficient, add a space
-                if i != len(self.coefficients) - 1:
+                if not isLeadingCoefficient:
                     poly_str += " "
 
                 # If the coefficient is negative, add a minus sign
                 if self.coefficients[i] < 0:
                     poly_str += "- "
-                elif i != len(self.coefficients) - 1:
+                elif not isLeadingCoefficient:
                     poly_str += "+ "
 
                 
