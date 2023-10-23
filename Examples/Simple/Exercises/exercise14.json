@@ -1,0 +1,19 @@
+{
+    "type": "finite_field_arithmetic",
+    "task": "division",
+    "integer_modulus": 2,
+    "f": [
+        1,
+        1
+    ],
+    "g": [
+        0
+    ],
+    "polynomial_modulus": [
+        1,
+        0,
+        1,
+        1
+    ],
+    "points": 0.5
+}

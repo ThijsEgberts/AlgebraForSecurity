@@ -1,0 +1,15 @@
+{
+    "type": "polynomial_arithmetic",
+    "task": "addition",
+    "integer_modulus": 3,
+    "f": [
+        2,
+        1
+    ],
+    "g": [
+        0,
+        0,
+        1
+    ],
+    "points": 0.5
+}

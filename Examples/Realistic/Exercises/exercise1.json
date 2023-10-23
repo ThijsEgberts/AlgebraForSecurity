@@ -1,0 +1,24 @@
+{
+    "type": "finite_field_arithmetic",
+    "task": "subtraction",
+    "integer_modulus": 277,
+    "f": [
+        145,
+        39,
+        202
+    ],
+    "g": [
+        95,
+        53,
+        175,
+        120
+    ],
+    "polynomial_modulus": [
+        267,
+        35,
+        210,
+        210,
+        1
+    ],
+    "points": 0.5
+}
