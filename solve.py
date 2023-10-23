@@ -34,53 +34,53 @@ def solve(exercise: dict) -> str:
     match exercise:
         case {'task': 'addition'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
-                return polynomial_addition_subtraction.solve_addition_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+                return polynomial_addition_subtraction.solve_addition_polynomial_arithmetic(exercise['f'], exercise['g'])
             if (exercise['type'] == "finite_field_arithmetic"):
-                return finitefield_addition_subtraction.solve_addition_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus']).toString()
+                return finitefield_addition_subtraction.solve_addition_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus'])
 
         case {'task': 'subtraction'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
-                return polynomial_addition_subtraction.solve_subtraction_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+                return polynomial_addition_subtraction.solve_subtraction_polynomial_arithmetic(exercise['f'], exercise['g'])
             if (exercise['type'] == "finite_field_arithmetic"):
-                return finitefield_addition_subtraction.solve_subtraction_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus']).toString()
+                return finitefield_addition_subtraction.solve_subtraction_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus'])
 
         case {'task': 'multiplication'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
-                return polynomial_multiplication.solve_multiplication_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+                return polynomial_multiplication.solve_multiplication_polynomial_arithmetic(exercise['f'], exercise['g'])
             if (exercise['type'] == "finite_field_arithmetic"):
-                return finitefield_multiplication.solve_multiplication_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus']).toString()
+                return finitefield_multiplication.solve_multiplication_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus'])
 
         case {'task': 'long_division'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
-                return polynomial_long_division.solve_long_division_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+                return polynomial_long_division.solve_long_division_polynomial_arithmetic(exercise['f'], exercise['g'])
 
         case {'task': 'extended_euclidean_algorithm'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
-                return polynomial_extended_euclidean_algorithm.solve_extended_euclidean_algorithm_polynomial_arithmetic(exercise['f'], exercise['g']).toString()
+                return polynomial_extended_euclidean_algorithm.solve_extended_euclidean_algorithm_polynomial_arithmetic(exercise['f'], exercise['g'])
 
         case {'task': 'irreducibility_check'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
-                return polynomial_irreducability_check.solve_irreducability_check_polynomial_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+                return polynomial_irreducability_check.solve_irreducability_check_polynomial_arithmetic(exercise['f'], exercise['polynomial_modulus'])
 
         case {'task': 'irreducable_element_generator'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
-                return polynomial_irreducable_element_generator.solve_irreducable_element_generator_polynomial_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+                return polynomial_irreducable_element_generator.solve_irreducable_element_generator_polynomial_arithmetic(exercise['f'], exercise['polynomial_modulus'])
 
         case {'task': 'division'}:
             if (exercise['type'] == 'finite_field_arithmetic'):
-                return finitefield_division.solve_division_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus']).toString()
+                return finitefield_division.solve_division_finite_field_arithmetic(exercise['f'], exercise['g'], exercise['polynomial_modulus'])
 
         case {'task': 'inversion'}:
             if (exercise['type'] == 'finite_field_arithmetic'):
-                return finitefield_inversion.solve_inversion_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+                return finitefield_inversion.solve_inversion_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus'])
 
         case {'task': 'primitivity_check'}:
             if (exercise['type'] == 'finite_field_arithmetic'):
-                return finitefield_primitivity_check.solve_primitivity_check_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+                return finitefield_primitivity_check.solve_primitivity_check_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus'])
 
         case {'task': 'primitive_element_generator'}:
             if (exercise['type'] == 'finite_field_arithmetic'):
-                return finitefield_primitive_element_generator.solve_primitive_element_generator_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus']).toString()
+                return finitefield_primitive_element_generator.solve_primitive_element_generator_finite_field_arithmetic(exercise['f'], exercise['polynomial_modulus'])
 
         # Invalid operation
         case _:
