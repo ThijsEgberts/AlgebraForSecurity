@@ -15,4 +15,4 @@ def solve_irreducability_check(polynomial: Polynomial, mod : int) -> bool:
     
     return t == polynomial.degree()
 
-solve_irreducability_check(Polynomial(2, [1, 1, 1]), 2)
+# solve_irreducability_check(Polynomial(2, [1, 1, 1]), 2)
