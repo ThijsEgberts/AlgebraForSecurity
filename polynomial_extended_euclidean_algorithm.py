@@ -5,9 +5,8 @@ from polynomial_long_division import solve_long_division_polynomial_arithmetic
 from polynomial_addition_subtraction import solve_subtraction_polynomial_arithmetic
 from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
 
-# source: https://www.baeldung.com/cs/extended-euclidean-algorithm
-# Tantoe hard gejet uit SA1
-
+#based on the lecture notes
+#not tested because not everything it depends on works yet
 def solve_extended_euclidean_algorithm_polynomial_arithmetic(a_: Polynomial, b_: Polynomial) -> (Polynomial, Polynomial, Polynomial):
     # when a or b is 0, the other is the gcd
     if a_.isZero():
@@ -17,42 +16,33 @@ def solve_extended_euclidean_algorithm_polynomial_arithmetic(a_: Polynomial, b_:
 
     a = Polynomial.copy(a_)
     b = Polynomial.copy(b_)
-
-    # make sure a >= b
-    swapAnswers = False
-    if not a.compare(b, False):
-        b, a = a, b
-        swapAnswers = True
     
-    x, x1, y, y1 = createOne(a.modulo), createZero(a.modulo), createZero(a.modulo), createOne(a.modulo)
+    mod = a.modulo
+    
+    x, u, y, v = createOne(a.modulo), createZero(a.modulo), createZero(a.modulo), createOne(a.modulo)
 
     while not b.isZero():
         q, r = solve_long_division_polynomial_arithmetic(a, b)
 
-        x, x1 = x1, solve_subtraction_polynomial_arithmetic(
-            x, solve_multiplication_polynomial_arithmetic(q, x1))
-        y, y1 = y1, solve_subtraction_polynomial_arithmetic(
-            y, solve_multiplication_polynomial_arithmetic(q, y1))
-
         a = b
         b = r
-    gcd = a
-    if swapAnswers:
-        return gcd, y, x
-    else:
-        return gcd, x, y
-
-# x = Polynomial(2, [
-#         0,
-#         0,
-#         1,
-#         1
-#     ])
-# y = Polynomial(2, [
-#         1,
-#         1,
-#         1
-#     ])
-# a, b, c = solve_extended_euclidean(x, y)
-# print(a, b, c)
-# print(a.coefficients, b.coefficients, c.coefficients)
+        x1 = x
+        y1 = y
+        x = u
+        y = v
+        u = solve_subtraction_polynomial_arithmetic(x1, solve_multiplication_polynomial_arithmetic(q, u))
+        v = solve_subtraction_polynomial_arithmetic(y1, solve_multiplication_polynomial_arithmetic(q, v))
+        
+    #make a monic and update the other polynomials as well
+    lca = a.getLeadingCoefficient()
+    # for i in a.coefficients:
+    #     i = (i / lca) % a.modulo
+    # for i in x.coefficients:
+    #     i = (i / lca) % a.modulo
+    # for i in y.coefficients:
+    #     i = (i / lca) % a.modulo
+    a.coefficients = [(i / lca) % a.modulo for i in a.coefficients]
+    x.coefficients = [(i / lca) % a.modulo for i in a.coefficients]
+    y.coefficients = [(i / lca) % a.modulo for i in a.coefficients]
+        
+    return a, x, y
