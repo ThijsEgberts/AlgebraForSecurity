@@ -25,17 +25,15 @@ def solve_long_division_polynomial_arithmetic(a: Polynomial, b: Polynomial) -> P
     while(r.degree() >= b.degree()):
         rdegree, bdegree = r.degree(), b.degree()
         # (lc(r ) · lc(b)^(−1))
-        leading_coefficient_inverse = Polynomial(a.modulo, [r.getLeadingCoefficient() * solve_int_inverse(b.getLeadingCoefficient(), a.modulo)])
-        # X^(deg(r )−deg(b))
-        x_to_power = Polynomial(a.modulo, [1 if i == rdegree - bdegree else 0 for i in range(rdegree - bdegree + 1)])
+        leading_coefficient_inverse = (r.getLeadingCoefficient() * solve_int_inverse(b.getLeadingCoefficient(), a.modulo)) % a.modulo
         # (lc(r ) · lc(b)^(−1)) · X^(deg(r )−deg(b))
-        inverse_time_x = solve_multiplication_polynomial_arithmetic(leading_coefficient_inverse, x_to_power)
+        inverse_time_x = Polynomial(a.modulo, [leading_coefficient_inverse if i == rdegree - bdegree else 0 for i in range(rdegree - bdegree + 1)])
         # q = q + (lc(r ) · lc(b)^(−1)) · X^(deg(r )−deg(b))
         q = solve_addition_polynomial_arithmetic(q, inverse_time_x)
         # r = r - (lc(r ) · lc(b)^(−1)) · X^(deg(r )−deg(b)) · b
         r = solve_subtraction_polynomial_arithmetic(r, solve_multiplication_polynomial_arithmetic(inverse_time_x, b))
         r.removeLeadingZeroes()
-
+        
     return q, r
 
 def solve_int_inverse(x : int, mod : int):
