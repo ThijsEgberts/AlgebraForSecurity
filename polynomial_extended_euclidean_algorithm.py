@@ -1,7 +1,7 @@
 from Polynomial import Polynomial
 from Polynomial import createZero
 from Polynomial import createOne
-from polynomial_long_division import solve_long_division
+from polynomial_long_division import solve_long_division_polynomial_arithmetic
 from polynomial_addition_subtraction import solve_subtraction_polynomial_arithmetic
 from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
 
@@ -28,7 +28,7 @@ def solve_extended_euclidean(a_: Polynomial, b_: Polynomial) -> (Polynomial, Pol
     x, x1, y, y1 = createOne(a.modulo), createZero(a.modulo), createZero(a.modulo), createOne(a.modulo)
 
     while not b.isZero():
-        q, r = solve_long_division(a, b)
+        q, r = solve_long_division_polynomial_arithmetic(a, b)
 
         x, x1 = x1, solve_subtraction_polynomial_arithmetic(
             x, solve_multiplication_polynomial_arithmetic(q, x1))

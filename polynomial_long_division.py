@@ -2,14 +2,8 @@ from Polynomial import Polynomial
 from polynomial_addition_subtraction import solve_addition_polynomial_arithmetic
 from polynomial_addition_subtraction import solve_subtraction_polynomial_arithmetic
 from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
-import sys
-sys.path.insert(0, 'SA1')
-import math
-from SA1.BigNumber import BigNumber
-from SA1.inverse import solve_inverse
 
-
-def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
+def solve_long_division_polynomial_arithmetic(a: Polynomial, b: Polynomial) -> Polynomial:
     """
     Solves the long division of two polynomials in K[x]. Based on algorithm 2.2.2 in the lecture notes.
 
@@ -45,20 +39,46 @@ def solve_long_division(a: Polynomial, b: Polynomial) -> Polynomial:
     return q, r
 
 def solve_int_inverse(x : int, mod : int):
-    """
-    Solves the inverse of an integer x in Z_mod using SA1 code.
-    """
-    xn, modn = False, False
-    if(x < 0):
-        xn = True
-    if(mod < 0):
-        xn = True
-    x, mod = abs(x), abs(mod)
+    if mod == 0:
+        return None
 
-    # split x and mod into a list of digits
-    xl = [(x//(10**i))%10 for i in range(math.ceil(math.log(x, 10)), -1, -1)][bool(math.log(x,10)%1):]
-    modl = [(mod//(10**i))%10 for i in range(math.ceil(math.log(mod, 10)), -1, -1)][bool(math.log(mod,10)%1):]
-    xb = BigNumber(mod, xl, xn)
-    modb = BigNumber(mod, modl, modn)
+    x = x % mod
+    
+    gcd, a, _ = solve_extended_euclidean(x, mod)  # gcd = a*x + b*mod
+    
+    # if gcd(x,mod) != 1, there exists no inverse
+    if gcd != 1:
+        return None
 
-    return solve_inverse(xb, modb).toInt()
+    return a % mod
+    
+#copied from SA1
+def solve_extended_euclidean(a, b):
+    # when a or b is 0, the other is the gcd
+    if a == 0:
+        return b, 0, 0
+    elif b == 0:
+        return a, 0, 0
+
+    # make sure a >= b
+    swapAnswers = False
+    if a >= b:
+        b, a = a, b
+        swapAnswers = True
+    
+    x, x1, y, y1 = 1, 0, 0, 1
+
+    while b != 0:
+        q = a // b
+        r = a % b
+
+        x, x1 = x1, x - (q * x1)
+        y, y1 = y1, y - (q * y1)
+
+        a = b
+        b = r
+    gcd = a
+    if swapAnswers:
+        return gcd, y, x
+    else:
+        return gcd, x, y
