@@ -63,6 +63,11 @@ def solve(exercise: dict) -> str:
     """
     Solve chooses the correct solver for the chosen operation and returns the answer.
     """
+    
+    #mod 0 is not defined
+    if exercise['integer_modulus'] == 0:
+        return None
+    
     match exercise:
         case {'task': 'addition'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
