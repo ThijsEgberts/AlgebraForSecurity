@@ -7,9 +7,8 @@ from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
 
 # source: https://www.baeldung.com/cs/extended-euclidean-algorithm
 # Tantoe hard gejet uit SA1
-# Niet getest omdat long division niet werkt
 
-def solve_extended_euclidean(a_: Polynomial, b_: Polynomial) -> (Polynomial, Polynomial, Polynomial):
+def solve_extended_euclidean_algorithm_polynomial_arithmetic(a_: Polynomial, b_: Polynomial) -> (Polynomial, Polynomial, Polynomial):
     # when a or b is 0, the other is the gcd
     if a_.isZero():
         return b_, createZero(a_.modulo), createZero(a_.modulo)

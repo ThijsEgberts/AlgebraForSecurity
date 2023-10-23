@@ -1,5 +1,5 @@
 from Polynomial import Polynomial
-from polynomial_extended_euclidean_algorithm import solve_extended_euclidean
+from polynomial_extended_euclidean_algorithm import solve_extended_euclidean_algorithm_polynomial_arithmetic
 
 def solve_irreducability_check(polynomial: Polynomial, mod : int) -> bool:
     """
@@ -10,7 +10,7 @@ def solve_irreducability_check(polynomial: Polynomial, mod : int) -> bool:
 
     t = 1
     # List comprehension generates X^(q^t) - X
-    while (solve_extended_euclidean(polynomial, Polynomial(mod, [1 if i == mod**t  else -1 if i == 1 else 0 for i in range(mod**t + 1)]))[0] == 1):
+    while (solve_extended_euclidean_algorithm_polynomial_arithmetic(polynomial, Polynomial(mod, [1 if i == mod**t  else -1 if i == 1 else 0 for i in range(mod**t + 1)]))[0] == 1):
         t += 1
     
     return t == polynomial.degree()
