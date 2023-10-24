@@ -10,12 +10,27 @@ def solve_multiplication_polynomial_arithmetic(x: Polynomial, y: Polynomial) -> 
         y (Polynomial): The second polynomial.
     """
 
-    # Initialize variables for exponents multiplication
-    result = Polynomial(x.modulo, [0])
-
     # Precompute lengths of exponents arrays
     len_x_coefficients = len(x.coefficients)
     len_y_coefficients = len(y.coefficients)
+
+    #initialize the resulting coefficients array
+    #the maximum degree of the resulting polynomial will be deg(ltx) + deg(lty)
+    result_coefficients = [0] * (len_x_coefficients + len_y_coefficients)
+    
+    #multiply the exponents
+    for i in range(len_x_coefficients):
+        for j in range(len_y_coefficients):
+            result_coefficients[i + j] += (x.coefficients[i] * y.coefficients[j]) % x.modulo
+    
+    #take the mods
+    result_coefficients = [c % x.modulo for c in result_coefficients]
+    
+    #remove the leading zeroes from the result
+    result = Polynomial(x.modulo, result_coefficients)
+    result.removeLeadingZeroes()
+
+    return result
 
     # Multiply exponents from right to left
     for i in range(len_x_coefficients - 1, -1, -1):
