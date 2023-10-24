@@ -114,7 +114,7 @@ def solve(exercise: dict) -> str:
             if (exercise['type'] == 'polynomial_arithmetic'):
                 return polynomial_irreducability_check.solve_irreducability_check_polynomial_arithmetic(Polynomial(exercise['integer_modulus'], exercise['f']))
 
-        case {'task': 'irreducable_element_generator'}:
+        case {'task': 'irreducible_element_generation'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
                 return polynomial_irreducable_element_generator.solve_irreducable_element_generator_polynomial_arithmetic(exercise['degree'], exercise['integer_modulus'])
 
