@@ -1,7 +1,7 @@
 from Polynomial import Polynomial
 from Polynomial import createZero
 from Polynomial import createOne
-from polynomial_long_division import solve_long_division_polynomial_arithmetic
+from polynomial_long_division import solve_int_inverse, solve_long_division_polynomial_arithmetic
 from polynomial_addition_subtraction import solve_subtraction_polynomial_arithmetic
 from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
 
@@ -10,20 +10,28 @@ from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
 def solve_extended_euclidean_algorithm_polynomial_arithmetic(a_: Polynomial, b_: Polynomial) -> (Polynomial, Polynomial, Polynomial):
     # when a or b is 0, the other is the gcd
     if a_.isZero():
-        return b_, createZero(a_.modulo), createZero(a_.modulo)
+        b = Polynomial.copy(b_)
+        #make the polynomials monic
+        lcbInv = solve_int_inverse(b.getLeadingCoefficient(), b.modulo)
+        b.coefficients = [(i * lcbInv) % b.modulo for i in b.coefficients]
+        
+        return b, createZero(a_.modulo), Polynomial(a_.modulo, [lcbInv % a_.modulo])
     elif b_.isZero():
-        return a_, createZero(a_.modulo), createZero(a_.modulo)
+        a = Polynomial.copy(a_)
+        #make the polynomials monic
+        lcaInv = solve_int_inverse(a.getLeadingCoefficient(), a.modulo)
+        a.coefficients = [(i * lcaInv) % a.modulo for i in a.coefficients]
+        
+        return a, Polynomial(a_.modulo, [lcaInv % a_.modulo]), createZero(a_.modulo)
 
     a = Polynomial.copy(a_)
     b = Polynomial.copy(b_)
-    
-    mod = a.modulo
-    
+        
     x, u, y, v = createOne(a.modulo), createZero(a.modulo), createZero(a.modulo), createOne(a.modulo)
 
     while not b.isZero():
         q, r = solve_long_division_polynomial_arithmetic(a, b)
-
+        
         a = b
         b = r
         x1 = x
@@ -41,8 +49,9 @@ def solve_extended_euclidean_algorithm_polynomial_arithmetic(a_: Polynomial, b_:
     #     i = (i / lca) % a.modulo
     # for i in y.coefficients:
     #     i = (i / lca) % a.modulo
-    a.coefficients = [(i / lca) % a.modulo for i in a.coefficients]
-    x.coefficients = [(i / lca) % a.modulo for i in a.coefficients]
-    y.coefficients = [(i / lca) % a.modulo for i in a.coefficients]
+    lcaInv = solve_int_inverse(lca, a.modulo)
+    a.coefficients = [(i * lcaInv) % a.modulo for i in a.coefficients]
+    x.coefficients = [(i * lcaInv) % a.modulo for i in x.coefficients]
+    y.coefficients = [(i * lcaInv) % a.modulo for i in y.coefficients]
         
     return a, x, y
