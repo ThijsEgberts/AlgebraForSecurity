@@ -1,9 +1,10 @@
 from Polynomial import Polynomial
 from Polynomial import createZero
 from Polynomial import createOne
-from polynomial_long_division import solve_int_inverse, solve_long_division_polynomial_arithmetic
+from polynomial_long_division import solve_long_division_polynomial_arithmetic
 from polynomial_addition_subtraction import solve_subtraction_polynomial_arithmetic
 from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
+from util_functions import solve_int_inverse
 
 #based on the lecture notes
 #not tested because not everything it depends on works yet
