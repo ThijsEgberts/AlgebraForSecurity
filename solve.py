@@ -155,6 +155,7 @@ def save_answer(answer, answer_location: str, operation: str):
             "answer-q": str(answer[0]), "answer-r": str(answer[1])
         }
     else:
+        #TODO make this work for bool and none as well
         answer_object = {"answer": str(answer)}
 
     # Save the answer object to a JSON file
