@@ -205,7 +205,7 @@ def timeOperation(operation, times):
     print("Total time: " + str(total_time))
     print("Average time per run: " + str(timer_per_run))
 
-# timeOperation(runRealisticPolyEucl, 50)
-runSimplePolyIrreducibilityCheck()
+# timeOperation(runRealisticPolyIrreducibilityCheck, 50)
+runRealisticPolyIrreducibilityCheck()
 
 
