@@ -14,7 +14,7 @@ import finitefield_primitivity_check
 from Polynomial import Polynomial
 
 
-def solve_exercise(exercise_location: str, answer_location: str, realScenario=True):
+def solve_exercise(exercise_location: str, answer_location: str, realScenario=True, print_correctness=True):
     """
     Solves the exercise at the given location and saves the answer at the given location.
     """
@@ -30,44 +30,51 @@ def solve_exercise(exercise_location: str, answer_location: str, realScenario=Tr
     else:
         answerDict = load_answer(answer_location)
         match exercise:
-            case {'task' : 'long_division'}:
+            case {'task': 'long_division'}:
                 if answerDict['answer-q'] == answer[0].coefficients and answerDict['answer-r'] == answer[1].coefficients:
-                    print("Exercise solved correctly")
+                    if print_correctness:
+                        print("Exercise solved correctly")
                 else:
-                    print("Exercise solved incorrectly:")
-                    print("Answer-q:", str(answer[0]))
-                    print("Target answer-q:", str(answerDict['answer-q']))
-                    print("Answer-r:", str(answer[1]))
-                    print("Target answer-r:", str(answerDict['answer-r']))
-            case {'task' : 'extended_euclidean_algorithm'}:
+                    if print_correctness:
+                        print("Exercise solved incorrectly:")
+                        print("Answer-q:", str(answer[0]))
+                        print("Target answer-q:", str(answerDict['answer-q']))
+                        print("Answer-r:", str(answer[1]))
+                        print("Target answer-r:", str(answerDict['answer-r']))
+            case {'task': 'extended_euclidean_algorithm'}:
                 if answerDict['answer-a'] == answer[1].coefficients and answerDict['answer-b'] == answer[2].coefficients and answerDict['answer-gcd'] == answer[0].coefficients:
-                    print("Exercise solved correctly")
+                    if print_correctness:
+                        print("Exercise solved correctly")
                 else:
-                    print("Exercise solved incorrectly:")
-                    print("Answer-a:", str(answer[1]))
-                    print("Target answer-a:", str(answerDict['answer-a']))
-                    print("Answer-b:", str(answer[2]))
-                    print("Target answer-b:", str(answerDict['answer-b']))
-                    print("Answer-gcd:", str(answer[0]))
-                    print("Target answer-gcd:", str(answerDict['answer-gcd']))
-            case _:        
+                    if print_correctness:
+                        print("Exercise solved incorrectly:")
+                        print("Answer-a:", str(answer[1]))
+                        print("Target answer-a:", str(answerDict['answer-a']))
+                        print("Answer-b:", str(answer[2]))
+                        print("Target answer-b:", str(answerDict['answer-b']))
+                        print("Answer-gcd:", str(answer[0]))
+                        print("Target answer-gcd:",
+                              str(answerDict['answer-gcd']))
+            case _:
                 if answerDict['answer'] == answer.coefficients:
-                    print("Exercise solved correctly")
+                    if print_correctness:
+                        print("Exercise solved correctly")
                 else:
-                    print("Exercise solved incorrectly:")
-                    print("Answer:", str(answer))
-                    print("Target answer:", str(answerDict['answer']))
+                    if print_correctness:
+                        print("Exercise solved incorrectly:")
+                        print("Answer:", str(answer))
+                        print("Target answer:", str(answerDict['answer']))
 
 
 def solve(exercise: dict) -> str:
     """
     Solve chooses the correct solver for the chosen operation and returns the answer.
     """
-    
-    #mod 0 is not defined
+
+    # mod 0 is not defined
     if exercise['integer_modulus'] == 0:
         return None
-    
+
     match exercise:
         case {'task': 'addition'}:
             if (exercise['type'] == 'polynomial_arithmetic'):
