@@ -29,41 +29,49 @@ def solve_exercise(exercise_location: str, answer_location: str, realScenario=Tr
         save_answer(answer, answer_location, exercise["operation"])
     else:
         answerDict = load_answer(answer_location)
-        match exercise:
-            case {'task': 'long_division'}:
-                if answerDict['answer-q'] == answer[0].coefficients and answerDict['answer-r'] == answer[1].coefficients:
-                    if print_correctness:
-                        print("Exercise solved correctly")
-                else:
-                    if print_correctness:
-                        print("Exercise solved incorrectly:")
-                        print("Answer-q:", str(answer[0]))
-                        print("Target answer-q:", str(answerDict['answer-q']))
-                        print("Answer-r:", str(answer[1]))
-                        print("Target answer-r:", str(answerDict['answer-r']))
-            case {'task': 'extended_euclidean_algorithm'}:
-                if answerDict['answer-a'] == answer[1].coefficients and answerDict['answer-b'] == answer[2].coefficients and answerDict['answer-gcd'] == answer[0].coefficients:
-                    if print_correctness:
-                        print("Exercise solved correctly")
-                else:
-                    if print_correctness:
-                        print("Exercise solved incorrectly:")
-                        print("Answer-a:", str(answer[1]))
-                        print("Target answer-a:", str(answerDict['answer-a']))
-                        print("Answer-b:", str(answer[2]))
-                        print("Target answer-b:", str(answerDict['answer-b']))
-                        print("Answer-gcd:", str(answer[0]))
-                        print("Target answer-gcd:",
-                              str(answerDict['answer-gcd']))
-            case _:
-                if answerDict['answer'] == answer.coefficients:
-                    if print_correctness:
-                        print("Exercise solved correctly")
-                else:
-                    if print_correctness:
-                        print("Exercise solved incorrectly:")
-                        print("Answer:", str(answer))
-                        print("Target answer:", str(answerDict['answer']))
+        if exercise['task'] == 'long_division':
+            if answerDict['answer-q'] == answer[0].coefficients and answerDict['answer-r'] == answer[1].coefficients:
+                if print_correctness:
+                    print("Exercise solved correctly")
+            else:
+                if print_correctness:
+                    print("Exercise solved incorrectly:")
+                    print("Answer-q:", str(answer[0]))
+                    print("Target answer-q:", str(answerDict['answer-q']))
+                    print("Answer-r:", str(answer[1]))
+                    print("Target answer-r:", str(answerDict['answer-r']))
+        elif exercise['task'] == 'extended_euclidean_algorithm':
+            if answerDict['answer-a'] == answer[1].coefficients and answerDict['answer-b'] == answer[2].coefficients and answerDict['answer-gcd'] == answer[0].coefficients:
+                if print_correctness:
+                    print("Exercise solved correctly")
+            else:
+                if print_correctness:
+                    print("Exercise solved incorrectly:")
+                    print("Answer-a:", str(answer[1]))
+                    print("Target answer-a:", str(answerDict['answer-a']))
+                    print("Answer-b:", str(answer[2]))
+                    print("Target answer-b:", str(answerDict['answer-b']))
+                    print("Answer-gcd:", str(answer[0]))
+                    print("Target answer-gcd:",
+                            str(answerDict['answer-gcd']))
+        elif exercise['task'] == 'irreducibility_check' or exercise['task'] == 'primitivity_check':
+            if answerDict['answer'] == answer:
+                if print_correctness:
+                    print("Exercise solved correctly")
+            else:
+                if print_correctness:
+                    print("Exercise solved incorrectly:")
+                    print("Answer:", str(answer))
+                    print("Target answer:", str(answerDict['answer']))
+        else:
+            if answerDict['answer'] == answer.coefficients:
+                if print_correctness:
+                    print("Exercise solved correctly")
+            else:
+                if print_correctness:
+                    print("Exercise solved incorrectly:")
+                    print("Answer:", str(answer))
+                    print("Target answer:", str(answerDict['answer']))
 
 
 def solve(exercise: dict) -> str:
