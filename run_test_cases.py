@@ -206,6 +206,6 @@ def timeOperation(operation, times):
     print("Average time per run: " + str(timer_per_run))
 
 # timeOperation(runRealisticPolyIrreducibilityCheck, 50)
-runRealisticFFinversion()
+runSimpleFFPrimitivityCheck()
 
 
