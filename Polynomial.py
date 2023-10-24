@@ -122,7 +122,10 @@ class Polynomial:
         """
         Returns the degree of the Polynomial.
         """
-        return len(self.coefficients) - 1
+        if self.coefficients[-1] != 0:
+            return len(self.coefficients) - 1
+        else:
+            return self.copy.removeLeadingZeroes().degree()
 
     def removeLeadingZeroes(self):
         """
