@@ -205,6 +205,7 @@ def timeOperation(operation, times):
     print("Total time: " + str(total_time))
     print("Average time per run: " + str(timer_per_run))
 
-timeOperation(runRealisticPolyLongDivision, 100)
+# timeOperation(runRealisticPolyLongDivision, 100)
+runSimplePolyLongDivision()
 
 

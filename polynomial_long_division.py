@@ -57,12 +57,6 @@ def solve_extended_euclidean(a, b):
         return b, 0, 0
     elif b == 0:
         return a, 0, 0
-
-    # make sure a >= b
-    swapAnswers = False
-    if a >= b:
-        b, a = a, b
-        swapAnswers = True
     
     x, x1, y, y1 = 1, 0, 0, 1
 
@@ -76,7 +70,4 @@ def solve_extended_euclidean(a, b):
         a = b
         b = r
     gcd = a
-    if swapAnswers:
-        return gcd, y, x
-    else:
-        return gcd, x, y
+    return gcd, x, y
