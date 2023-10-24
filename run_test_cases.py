@@ -212,6 +212,7 @@ def timeOperation(operation, times):
 # runRealisticPolyLongDivision()
 # runRealisticPolyMulti()
 runSimplePolyIrreducibleGenerator()
+# runSimplePolyIrreducibleGenerator()
 # runRealisticPolyIrreducibleGenerator()
 
 

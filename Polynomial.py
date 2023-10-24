@@ -66,7 +66,6 @@ class Polynomial:
         if self.coefficients[-1] == 0:
             raise Exception('Last coefficient is zero')
 
-
     def __str__(self):
         """
         Returns a string representation of the Polynomial.
@@ -74,7 +73,7 @@ class Polynomial:
 
         return str(self.coefficients)
         return self.fancyPolyStringFormat()
-    
+
     # TODO fix every function below this line
 
     def fancyPolyStringFormat(self):
@@ -90,9 +89,9 @@ class Polynomial:
 
             # If the coefficient is not zero, add it to the string representation
             if self.coefficients[i] != 0:
-                
-                isLeadingCoefficient = i == len(self.coefficients) - 1 #
-                    
+
+                isLeadingCoefficient = i == len(self.coefficients) - 1
+
                 # If the coefficient is not the first coefficient, add a space
                 if not isLeadingCoefficient:
                     poly_str += " "
@@ -103,7 +102,6 @@ class Polynomial:
                 elif not isLeadingCoefficient:
                     poly_str += "+ "
 
-                
                 # If the coefficient is not |1| or it is the first coefficient, add it to the string
                 if abs(self.coefficients[i]) != 1 or i == 0:
                     poly_str += str(abs(self.coefficients[i]))
@@ -117,7 +115,7 @@ class Polynomial:
                     poly_str += "^" + str(i)
 
         return poly_str
-    
+
     def degree(self) -> int:
         """
         Returns the degree of the Polynomial.
@@ -125,7 +123,7 @@ class Polynomial:
         if self.coefficients[-1] != 0:
             return len(self.coefficients) - 1
         else:
-            return self.copy.removeLeadingZeroes().degree()
+            return self.copy().removeLeadingZeroes().degree()
 
     def removeLeadingZeroes(self):
         """
@@ -207,7 +205,7 @@ class Polynomial:
             result += self.coefficients[i] * (x ** i)
 
         return result
-    
+
     def getLeadingCoefficient(self) -> int:
         """
         Returns the leading coefficient of the Polynomial.
@@ -230,12 +228,14 @@ def createPolynomialFromString(string: str, modulo: int) -> Polynomial:
     poly.parseString(string, modulo)
     return poly
 
+
 def createZero(modulo: int) -> Polynomial:
     """
     Creates a zero polynomial
     """
 
     return Polynomial(modulo, [0])
+
 
 def createOne(modulo: int) -> Polynomial:
     """
