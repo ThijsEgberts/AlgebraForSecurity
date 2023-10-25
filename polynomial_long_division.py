@@ -1,4 +1,4 @@
-from Polynomial import Polynomial, createZero
+from Polynomial import Polynomial, createOne, createZero
 from polynomial_addition_subtraction import solve_addition_polynomial_arithmetic
 from polynomial_addition_subtraction import solve_subtraction_polynomial_arithmetic
 from polynomial_multiplication import solve_multiplication_polynomial_arithmetic
@@ -26,7 +26,7 @@ def solve_long_division_polynomial_arithmetic(a: Polynomial, b: Polynomial) -> P
     
     # a == b so a/b = a/a = 1
     if(a.coefficients == b.coefficients):
-        return Polynomial(a.modulo, [1])
+        return createOne(a.modulo), createZero(a.modulo)
     
     
     q = Polynomial(a.modulo, [0])
