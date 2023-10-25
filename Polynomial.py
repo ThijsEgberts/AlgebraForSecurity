@@ -120,11 +120,8 @@ class Polynomial:
         """
         Returns the degree of the Polynomial.
         """
-        if self.coefficients[-1] != 0:
-            return len(self.coefficients) - 1
-        else:
-            return self.copy().removeLeadingZeroes().degree()
-
+        return len(self.coefficients) - 1
+    
     def removeLeadingZeroes(self):
         """
         Removes leading zeroes from the Polynomial. So polynomial 0X^5 + 2X^4 becomes 2X^4.
