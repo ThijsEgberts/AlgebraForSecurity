@@ -211,8 +211,9 @@ def timeOperation(operation, times):
 # runRealisticPolyIrreducibilityCheck()
 # runRealisticPolyLongDivision()
 # runRealisticPolyMulti()
-runSimplePolyIrreducibleGenerator()
+# runSimplePolyIrreducibleGenerator()
 # runSimplePolyIrreducibleGenerator()
 # runRealisticPolyIrreducibleGenerator()
+runRealisticFFPrimitivityCheck()
 
 

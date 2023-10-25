@@ -9,11 +9,11 @@ def solve_primitivity_check_finite_field_arithmetic(f: Polynomial, polMod: Polyn
     
     #find prime divisors of q-1
     primeDivisors = factorization(q-1)
-    print(primeDivisors)
+    # primeDivisors = [p % f.modulo for p in primeDivisors]
     
     for p in primeDivisors:
-        res = polyPow(f, solve_int_inverse(p, f.modulo) * (q-1)).coefficients
-        print(res)
+        pInv = solve_int_inverse(p, f.modulo)
+        res = polyPow(f, pInv * (q-1)).coefficients
         if res == [1]:
-            return True
-    return False
+            return False
+    return True
