@@ -214,6 +214,6 @@ def timeOperation(operation, times):
 # runSimplePolyIrreducibleGenerator()
 # runSimplePolyIrreducibleGenerator()
 # runRealisticPolyIrreducibleGenerator()
-runRealisticFFPrimitivityCheck()
+runRealisticFFPrimitiveGenerator()
 
 

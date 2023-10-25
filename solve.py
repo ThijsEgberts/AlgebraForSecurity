@@ -130,7 +130,7 @@ def solve(exercise: dict) -> str:
             if (exercise['type'] == 'finite_field_arithmetic'):
                 return finitefield_primitivity_check.solve_primitivity_check_finite_field_arithmetic(Polynomial(exercise['integer_modulus'], exercise['f']), Polynomial(exercise['integer_modulus'], exercise['polynomial_modulus']))
 
-        case {'task': 'primitive_element_generator'}:
+        case {'task': 'primitive_element_generation'}:
             if (exercise['type'] == 'finite_field_arithmetic'):
                 return finitefield_primitive_element_generator.solve_primitive_element_generator_finite_field_arithmetic(Polynomial(exercise['integer_modulus'], exercise['polynomial_modulus']))
 
