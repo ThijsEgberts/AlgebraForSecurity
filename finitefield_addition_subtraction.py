@@ -8,6 +8,7 @@ def solve_addition_finite_field_arithmetic(x: Polynomial, y: Polynomial, polynom
     normal = solve_addition_polynomial_arithmetic(x, y)
     remainder = solve_long_division_polynomial_arithmetic(normal, polynomial_modulo)[1]
 
+    remainder.removeLeadingZeroes()
     return remainder
 
 def solve_subtraction_finite_field_arithmetic(x: Polynomial, y: Polynomial, polynomial_modulo: Polynomial) -> Polynomial:
@@ -15,4 +16,5 @@ def solve_subtraction_finite_field_arithmetic(x: Polynomial, y: Polynomial, poly
     normal = solve_subtraction_polynomial_arithmetic(x, y)
     remainder = solve_long_division_polynomial_arithmetic(normal, polynomial_modulo)[1]
 
+    remainder.removeLeadingZeroes()
     return remainder
