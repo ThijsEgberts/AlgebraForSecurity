@@ -64,14 +64,24 @@ def solve_exercise(exercise_location: str, answer_location: str, realScenario=Tr
                     print("Answer:", str(answer))
                     print("Target answer:", str(answerDict['answer']))
         else:
-            if answerDict['answer'] == answer.coefficients:
-                if print_correctness:
-                    print("Exercise solved correctly")
+            if answer == None:
+                if answerDict['answer'] == answer:
+                    if print_correctness:
+                        print("Exercise solved correctly")
+                else:
+                    if print_correctness:
+                        print("Exercise", exercise, "solved incorrectly:")
+                        print("Answer:", str(answer))
+                        print("Target answer:", str(answerDict['answer']))
             else:
-                if print_correctness:
-                    print("Exercise solved incorrectly:")
-                    print("Answer:", str(answer))
-                    print("Target answer:", str(answerDict['answer']))
+                if answerDict['answer'] == answer.coefficients:
+                    if print_correctness:
+                        print("Exercise solved correctly")
+                else:
+                    if print_correctness:
+                        print("Exercise", exercise, "solved incorrectly:")
+                        print("Answer:", str(answer))
+                        print("Target answer:", str(answerDict['answer']))
 
 
 def solve(exercise: dict) -> str:
