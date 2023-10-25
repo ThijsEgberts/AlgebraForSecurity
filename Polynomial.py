@@ -126,6 +126,8 @@ class Polynomial:
         """
         Removes leading zeroes from the Polynomial. So polynomial 0X^5 + 2X^4 becomes 2X^4.
         """
+        if self.isZero():
+            self.coefficients = [0]
         # Find the index of the first non-zero coefficient from the left
         first_non_zero_index = len(self.coefficients)-1
         for i in range(len(self.coefficients)-1, -1, -1):
