@@ -1,3 +1,5 @@
+from Polynomial import Polynomial
+from polynomial_irreducability_check import solve_irreducability_check_polynomial_arithmetic
 import solve
 import time
 
@@ -213,8 +215,9 @@ def timeOperation(operation, times):
 # runRealisticPolyMulti()
 # runSimplePolyIrreducibleGenerator()
 # runSimplePolyIrreducibleGenerator()
-# runRealisticPolyIrreducibleGenerator()
+# runSimplePolyIrreducibleGenerator()
 # runRealisticFFPrimitiveGenerator()
 # runAll()
-runSimpleFFdivision()
+# runSimpleFFdivision()
 
+timeOperation(runRealisticPolyIrreducibleGenerator, 10)
