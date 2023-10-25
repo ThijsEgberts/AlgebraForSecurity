@@ -44,4 +44,6 @@ def solve_long_division_polynomial_arithmetic(a: Polynomial, b: Polynomial) -> P
         r = solve_subtraction_polynomial_arithmetic(r, solve_multiplication_polynomial_arithmetic(inverse_time_x, b))
         r.removeLeadingZeroes()
         
+    q.removeLeadingZeroes()
+    r.removeLeadingZeroes()
     return q, r
