@@ -12,9 +12,7 @@ def solve_irreducability_check_polynomial_arithmetic(polynomial: Polynomial) -> 
     mod = polynomial.modulo
     t = 1
     # List comprehension generates X^(q^t) - X
-    coefficients = [1 if i == mod**t else -1 %
-                    mod if i == 1 else 0 for i in range(mod**t + 1)]
-    while (solve_extended_euclidean_algorithm_polynomial_arithmetic(polynomial, Polynomial(mod, coefficients))[0].coefficients == [1]):
+    while (solve_extended_euclidean_algorithm_polynomial_arithmetic(polynomial, Polynomial(mod, [1 if i == mod**t  else -1 % mod if i == 1 else 0 for i in range(mod**t + 1)]))[0].coefficients == [1]):
         t += 1
 
     return t == polynomial.degree()

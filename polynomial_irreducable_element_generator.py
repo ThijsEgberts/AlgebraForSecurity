@@ -15,12 +15,15 @@ def solve_irreducable_element_generator_polynomial_arithmetic(degree: int, integ
     """
 
     # First generate a random polynomial of degree 1 to degree(polyMod)
-    randomDegree = random.randint(2, degree)
-    randomPoly = Polynomial(integer_modulus, [random.randint(0, integer_modulus)
-                            for i in range(randomDegree+1)])
+    # randomDegree = random.randint(2, degree)
+    randomPoly = generateRandomPolyOfDeg(degree, integer_modulus)
+    
+    while not solve_irreducability_check_polynomial_arithmetic(randomPoly):
+        randomPoly = generateRandomPolyOfDeg(degree, integer_modulus)
+    return randomPoly
 
-    while solve_irreducability_check_polynomial_arithmetic(randomPoly):
-        randomDegree = random.randint(2, degree)
-        randomPoly = Polynomial(
-            integer_modulus, [random.randint(0, integer_modulus) for i in range(randomDegree+1)])
+def generateRandomPolyOfDeg(degree, integer_modulus):
+    randomPoly = Polynomial(integer_modulus, [random.randint(0, integer_modulus-1) if i != degree else random.randint(1, integer_modulus-1)
+                            for i in range(degree+1)])
+    randomPoly.removeLeadingZeroes()
     return randomPoly
