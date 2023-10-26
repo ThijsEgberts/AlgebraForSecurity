@@ -23,6 +23,3 @@ def solve_irreducability_check_polynomial_arithmetic(polynomial: Polynomial) -> 
                         mod if i == 1 else 0 for i in range(modt + 1)]
 
     return t == polynomial.degree()
-
-# print(solve_irreducability_check_polynomial_arithmetic(
-#     Polynomial(5, [1, 2, 2, 4, 0, 3])))

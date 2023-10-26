@@ -196,6 +196,7 @@ def runAll():
     runRealistic()
     print("All test cases done.\n")
 
+
 def timeOperation(operation, times):
     start = time.time()
     for i in range(times):
@@ -220,4 +221,7 @@ def timeOperation(operation, times):
 # runAll()
 # runSimpleFFdivision()
 
+
 timeOperation(runRealisticPolyIrreducibleGenerator, 10)
+# runRealisticPolyIrreducibilityCheck()
+# runRealisticPolyIrreducibleGenerator()
