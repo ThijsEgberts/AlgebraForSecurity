@@ -18,6 +18,7 @@ def solve_exercise(exercise_location: str, answer_location: str, realScenario=Tr
     """
     Solves the exercise at the given location and saves the answer at the given location.
     """
+    
     # Load the exercise and return the JSON object (See Assignment 2.3)
     exercise = load_exercise(exercise_location)
 
@@ -26,7 +27,7 @@ def solve_exercise(exercise_location: str, answer_location: str, realScenario=Tr
 
     # Save the answer
     if realScenario:
-        save_answer(answer, answer_location, exercise["operation"])
+        save_answer(answer, answer_location, exercise["task"])
     else:
         answerDict = load_answer(answer_location)
         if exercise['task'] == 'long_division':
@@ -150,23 +151,36 @@ def solve(exercise: dict) -> str:
                             exercise["operation"] + ".")
 
 
-def save_answer(answer, answer_location: str, operation: str):
+def save_answer(answer, answer_location: str, task: str):
     """
     Saves the answer at the given location. 
     Using the JSON format "answer": "coefficient list".
     """
     # Create the answer object
-    if operation == "extended_euclidean_algorithm":
-        answer_object = {
-            "answer-a": str(answer[1]), "answer-b": str(answer[2]), "answer-gcd": str(answer[0])}
+    if task == "extended_euclidean_algorithm":
+        if answer == None or answer[0] == None or answer[1] == None or answer[2] == None:
+            answer_object = {
+                "answer-a": None, "answer-b": None, "answer-gcd": None}
+        else:
+            answer_object = {
+                "answer-a": answer[1].coefficients, "answer-b": answer[2].coefficients, "answer-gcd": answer[0].coefficients}
 
-    elif operation == "long_division":
-        answer_object = {
-            "answer-q": str(answer[0]), "answer-r": str(answer[1])
-        }
+    elif task == "long_division":
+        if answer[0] == None or answer[1] == None:
+            answer_object = {
+                "answer-q": None, "answer-r": None
+            }
+        else:
+            answer_object = {
+                "answer-q": answer[0].coefficients, "answer-r": answer[1].coefficients
+            }
+    elif task == "primitivity_check" or task == "irreducibility_check":
+        answer_object = {"answer" : answer}
     else:
-        #TODO make this work for bool and none as well
-        answer_object = {"answer": str(answer)}
+        if answer == None:
+            answer_object = {"answer" : answer}
+        else:
+            answer_object = {"answer": answer.coefficients}
 
     # Save the answer object to a JSON file
     with open(answer_location, 'w') as answer_file:
@@ -208,3 +222,5 @@ def load_answer(answer_location: str):
         answer = answer_file.read()
     # Return the exercise
     return json.loads(answer)
+
+# solve_exercise("Examples\Realistic\Exercises\exercise0.json", "Examples\Realistic\Exercises\\testAnswer.json")

@@ -14,7 +14,7 @@ def solve_long_division_polynomial_arithmetic(a: Polynomial, b: Polynomial) -> P
     """
     # b != 0
     if(b.isZero()):
-        raise ZeroDivisionError("Division by zero.")
+        return None, None
     
     #if the divisor is a constant, we just divide all the coefficients of a by b[0]
     if(len(b.coefficients) == 1):
