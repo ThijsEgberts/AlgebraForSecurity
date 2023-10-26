@@ -210,7 +210,7 @@ def timeOperation(operation, times):
 # timeOperation(runRealisticPolyIrreducibilityCheck, 50)
 # runRealisticPolyAddSub()
 # runRealisticPolyEucl()
-# runRealisticPolyIrreducibilityCheck()
+runRealisticPolyIrreducibilityCheck()
 # runRealisticPolyLongDivision()
 # runRealisticPolyMulti()
 # runSimplePolyIrreducibleGenerator()
@@ -220,4 +220,4 @@ def timeOperation(operation, times):
 # runAll()
 # runSimpleFFdivision()
 
-timeOperation(runRealisticPolyIrreducibleGenerator, 10)
+# timeOperation(runRealisticPolyIrreducibleGenerator, 50)
